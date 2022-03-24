@@ -13,10 +13,23 @@ export class ZhihuController {
     @HttpCode(200)
     async postGetZhihu(@Body() zhihuDTO: zhihuDTO){
         const { url } = zhihuDTO
+        console.log('url', zhihuDTO)
         const { title, article_id, articleThumbnail } = await this.ZhihuService.collection(url)        
         const result = await this.zhihu_list.list(article_id, articleThumbnail, title)
         console.log(result)
-        return result
+        let data = {
+            state: false,
+            msg: '采集失败',
+            data:{}
+        }
+        if(result.id > 0){
+            data = {
+                state: true,
+                data: result,
+                msg: '采集成功'
+            }
+        }
+        return data
     }
 
     @Get('/index')

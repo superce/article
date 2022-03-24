@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { getLocal } from '@src/utils/storage'
 import router from '@src/router/index'
-let baseURL = ''
+let baseURL = '/api'
 export const instance = axios.create({
     baseURL,
     timeout: 20000
@@ -17,7 +17,7 @@ instance.interceptors.request.use(
     (config) => {
         const userInfor = getLocal("SAVE_LOGIN_INFOR")
         if(!userInfor){
-            router.replace('/login')
+            // router.replace('/login')
         }else{
             config.headers.token = userInfor.token
         }
@@ -32,7 +32,7 @@ instance.interceptors.response.use(
     (r) => {
         const { status, data, config } = r
         if(data.jumplogin){
-            router.replace('/login')
+            // router.replace('/login')
         }
         return Promise.resolve(data)
     },

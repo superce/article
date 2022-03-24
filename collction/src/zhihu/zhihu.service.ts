@@ -18,6 +18,7 @@ export class ZhihuService {
         const $ = cheerio.load(data) 
         let openccTitle = $('.QuestionHeader-title').text()
         const title = await translate(openccTitle)
+        console.log('title', title, openccTitle)
         const figureLength =  $('figure').length        
         let articleThumbnail: string = ''
         for(var i = 0;i < figureLength;i++){
@@ -32,6 +33,7 @@ export class ZhihuService {
             
             // const a:{name:string,path:string} = await downloadImg(imgurl)
             const a: { name: string, path: string } = await crop(imgurl)
+            console.log(a)
             await uploadQiniu(a)
             console.log('存储七牛成功');
             
@@ -51,7 +53,7 @@ export class ZhihuService {
         }
         let html = $('.RichContent-inner').eq(0).find('.RichText').html()
         html = await translate(html)
-        const success = await this.saveZhi(title, html)
+        const success = await this.saveZhi(title, html)    
         let result = {
             title,
             article_id: success.article_id,

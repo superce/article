@@ -10,6 +10,14 @@ export default defineConfig({
     }
   },
   server:{
-    port: 3100
-  }
+    port: 3100,
+    proxy: {
+      // 选项写法
+      '/api': {
+        target: 'http://localhost:3001/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
 })
