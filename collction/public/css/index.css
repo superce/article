@@ -1,0 +1,56 @@
+
+*{font-family: Avenir, Helvetica, Arial, sans-serif;}
+.warp{background-color: #F9F9F9;}
+a{text-decoration: none;}
+.header{background: #1B74E4;padding: 0.2rem;}
+.header .top{display: flex;justify-content: space-between;align-items: center;}
+.header .top .logo img{height: 1rem;}
+.header .top .home{border-radius: 0.6rem;border: 1px solid #fff;display: flex;align-items: center;justify-content: center;width: 1.52rem;height: 0.56rem;}
+.header .top .home a{font-size: 0.32rem;color:#fff;margin-left: 0.08rem;text-decoration: none;}
+.header .nav{margin-top: 0.2rem;}
+.header .nav ul{display: flex;flex-wrap: nowrap;align-items: center;overflow-x: scroll;}
+.header .nav ul li{padding: 0 0.1rem;flex-shrink: 0;}
+.header .nav ul li a{font-size: 0.32rem;color:#fff;text-decoration: none;display: block;padding-bottom: 0.15rem;}
+.header .nav ul li a.active{border-bottom: 2px solid #fff;}
+.list-item{
+    width: 7.2rem;
+    margin:0.4rem auto;
+    box-shadow: 0px 0px 0.08rem 0.04rem #ddd;    
+    border-radius: 0.2rem;    
+}
+.list-item img{display: block;width: 100%;height: 4rem;object-fit: cover;}
+.list-item h3{font-size: 0.32rem;color:#414347;line-height: 0.6rem;font-weight: 800;font-family: Avenir, Helvetica, Arial, sans-serif;;padding: 0.2rem;}
+.list-item > div{display: flex;padding:0.3rem 0.2rem;align-items: center;}
+.list-item > div span{font-size: 0.24rem;color:#C6CCD5;}
+.list-item > div .category{margin-right: 0.2rem;}
+.list-item > div .tag{padding: 0.08rem 0.14rem;background-color: rgba(189, 196, 206, 1);color:#fff;border-radius:0.06rem;margin-right: 0.08rem;}
+.main-detail .detail{padding: 0 0.4rem}
+.main-detail .detail > h3{font-size: 0.4rem;color:#414347;line-height: 0.6rem;font-weight: 800;font-family: Avenir, Helvetica, Arial, sans-serif;margin-top: 0.4rem;}
+.main-detail .detail > span{font-size: 0.32rem;color:#B6B9C0;display: block;margin: 0.36rem 0}
+.main-detail .page{box-shadow: 0 0 8px 5px #ddd;border-radius: 0.2rem;margin-bottom: 0.2rem;padding: 0.3rem;}
+.main-detail .page p, .main-detail .page li{ font-size: 0.36rem; line-height: 0.6rem;color:#333;margin-bottom: 0.5rem;}
+.main-detail .page h2{font-size: 0.4rem;color:#333;font-weight: 800;margin-bottom: 0.5rem;padding-top: 0.5rem;}
+.main-detail .page img{width:100%;border-radius: 0.2rem 0.2rem 0 0;}
+.main-detail .text{padding: 0 0.2rem;}
+.main-detail .text p{font-size: 0.32rem;line-height: 0.6rem;color:#707070;font-family: Source Han Sans CN;}
+.main-detail .content{display: flex;justify-content: space-between;padding: 0.39rem 0.4rem;align-items: flex-start;}
+.main-detail .icon{display: flex;align-items:flex-start;height: 0.5rem;}
+.main-detail .icon span{display: block; width: 0.08rem;height: 0.4rem;background-color: #EC1A19;margin-right: 0.04rem;border-radius: 0.04rem;transform: rotate(25deg);}
+.main-detail .icon .grey{background-color:#7E91A2;height: 0.34rem;margin-left: 0.06rem;}
+.main-detail .count{display: flex;align-items: flex-end;height: 0.4rem;}
+.main-detail .count span{font-size: 0.32rem;display: block;}
+.main-detail .count span.current-pageindex{color:#EC1A19;font-size: 0.42rem;}
+.main-detail .count .line{margin: 0 0.02rem}
+.swiper-wrapper{display: flex;overflow-x: scroll;}
+.swiper-wrapper .swiper-slide{width: 4rem;margin-right: 3px;}
+.swiper-wrapper .swiper-slide img{width:4rem;height: 3rem;object-fit:cover}
+.swiper-wrapper .swiper-slide img.active{border: 1px solid #EC1A19}
+.recommend{padding:0 0 0.1rem 0}
+.main-detail-page-btn{display: flex;justify-content: space-between;align-items: center;margin: 1rem 0}
+.main-detail-page-btn span{font-size: 0.32rem;display: block;}
+.main-detail-page-btn .left,.main-detail-page-btn .right {background-color: rgba(27, 116, 228, 1);color:#fff;padding: 0.14rem 0.55rem;}
+.main-detail-page-btn .left{border-radius: 0 0.3rem 0.3rem 0;}
+.main-detail-page-btn .right{border-radius: 0.3rem 0 0 0.3rem;}
+.main-detail-page-btn .count{font-size: 0.32rem;}
+.main-detail-page-btn .count .crrent-pageindex{color:rgba(27, 116, 228, 1);font-size: 0.44rem;}
+.main-detail-page-btn .count .line{margin: 0 2px}

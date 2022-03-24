@@ -1,0 +1,11 @@
+<div class="main">
+    {{#each list}}
+    <div class="list-item">
+        <a href="/zhihu/detail/{{ this.article_id }}">
+            <h3>{{ this.title }}</h3>
+            <img src="{{ this.thumbnail }}" alt="{{ this.title }}">
+        </a>
+    </div>
+    {{/each}}
+</div>
+
