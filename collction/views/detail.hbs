@@ -1,7 +1,7 @@
 <div class="main main-detail">
     <div class="detail">
         <h3>{{{article.title}}}</h3>
-        <span>{{{article.date}}}</span>
+        <span class="date">{{{article.date}}}</span>
         <div class="contaier">
             <div class="page">
                 {{{article.content}}}
@@ -9,3 +9,9 @@
         </div>
     </div>
 </div>
+<script>
+    var date = document.querySelector('.date').innerText
+    date = new Date(date)
+    var t = date.toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
+    document.querySelector('.date').innerText = t
+</script>

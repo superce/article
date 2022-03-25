@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Render, UseGuards } from '@nestjs/common';
 import { ZhihuService, zhihu_listServer, getZhihuListServer, zhihuDetailServer } from './zhihu.service'
-import { zhihuDTO } from './dto/index'
+import { zhihuDTO, listParamDTO } from './dto/index'
 import { AuthGuard } from '@nestjs/passport';
 @Controller('/zhihu')
 export class ZhihuController {
@@ -35,8 +35,10 @@ export class ZhihuController {
 
     @Get('/index')
     @Render('index')
-    async viewsRoot(){
-        const list = await this.getZhihuList.getList()
+    async viewsRoot(@Param() param: listParamDTO){
+        console.log(param);
+        const { pageSize, pageIndex } = param
+        const list = await this.getZhihuList.getList(pageSize, pageIndex)
         return { list }
     }
     @Get('/detail/:id')
@@ -45,10 +47,10 @@ export class ZhihuController {
         const article = await this.getZhihuDetail.detail(id)
         return { article }
     }
-    @Get('/list')
-    @Render('list')
-    async viewsList(){
-        const list = await this.getZhihuList.getList()
-        return { list }
-    }
+    // @Get('/list')
+    // @Render('list')
+    // async viewsList(){
+    //     const list = await this.getZhihuList.getList()
+    //     return { list }
+    // }
 }

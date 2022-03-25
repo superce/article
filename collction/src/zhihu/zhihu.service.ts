@@ -81,8 +81,11 @@ export class zhihu_listServer{
 
 export class getZhihuListServer {
     constructor ( @InjectRepository(zhihu_list) private readonly getZhihuList: Repository<any> ){}
-    async getList () {
-       return await this.getZhihuList.find()
+    async getList(pageSize = 10, pageParam = 1) {
+        // let db = await this.getZhihuList.createQueryBuilder('h').skip(pageSize * (pageParam - 1)).take(pageSize).getRawMany()
+        // console.log(db)
+        // return db
+        return await this.getZhihuList.find()
     }
 }
 
