@@ -1,6 +1,7 @@
-import { Body, Controller, Get, HttpCode, Param, Post, Render } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Render, UseGuards } from '@nestjs/common';
 import { ZhihuService, zhihu_listServer, getZhihuListServer, zhihuDetailServer } from './zhihu.service'
 import { zhihuDTO } from './dto/index'
+import { AuthGuard } from '@nestjs/passport';
 @Controller('/zhihu')
 export class ZhihuController {
     constructor(
@@ -9,14 +10,14 @@ export class ZhihuController {
         private getZhihuList: getZhihuListServer,
         private getZhihuDetail: zhihuDetailServer
     ){}
+    @UseGuards(AuthGuard('jwt'))
     @Post()
     @HttpCode(200)
     async postGetZhihu(@Body() zhihuDTO: zhihuDTO){
         const { url } = zhihuDTO
-        console.log('url', zhihuDTO)
+        if(!url) throw new HttpException("url不能为空", HttpStatus.OK)
         const { title, article_id, articleThumbnail } = await this.ZhihuService.collection(url)        
         const result = await this.zhihu_list.list(article_id, articleThumbnail, title)
-        console.log(result)
         let data = {
             state: false,
             msg: '采集失败',
@@ -29,7 +30,7 @@ export class ZhihuController {
                 msg: '采集成功'
             }
         }
-        return data
+        throw new HttpException('采集成功', HttpStatus.OK)
     }
 
     @Get('/index')

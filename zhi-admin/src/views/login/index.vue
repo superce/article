@@ -16,11 +16,21 @@
 </template>
 <script setup>
 import { reactive } from 'vue'
+import { apiLogin } from '@src/api/login'
+import { useRouter } from 'vue-router'
+import { setLocal } from '@src/utils/storage'
+const router = useRouter()
 const userInfo = reactive({
   username: '',
   password: ''
 })
 const onLogin = () => {
-
+  apiLogin(userInfo).then(res => {
+    console.log('res', res)
+    setLocal("SAVE_LOGIN_INFOR", res.token)
+    router.replace('/')
+  }).catch(err => {
+    console.log('err',err)
+  })
 }
 </script>

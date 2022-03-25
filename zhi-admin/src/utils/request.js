@@ -17,9 +17,9 @@ instance.interceptors.request.use(
     (config) => {
         const userInfor = getLocal("SAVE_LOGIN_INFOR")
         if(!userInfor){
-            // router.replace('/login')
+            router.replace('/login')
         }else{
-            config.headers.token = userInfor.token
+            config.headers.token = userInfor
         }
         return config
     },
@@ -31,9 +31,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (r) => {
         const { status, data, config } = r
-        if(data.jumplogin){
-            // router.replace('/login')
-        }
         return Promise.resolve(data)
     },
     (error) => {
