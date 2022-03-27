@@ -39,7 +39,7 @@ export const crop = async (imgPath:string) => {
         const height = img.bitmap.height - 50
         img.crop(0, 0, width, height)        
        // 保存
-       var dirPath = join(__dirname, "file");
+       var dirPath = join(__dirname, "../../public/fileimg");
         if (!fs.existsSync(dirPath)) {
             fs.mkdirSync(dirPath);
             // console.log("文件夹创建成功");

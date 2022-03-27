@@ -1,53 +1,11 @@
 <div class="main">
     {{#each list}}
     <div class="list-item io">
-        <a href="/zhihu/detail/{{article_id }}">
+        <a href="/detail/{{article_id }}">
             <h3>{{ title }}</h3>
             <img src="{{ thumbnail }}" alt="{{ title }}">
         </a>
     </div>
     {{/each}}
 </div>
-<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-<script>
-    var loadMore = false
-    function scrollMore (){
-        $.ajax({
-            url: '/zhihu/index?pageSize=10&pageIndex=' 
-            type: 'GET', //GET    POST
-            async: true,    //或false,是否异步
-            timeout: 5000,    //超时时间
-            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 
-            beforeSend: function (xhr) {//请求发送之前进行的操作
-                console.log(xhr)
-                console.log('发送前')
-            },
-            success: function (data, textStatus, jqXHR) {//请求成功之后的返回结果
-                console.log(data);
-            },
-            error: function (xhr, textStatus) {//请求失败之后的返回错误信息
-                console.log('错误', xhr.responseText);
-                console.log(xhr);
-                console.log(textStatus);
-            }
-        })
-    }
-    $(window).on('scroll', function () {
-            var $currentWindow = $(window);
-            //当前窗口的高度
-            var windowHeight = $currentWindow.height();
-            //当前滚动条从上往下滚动的距离
-            var scrollTop = $currentWindow.scrollTop();
-            //当前文档的高度
-            var docHeight = $(document).height();
-            //当 滚动条距底部的距离 + 滚动条滚动的距离 >= 文档的高度 - 窗口的高度
-            //换句话说：（滚动条滚动的距离 + 窗口的高度 = 文档的高度） 这个是基本的公式
-            if (((100 + scrollTop) >= docHeight - windowHeight) && loadMore) {
-                console.log('滚动')
-                //这里可以写判断逻辑
-
-            }
-
-    });
-</script>

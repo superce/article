@@ -2,7 +2,10 @@
 import axios from 'axios'
 import { getLocal } from '@src/utils/storage'
 import router from '@src/router/index'
-let baseURL = '/api'
+let baseURL = 'https://www.health-longevity.top'
+if (import.meta.env.DEV){
+    baseURL = '/api'
+}
 export const instance = axios.create({
     baseURL,
     timeout: 20000

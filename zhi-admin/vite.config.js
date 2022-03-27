@@ -14,10 +14,11 @@ export default defineConfig({
     proxy: {
       // 选项写法
       '/api': {
-        target: 'http://localhost:3001/',
+        target: 'https://www.health-longevity.top',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
-    }
+    },
+    https: true,
   },
 })

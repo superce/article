@@ -1,20 +1,22 @@
-import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Render, UseGuards } from '@nestjs/common';
-import { ZhihuService, zhihu_listServer, getZhihuListServer, zhihuDetailServer } from './zhihu.service'
-import { zhihuDTO, listParamDTO } from './dto/index'
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Render, UseGuards, Header } from '@nestjs/common';
+import { ZhihuService, zhihu_listServer } from './zhihu.service'
+import { zhihuDTO } from './dto/index'
 import { AuthGuard } from '@nestjs/passport';
-@Controller('/zhihu')
+@Controller('/api/home')
 export class ZhihuController {
     constructor(
         private ZhihuService:ZhihuService, 
         private zhihu_list: zhihu_listServer,
-        private getZhihuList: getZhihuListServer,
-        private getZhihuDetail: zhihuDetailServer
     ){}
+    @Header('Access-Control-Allow-Origin', '*')
+    @Header('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, DELETE')
     @UseGuards(AuthGuard('jwt'))
     @Post()
     @HttpCode(200)
     async postGetZhihu(@Body() zhihuDTO: zhihuDTO){
         const { url } = zhihuDTO
+        console.log(url);
+        
         if(!url) throw new HttpException("url不能为空", HttpStatus.OK)
         const { title, article_id, articleThumbnail } = await this.ZhihuService.collection(url)        
         const result = await this.zhihu_list.list(article_id, articleThumbnail, title)
@@ -33,24 +35,5 @@ export class ZhihuController {
         throw new HttpException('采集成功', HttpStatus.OK)
     }
 
-    @Get('/index')
-    @Render('index')
-    async viewsRoot(@Param() param: listParamDTO){
-        console.log(param);
-        const { pageSize, pageIndex } = param
-        const list = await this.getZhihuList.getList(pageSize, pageIndex)
-        return { list }
-    }
-    @Get('/detail/:id')
-    @Render('detail')
-    async viewsDetail(@Param('id') id){
-        const article = await this.getZhihuDetail.detail(id)
-        return { article }
-    }
-    // @Get('/list')
-    // @Render('list')
-    // async viewsList(){
-    //     const list = await this.getZhihuList.getList()
-    //     return { list }
-    // }
+
 }

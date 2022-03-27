@@ -15,7 +15,7 @@
   const url = ref('')
   const loading = ref(false)
   function doCollection(){
-    if(url){
+    if(url.value){
       loading.value = true
       apiGetZhihu({url: url.value}).then(res => {
         console.log(res);

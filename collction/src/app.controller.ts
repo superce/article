@@ -1,19 +1,25 @@
-import { Controller, Get, Redirect, Render } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Param, Redirect, Render } from '@nestjs/common';
+import { listParamDTO } from './zhihu/dto';
+import { getZhihuListServer, zhihuDetailServer } from './app.service'
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly getZhihuList: getZhihuListServer,
+    private readonly getZhihuDetail: zhihuDetailServer
+  ) {}
 
   @Get()
-  @Redirect('/zhihu/index')
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
-  @Get('/index')
   @Render('index')
-  root(){
-    return { message: 'hello word' }
+  async viewsRoot(@Param() param: listParamDTO) {
+    const { pageSize, pageIndex } = param
+    const list = await this.getZhihuList.getList(pageSize, pageIndex)
+    return { list }
+  }
+  @Get('/detail/:id')
+  @Render('detail')
+  async viewsDetail(@Param('id') id) {
+    const article = await this.getZhihuDetail.detail(id)
+    return { article }
   }
 }

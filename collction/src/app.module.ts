@@ -2,26 +2,28 @@ import { Module } from '@nestjs/common';
 // 引入数据库的及配置文件
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { getZhihuListServer, zhihuDetailServer } from './app.service';
 import { ZhihuModule } from './zhihu/zhihu.module';
 import { UserModule } from './user/user.module';
+import { zhihu_article, zhihu_list } from './zhihu/entity/zhihu.entity'
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: '119.13.87.28',
       port: 3305,
-      username: 'root',
+      username: 'zhihu',
       password: '123456',
-      database: 'zhihu',
+      database: 'database',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     ZhihuModule,
-    UserModule
+    UserModule,
+    TypeOrmModule.forFeature([zhihu_list, zhihu_article])
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [getZhihuListServer, zhihuDetailServer],
 })
 export class AppModule {}

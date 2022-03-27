@@ -34,10 +34,10 @@ export class ZhihuService {
             // const a:{name:string,path:string} = await downloadImg(imgurl)
             const a: { name: string, path: string } = await crop(imgurl)
             console.log(a)
-            await uploadQiniu(a)
-            console.log('存储七牛成功');
+            // await uploadQiniu(a)
+            // console.log('存储七牛成功');
             
-            const qnImgUrl = `http://r8q5v9tvi.hb-bkt.clouddn.com/${a.name}`
+            const qnImgUrl = `/fileimg/${a.name}`
             $('figure').eq(i).find('img').attr('data-actualsrc', "")
             $('figure').eq(i).find('img').attr('src', qnImgUrl)
             $('figure').eq(i).find('img').attr("data-default-watermark-src", "")
@@ -70,28 +70,11 @@ export class ZhihuService {
    
 }
 
-export class zhihu_listServer{
+export class zhihu_listServer {
     constructor(@InjectRepository(zhihu_list) private readonly zhihuRepos: Repository<any>) { }
     async list(article_id: string, thumbnail: string, title: string) {
         const newinsert = await this.zhihuRepos.create({ title, thumbnail, article_id })
-        const list = await this.zhihuRepos.save(newinsert) 
+        const list = await this.zhihuRepos.save(newinsert)
         return list
-    }
-}
-
-export class getZhihuListServer {
-    constructor ( @InjectRepository(zhihu_list) private readonly getZhihuList: Repository<any> ){}
-    async getList(pageSize = 10, pageParam = 1) {
-        // let db = await this.getZhihuList.createQueryBuilder('h').skip(pageSize * (pageParam - 1)).take(pageSize).getRawMany()
-        // console.log(db)
-        // return db
-        return await this.getZhihuList.find()
-    }
-}
-
-export class zhihuDetailServer {
-    constructor(@InjectRepository(zhihu_article) private readonly getDetail: Repository<any>){}
-    async detail (article_id: string) {
-        return await this.getDetail.findOneByOrFail({article_id})
     }
 }
