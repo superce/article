@@ -4,7 +4,7 @@ import { getLocal } from '@src/utils/storage'
 import router from '@src/router/index'
 let baseURL = 'https://www.health-longevity.top'
 if (import.meta.env.DEV){
-    baseURL = '/api'
+    baseURL = 'http://localhost:3001'
 }
 export const instance = axios.create({
     baseURL,

@@ -11,14 +11,14 @@ export default defineConfig({
   },
   server:{
     port: 3100,
-    proxy: {
-      // 选项写法
-      '/api': {
-        target: 'https://www.health-longevity.top',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    },
+    // proxy: {
+    //   // 选项写法
+    //   '/api': {
+    //     target: 'https://www.health-longevity.top',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, '')
+    //   }
+    // },
     https: true,
   },
 })

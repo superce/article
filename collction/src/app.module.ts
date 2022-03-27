@@ -10,12 +10,20 @@ import { zhihu_article, zhihu_list } from './zhihu/entity/zhihu.entity'
 @Module({
   imports: [
     TypeOrmModule.forRoot({
+      // type: 'mysql',
+      // host: '119.13.87.28',
+      // port: 3305,
+      // username: 'zhihu',
+      // password: '123456',
+      // database: 'database',
+      // entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      // synchronize: true,
       type: 'mysql',
-      host: '119.13.87.28',
+      host: 'localhost',
       port: 3305,
-      username: 'zhihu',
+      username: 'root',
       password: '123456',
-      database: 'database',
+      database: 'zhihu',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),

@@ -47,7 +47,7 @@ export const crop = async (imgPath:string) => {
             // console.log("文件夹已存在");
         }  
         const imgName = `${width}_${height}-${name}`
-        await img.writeAsync(`${dirPath}\\${imgName}`);
+        await img.writeAsync(`${dirPath}/${imgName}`);
         return {
             name: imgName,
             path: dirPath,

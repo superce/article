@@ -8,8 +8,8 @@ export class ZhihuController {
         private ZhihuService:ZhihuService, 
         private zhihu_list: zhihu_listServer,
     ){}
-    @Header('Access-Control-Allow-Origin', '*')
-    @Header('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, DELETE')
+    // @Header('Access-Control-Allow-Origin', '*')
+    // @Header('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, DELETE')
     @UseGuards(AuthGuard('jwt'))
     @Post()
     @HttpCode(200)

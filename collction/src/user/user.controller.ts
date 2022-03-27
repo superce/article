@@ -10,8 +10,8 @@ export class UserController {
     private registerService: RegisterService
   ){}
 
-  @Header('Access-Control-Allow-Origin', '*')
-  @Header('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, DELETE')
+  // @Header('Access-Control-Allow-Origin', '*')
+  // @Header('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, DELETE')
   @UseGuards(AuthGuard('local')) //守卫将从body中提取username、password，然后调用LocalStrategy中的validate方法，若认证通过，则将User信息赋值给request.user。
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('/login')

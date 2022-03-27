@@ -16,16 +16,22 @@ export class UserService {
   async login (username: string, password: string){
       const user = await this.userRep.find({where:{username,password}})      
       if(user.length === 0){
-        throw new HttpException('用戶名或密码错误！', HttpStatus.NOT_FOUND);
+        let status = {
+          code: 401,
+          message: '用戶名或密码错误！'
+        }
+        throw new HttpException(status, HttpStatus.OK);
       }
       const { id } = user[0]
       const token = this.jwtService.sign({ username, sub: id})
       const info = {
         id,
         username,
-        token
+        token,
+        code: 200
       }
-      return info
+      throw new HttpException(info, HttpStatus.OK);
+      // return info
   }
 }
 
@@ -36,7 +42,11 @@ export class RegisterService {
     const { username } = userInfo
     const existUser = await this.userRep.findOne({where:{username}})
     if(existUser){
-      throw new HttpException("用户名已存在", HttpStatus.OK)
+      let status = {
+        code: 401,
+        message: '用户名已存在'
+      }
+      throw new HttpException(status, HttpStatus.OK);
     }
     const newUser = this.userRep.create(userInfo)
     return await this.userRep.save(newUser)
