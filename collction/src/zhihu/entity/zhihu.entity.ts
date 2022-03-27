@@ -12,6 +12,9 @@ export class zhihu_article{
 
     @Column('text')
     content: string
+
+    @Column()
+    thumbnail: string
     
     @CreateDateColumn()
     date: Date

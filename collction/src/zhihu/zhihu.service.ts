@@ -53,7 +53,7 @@ export class ZhihuService {
         }
         let html = $('.RichContent-inner').eq(0).find('.RichText').html()
         html = await translate(html)
-        const success = await this.saveZhi(title, html)    
+        const success = await this.saveZhi(title, html, articleThumbnail)    
         let result = {
             title,
             article_id: success.article_id,
@@ -61,9 +61,9 @@ export class ZhihuService {
         }
         return result
     }
-    async saveZhi(title: string, content: string){
+    async saveZhi(title: string, content: string, thumbnail: string){
         const article_id = guid()
-        const newinsert = await this.zhihuRepos.create({ title, content, article_id })
+        const newinsert = await this.zhihuRepos.create({ title, content, article_id, thumbnail })
         const zhi = await this.zhihuRepos.save(newinsert)        
         return zhi
     }
