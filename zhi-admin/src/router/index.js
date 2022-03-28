@@ -13,6 +13,6 @@ const routes = [
   }
 ]
 export default createRouter({
-  history: createWebHistory("/zh/"),
+  history: createWebHashHistory(),
   routes
 })

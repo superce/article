@@ -1,11 +1,12 @@
 
 {{#extend "meta"}}
 <meta property="og:type" content="article">
-<meta property="og:title" content="{{article.title}}">
-<meta property="og:url" content="https://health-longevity.top/detail/{{article.article_id}}">
-<meta property="og:image" content="https://health-longevity.top/{{article.thumbnail}}">
-<meta name="twitter:image" content="https://health-longevity.top/{{article.thumbnail}}">
+<meta id="og-title" property="og:title" content={{article.title}}>
+<meta id="og-url" property="og:url" content='https://health-longevity.top/detail/f7908a9107d44a548ebea706e4b10422'>
+<meta id="og-image" property="og:image" content="https://health-longevity.top/fileimg/720_910-b541e0afc0bd4a71ac354f54cd32cee2.jpg">
+<meta id="t-imgage" name="twitter:image" content="https://health-longevity.top/fileimg/720_910-b541e0afc0bd4a71ac354f54cd32cee2.jpg">
 {{/extend}}
+{{article}}
 <div class="main main-detail">
     <div class="detail">
         <h3>{{article.title}}</h3>

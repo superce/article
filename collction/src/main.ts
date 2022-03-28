@@ -22,10 +22,13 @@ async function bootstrap() {
   hbs.registerHelper('extend', (name: string | number, context: { fn: (arg0: any) => any; }) => {
     let block = blocks[name]
     if(!block) block = blocks[name] = []
+    console.log('this', this)
     block.push(context.fn(this))
   })
   hbs.registerHelper('block', (name: string | number) => {
+    console.log('name', name)
     const val = (blocks[name] || []).join('\n')
+    console.log('val', val)
     blocks[name] = []
     return val
   })
