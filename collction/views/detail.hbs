@@ -1,36 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="{{{article.title}}}">
-    <meta property="og:url" content="https://health-longevity.top/detail/{{article.article_id }}">
-    <meta property="og:image" content="https://health-longevity.top/{{article.thumbnail}}">
-    <meta name="twitter:image" content="https://health-longevity.top/{{article.thumbnail}}">
-    <title>{{title}}</title>
-</head>
-
-<body>
-    <div class="main main-detail">
-        <div class="detail">
-            <h3>{{{article.title}}}</h3>
-            <span class="date">{{{article.date}}}</span>
-            <div class="contaier">
-                <div class="page">
-                    {{{article.content}}}
-                </div>
+{{#extend "meta"}}
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{{article.title}}}">
+<meta property="og:url" content="https://health-longevity.top/detail/{{article.article_id }}">
+<meta property="og:image" content="https://health-longevity.top/{{article.thumbnail}}">
+<meta name="twitter:image" content="https://health-longevity.top/{{article.thumbnail}}">
+{{/extend}}
+<div class="main main-detail">
+    <div class="detail">
+        <h3>{{{article.title}}}</h3>
+        <span class="date">{{{article.date}}}</span>
+        <div class="contaier">
+            <div class="page">
+                {{{article.content}}}
             </div>
         </div>
     </div>
-    <script>
-        var date = document.querySelector('.date').innerText
-        date = new Date(date)
-        var t = date.toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
-        document.querySelector('.date').innerText = t
-    </script>
-</body>
-
-</html>
+</div>
+<script>
+    var date = document.querySelector('.date').innerText
+    date = new Date(date)
+    var t = date.toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
+    document.querySelector('.date').innerText = t
+</script>

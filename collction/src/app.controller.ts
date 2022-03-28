@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Redirect, Render } from '@nestjs/common';
+import { Controller, Get, Param, Redirect, Render, Res, Response } from '@nestjs/common';
 import { listParamDTO } from './zhihu/dto';
 import { getZhihuListServer, zhihuDetailServer } from './app.service'
 
@@ -18,7 +18,7 @@ export class AppController {
   }
   @Get('/detail/:id')
   @Render('detail')
-  async viewsDetail(@Param('id') id) {
+  async viewsDetail(@Param('id') id: string) {
     const article = await this.getZhihuDetail.detail(id)
     return { article }
   }
