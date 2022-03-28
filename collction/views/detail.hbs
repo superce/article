@@ -1,15 +1,15 @@
 
 {{#extend "meta"}}
 <meta property="og:type" content="article">
-<meta property="og:title" content="{{{article.title}}}">
-<meta property="og:url" content="https://health-longevity.top/detail/{{article.article_id }}">
+<meta property="og:title" content="{{article.title}}">
+<meta property="og:url" content="https://health-longevity.top/detail/{{article.article_id}}">
 <meta property="og:image" content="https://health-longevity.top/{{article.thumbnail}}">
 <meta name="twitter:image" content="https://health-longevity.top/{{article.thumbnail}}">
 {{/extend}}
 <div class="main main-detail">
     <div class="detail">
-        <h3>{{{article.title}}}</h3>
-        <span class="date">{{{article.date}}}</span>
+        <h3>{{article.title}}</h3>
+        <span class="date">{{article.date}}</span>
         <div class="contaier">
             <div class="page">
                 {{{article.content}}}

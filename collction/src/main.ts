@@ -16,6 +16,8 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
+  
+  // 设置hbs模板，局部引用
   let blocks = {}
   hbs.registerHelper('extend', (name: string | number, context: { fn: (arg0: any) => any; }) => {
     let block = blocks[name]
@@ -27,6 +29,7 @@ async function bootstrap() {
     blocks[name] = []
     return val
   })
+
   await app.listen(3001);
 }
 bootstrap();
