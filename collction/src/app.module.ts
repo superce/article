@@ -6,27 +6,11 @@ import { getZhihuListServer, zhihuDetailServer } from './app.service';
 import { ZhihuModule } from './zhihu/zhihu.module';
 import { UserModule } from './user/user.module';
 import { zhihu_article, zhihu_list } from './zhihu/entity/zhihu.entity'
+import connectMysql from './connectMysql';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      // type: 'mysql',
-      // host: '119.13.87.28',
-      // port: 3305,
-      // username: 'zhihu',
-      // password: '123456',
-      // database: 'database',
-      // entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      // synchronize: true,
-      type: 'mysql',
-      host: 'localhost',
-      port: 3305,
-      username: 'root',
-      password: '123456',
-      database: 'zhihu',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(connectMysql),
     ZhihuModule,
     UserModule,
     TypeOrmModule.forFeature([zhihu_list, zhihu_article])
