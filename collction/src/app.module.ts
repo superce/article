@@ -8,8 +8,6 @@ import { ZhihuModule } from './zhihu/zhihu.module';
 import { UserModule } from './user/user.module';
 import { zhihu_article, zhihu_list } from './zhihu/entity/zhihu.entity'
 import connectMysql from './connectMysql';
-console.log(connectMysql);
-console.log(__dirname + '/**/*.entity{.ts,.js}');
 
 @Module({
   imports: [

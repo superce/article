@@ -17,16 +17,26 @@ export function hbsView(app: { useStaticAssets: (arg0: string) => void; setBaseV
     // return 的字符串就是渲染的Markup片段
     
     const { title,article_id,thumbnail } = context.hash
-    return new hbs.SafeString(
-        `<meta property="og:type" content="article">
-        <meta id="og-title" property="og:title" content="${title}">
-        <meta id="og-url" property="og:url" content="https://health-longevity.top/detail/${article_id}">
-        <meta id="og-image" property="og:image" content="https://health-longevity.top${thumbnail}">
-        <meta id="t-imgage" name="twitter:image" content="https://health-longevity.top${thumbnail}">`
-    )
+    // return new hbs.SafeString(
+    //     `<meta property="og:type" content="article">
+    //     <meta id="og-title" property="og:title" content="${title}">
+    //     <meta id="og-url" property="og:url" content="https://health-longevity.top/detail/${article_id}">
+    //     <meta id="og-image" property="og:image" content="https://health-longevity.top${thumbnail}">
+    //     <meta id="t-imgage" name="twitter:image" content="https://health-longevity.top${thumbnail}">`
+    // )
     })
-    hbs.registerHelper('block', (name: string | number, context: any) => {})
-    
+    hbs.registerHelper('block', (name: string | number, context: any) => {
+        if (context.hash.article.id){
+            const { title, article_id, thumbnail } = context.hash.article
+            return new hbs.SafeString(
+                `<meta property="og:type" content="article">
+            <meta id="og-title" property="og:title" content="${title}">
+            <meta id="og-url" property="og:url" content="https://health-longevity.top/detail/${article_id}">
+            <meta id="og-image" property="og:image" content="https://health-longevity.top${thumbnail}">
+            <meta id="t-imgage" name="twitter:image" content="https://health-longevity.top${thumbnail}">`
+            )
+        }
+    })
     hbs.registerPartial('partial', fs.readFileSync(join(__dirname, '../views', 'partial.hbs'), 'utf8'))
     hbs.registerPartials(join(__dirname, '../views', 'partials'))
 }
