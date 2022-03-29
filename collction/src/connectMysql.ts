@@ -1,14 +1,16 @@
-
-export  default{
-    // type: 'mysql',
-      // host: '119.13.87.28',
-      // port: 3305,
-      // username: 'zhihu',
-      // password: '123456',
-      // database: 'database',
-      // entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      // synchronize: true,
-      type: 'mysql',
+let sql = {
+    type: 'mysql',
+    host: '119.13.87.28',
+    port: 3305,
+    username: 'zhihu',
+    password: '123456',
+    database: 'database',
+    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    synchronize: true,
+}
+if(process.env.NODE_ENV === 'development'){
+  sql = {
+    type: 'mysql',
       host: 'localhost',
       port: 3305,
       username: 'root',
@@ -16,4 +18,6 @@ export  default{
       database: 'zhihu',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+  }
 }
+export default sql
