@@ -13,7 +13,7 @@ import { translate } from 'src/utils/opencc';
 export class ZhihuService {
     constructor(@InjectRepository(zhihu_article) private readonly zhihuRepos: Repository<any>){}
     async collection(param: string){
-        const url = `https://www.zhihu.com/${param}`
+        const url = param //`https://www.zhihu.com/${param}`
         const { data } = await axios.get(url)
         const $ = cheerio.load(data) 
         let openccTitle = $('.QuestionHeader-title').text()
@@ -40,6 +40,8 @@ export class ZhihuService {
             const qnImgUrl = `/fileimg/${a.name}`
             $('figure').eq(i).find('img').attr('data-actualsrc', "")
             $('figure').eq(i).find('img').attr('src', qnImgUrl)
+            $('figure').eq(i).find('img').attr('data-src', qnImgUrl)
+            $('figure').eq(i).find('img').addClass('lazy')
             $('figure').eq(i).find('img').attr("data-default-watermark-src", "")
             $('figure').eq(i).find('img').attr("data-original", "")
             $('figure').eq(i).find('img').attr("data-actualsrc", "")
