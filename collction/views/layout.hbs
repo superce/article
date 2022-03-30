@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/index.css">
   <script src="/js/rem.js"></script>
+  <script src="/js/jquery-ias.min.js"></script>
   <script src="/js/lazy.js"></script>
   <script>
     var _hmt = _hmt || [];
@@ -43,5 +44,10 @@
     </div>
     {{{body}}}
   </div>
+  <script>
+    $(function () {
+      $(".lazy").lazyload({})
+    })
+  </script>
 </body>
 </html>
