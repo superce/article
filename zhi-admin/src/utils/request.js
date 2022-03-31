@@ -8,7 +8,7 @@ if (import.meta.env.DEV){
 }
 export const instance = axios.create({
     baseURL,
-    timeout: 20000
+    timeout: 50000
 })
 instance.defaults.headers['Content-Type'] = 'application/json'
 instance.defaults.headers['accept'] = 'text/plain'

@@ -55,6 +55,15 @@ a{text-decoration: none;display: block;}
 .main-detail-page-btn .count{font-size: 0.32rem;}
 .main-detail-page-btn .count .crrent-pageindex{color:rgba(27, 116, 228, 1);font-size: 0.44rem;}
 .main-detail-page-btn .count .line{margin: 0 2px}
+.footer {
+    background: #4CAF50;
+    padding: 0.2rem;
+}
+.footer p {
+    font-size: 0.25rem;
+    color: #fff;
+    padding: 0.3rem 0;
+}
 @media screen and (min-width:768px) {
     .warp{width: 768px;margin: 0 auto;}
 }
