@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios from 'axios'
 import { downloadImg, crop } from '../utils/download'
 import { uploadQiniu } from '../utils/uploadQiniu'
@@ -18,8 +18,10 @@ export class ZhihuService {
         const $ = cheerio.load(data) 
         let openccTitle = $('.QuestionHeader-title').text()
         const title = await translate(openccTitle)
-        console.log('title', title, openccTitle)
-        const figureLength =  $('figure').length        
+        console.log('title------', title, openccTitle)
+        const figureLength =  $('figure').length  
+        console.log('figureLength', figureLength);
+              
         let articleThumbnail: string = ''
         for(var i = 0;i < figureLength;i++){
             console.log(i)
@@ -66,7 +68,7 @@ export class ZhihuService {
     async saveZhi(title: string, content: string, thumbnail: string){
         const article_id = guid()
         const newinsert = await this.zhihuRepos.create({ title, content, article_id, thumbnail })
-        const zhi = await this.zhihuRepos.save(newinsert)        
+        const zhi = await this.zhihuRepos.save(newinsert)    
         return zhi
     }
    
@@ -77,6 +79,17 @@ export class zhihu_listServer {
     async list(article_id: string, thumbnail: string, title: string) {
         const newinsert = await this.zhihuRepos.create({ title, thumbnail, article_id })
         const list = await this.zhihuRepos.save(newinsert)
-        return list
+        let code = 400
+        let message = '采集失败'
+        if(list.id > 0){
+            code = 200
+            message = '采集成功'
+        }
+        let retsult = {
+            code,
+            data:list,
+            message
+        }
+        return retsult
     }
 }

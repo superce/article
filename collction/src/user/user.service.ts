@@ -17,7 +17,7 @@ export class UserService {
       const user = await this.userRep.find({where:{username,password}})      
       if(user.length === 0){
         let status = {
-          code: 401,
+          code: 400,
           message: '用戶名或密码错误！'
         }
         throw new HttpException(status, HttpStatus.OK);

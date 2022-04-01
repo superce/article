@@ -14,25 +14,11 @@ export class ZhihuController {
     @Post()
     @HttpCode(200)
     async postGetZhihu(@Body() zhihuDTO: zhihuDTO){
-        const { url } = zhihuDTO
-        console.log(url);
-        
-        if(!url) throw new HttpException("url不能为空", HttpStatus.OK)
-        const { title, article_id, articleThumbnail } = await this.ZhihuService.collection(url)        
-        const result = await this.zhihu_list.list(article_id, articleThumbnail, title)
-        let data = {
-            state: false,
-            msg: '采集失败',
-            data:{}
-        }
-        if(result.id > 0){
-            data = {
-                state: true,
-                data: result,
-                msg: '采集成功'
-            }
-        }
-        throw new HttpException('采集成功', HttpStatus.OK)
+        const { url } = zhihuDTO            
+        if(!url) throw new HttpException("url不能为空", HttpStatus.OK)        
+        const {article_id, articleThumbnail, title} = await this.ZhihuService.collection(url) 
+        const result = await this.zhihu_list.list(article_id, articleThumbnail, title) 
+        throw new HttpException(result, HttpStatus.OK);
     }
 
 

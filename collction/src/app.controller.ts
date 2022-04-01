@@ -14,6 +14,8 @@ export class AppController {
   async viewsRoot(@Param() param: listParamDTO) {
     const { pageSize, pageIndex } = param
     const list = await this.getZhihuList.getList(pageSize, pageIndex)
+    console.log(list);
+    
     const article ={
       title: '身材管理'
     }

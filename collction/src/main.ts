@@ -2,8 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { hbsView } from './hbs'
+
 async function bootstrap() {  
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  // console.log(app);
+  
   app.enableCors({
     "origin": "*",
     "credentials": true,
