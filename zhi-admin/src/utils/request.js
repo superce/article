@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { getLocal } from '@src/utils/storage'
 import router from '@src/router/index'
+console.log(import.meta.env.DEV);
 let baseURL = 'https://www.health-longevity.top'
 if (import.meta.env.DEV){
     baseURL = 'http://localhost:3001'

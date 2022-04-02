@@ -8,12 +8,13 @@ import  { InjectRepository } from '@nestjs/typeorm'
 import { zhihu_article, zhihu_list } from './entity/zhihu.entity';
 import { guid } from '../utils/GUID'
 import { translate } from 'src/utils/opencc';
+import { categroy } from '../utils/categroy'
 @Injectable()
 
 export class ZhihuService {
     constructor(@InjectRepository(zhihu_article) private readonly zhihuRepos: Repository<any>){}
-    async collection(param: string){
-        const url = param //`https://www.zhihu.com/${param}`
+    async collection(param:{url: string, categroy_id: number} ){
+        const { url, categroy_id } = param //`https://www.zhihu.com/${param}`
         const { data } = await axios.get(url)
         const $ = cheerio.load(data) 
         let openccTitle = $('.QuestionHeader-title').text()
@@ -27,6 +28,11 @@ export class ZhihuService {
             console.log(i)
             let img = $('figure').eq(i).find('img').attr('data-actualsrc')
             $('figure noscript').remove()
+            console.log('img.split', img)
+            if(!img) {
+                $('figure').eq(i).remove()
+                continue
+            }
             const imgurl = img.split('?')[0]
             if (imgurl.includes('.gif')) {
                 $('figure').eq(i).remove()
@@ -62,6 +68,7 @@ export class ZhihuService {
             title,
             article_id: success.article_id,
             articleThumbnail,
+            categroy_id
         }
         return result
     }
@@ -75,9 +82,10 @@ export class ZhihuService {
 }
 
 export class zhihu_listServer {
-    constructor(@InjectRepository(zhihu_list) private readonly zhihuRepos: Repository<any>) { }
-    async list(article_id: string, thumbnail: string, title: string) {
-        const newinsert = await this.zhihuRepos.create({ title, thumbnail, article_id })
+    constructor(@InjectRepository(zhihu_list) private readonly zhihuRepos: Repository<zhihu_list>) { }
+    async list(article_id: string, thumbnail: string, title: string, categroy_id: number) {
+        const categroy_name = categroy(categroy_id)
+        const newinsert = await this.zhihuRepos.create({ title, thumbnail, article_id, categroy_id, categroy_name })
         const list = await this.zhihuRepos.save(newinsert)
         let code = 400
         let message = '采集失败'
@@ -91,5 +99,35 @@ export class zhihu_listServer {
             message
         }
         return retsult
+    }
+    async edit(id: number, categroy_id: number){
+        let result = {
+            code:200,
+            data:{},
+            message: '修改成功'
+        }
+        try{
+            const item = await this.zhihuRepos.findOne({where: {id}})
+            if(!item){
+                result = {
+                    code:400,
+                    data:{},
+                    message: '没有此条数据'
+                }
+            }else{
+                const categroy_name = categroy(categroy_id)
+                item.categroy_id = categroy_id
+                item.categroy_name = categroy_name
+                result.data = await this.zhihuRepos.save(item)
+                console.log(result);
+            }
+        }catch{
+            result = {
+                code:400,
+                data:{},
+                message: '修改失败'
+            }
+        }
+        return result
     }
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, PrimaryColumn } from 'typeorm'
 @Entity()
 export class zhihu_article{
     @PrimaryGeneratedColumn()
@@ -32,5 +32,10 @@ export class zhihu_list {
 
     @Column()
     thumbnail: string
+
+    @Column("int")
+    categroy_id: number //0,1, 2, 3
+    @Column()
+    categroy_name: string
 
 }
