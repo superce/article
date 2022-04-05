@@ -1,10 +1,12 @@
 export const categroy = (id: number) => {
     switch(id){
         case 0:
-            return '百搭'
+            return '首頁'
         case 1:
-            return "y"
+            return "美女"
         case 2:
-            return "t"
+            return "美腿"
+        case 3:
+            return "身材"
     }
 }

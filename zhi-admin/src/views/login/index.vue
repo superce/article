@@ -19,6 +19,8 @@ import { reactive } from 'vue'
 import { apiLogin } from '@src/api/login'
 import { useRouter } from 'vue-router'
 import { setLocal } from '@src/utils/storage'
+import { useStore } from 'vuex'
+const store = useStore();
 const router = useRouter()
 const userInfo = reactive({
   username: '',
@@ -28,7 +30,9 @@ const onLogin = () => {
   apiLogin(userInfo).then(res => {
     console.log('res', res)
     if(res.code === 200){
-      setLocal("SAVE_LOGIN_INFOR", res.token)
+      console.log(res);
+      store.commit("login/SAVE_LOGIN_INFOR", res);
+      // setLocal("SAVE_LOGIN_INFOR", res)
       router.replace('/')
     }
   }).catch(err => {

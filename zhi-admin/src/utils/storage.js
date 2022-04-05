@@ -131,4 +131,6 @@ export const clearLocal = () => {
         }
     })
 }
-
+export const getToken = (name) => {
+    return getLocal(name).token
+}

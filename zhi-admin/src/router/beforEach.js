@@ -1,7 +1,7 @@
 import router from './index'
-import { getLocal } from '@src/utils/storage'
+import { getToken } from '@src/utils/storage'
 router.beforeEach((to, from, next) => {
-  const userInfor = getLocal("SAVE_LOGIN_INFOR")
+  const userInfor = getToken("SAVE_LOGIN_INFOR")
   if (!userInfor && to.name !== 'Login') {
     next({ path: '/login' })
   }else{

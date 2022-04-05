@@ -27,5 +27,10 @@ export class ZhihuController {
         const result = await this.zhihu_list.edit(id, categroy_id)        
         throw new HttpException(result, HttpStatus.OK)
     }
+    @Get('/list')
+    async getList(){
+        const result = await this.zhihu_list.lists()
+        throw new HttpException(result, HttpStatus.OK)
+    }
 
 }

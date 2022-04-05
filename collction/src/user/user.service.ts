@@ -25,7 +25,6 @@ export class UserService {
       const { id } = user[0]
       const token = this.jwtService.sign({ username, sub: id})
       const info = {
-        id,
         username,
         token,
         code: 200

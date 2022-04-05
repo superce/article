@@ -7,9 +7,10 @@ import { getZhihuListServer, zhihuDetailServer } from './app.service';
 import { ZhihuModule } from './zhihu/zhihu.module';
 import { UserModule } from './user/user.module';
 import { zhihu_article, zhihu_list } from './zhihu/entity/zhihu.entity'
+import { DouyinModule } from './douyin/douyin.module';
 import connectMysql from './connectMysql';
 
-console.log('connectMysql')
+console.log(connectMysql)
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ console.log('connectMysql')
     ConfigModule.forRoot(),
     ZhihuModule,
     UserModule,
-    TypeOrmModule.forFeature([zhihu_list, zhihu_article])
+    TypeOrmModule.forFeature([zhihu_list, zhihu_article]),
+    DouyinModule
   ],
   controllers: [AppController],
   providers: [getZhihuListServer, zhihuDetailServer],

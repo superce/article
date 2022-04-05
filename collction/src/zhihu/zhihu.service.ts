@@ -130,4 +130,13 @@ export class zhihu_listServer {
         }
         return result
     }
+    async lists(){
+        const list = await this.zhihuRepos.find()
+        let result = {
+            code: 200,
+            data: list,
+            message: 'ok'
+        }
+        return result
+    }
 }
