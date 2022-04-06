@@ -1,16 +1,18 @@
 <template>
-  <el-table :data="tableData" stripe style="width: 100%">
-    <el-table-column prop="avatar" label="头像" width="180" />
-    <el-table-column prop="author" label="博主" width="180">
-      <template #default="{ row }">
-        <span @click="toCideoList">{{ row.author }}</span>
-      </template>
-    </el-table-column>
-    <el-table-column prop="categroy_id" label="分类" width="180" />
-    <el-table-column prop="fans" label="粉丝" width="180" />
-    <el-table-column prop="likes" label="点赞量" width="180" />
-    <el-table-column prop="create_date" label="采集时间" />
-  </el-table>
+  <div>
+    <el-table :data="tableData" stripe style="width: 100%;overflow-y:scroll" height="calc(100% - 30px)">
+      <el-table-column prop="avatar" label="头像" width="180" />
+      <el-table-column prop="author" label="博主" width="180" >
+        <template #default="{ row }">
+          <span style="color:red" @click="toCideoList(row)">{{ row.author }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="categroy_id" label="分类" width="180" />
+      <el-table-column prop="fans" label="粉丝" width="180" />
+      <el-table-column prop="likes" label="点赞量" width="180" />
+      <el-table-column prop="create_date" label="采集时间" />
+    </el-table>
+  </div>
 </template>
 
 <script setup>
@@ -21,9 +23,10 @@ const router = useRouter()
 onMounted(() => {
   getAuth()
 })
-const toCideoList = () => {
+const toCideoList = ({authId}) => {
   console.log(66);
-  router.push({ name: 'VideoList' })  
+  // window.
+  router.push({ name: 'VideoList', query:{authId} })  
 }
 const tableData = ref([])
 const getAuth = () => {

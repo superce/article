@@ -6,6 +6,9 @@ export class video_list {
   id: number
 
   @Column()
+  title: string
+
+  @Column()
   authId: string
 
   @Column('text')

@@ -132,5 +132,9 @@ export const clearLocal = () => {
     })
 }
 export const getToken = (name) => {
-    return getLocal(name).token
+    if(getLocal(name)){
+        return getLocal(name).token
+    }else{
+        return ''
+    }    
 }

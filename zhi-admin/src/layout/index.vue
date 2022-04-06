@@ -30,16 +30,12 @@
         <div class="container"> 
           <router-view v-slot="{ Component }">
             <transition name="fade-transform" mode="out-in">
-              <keep-alive>
-                <div :key="pagePath">
-                  <component :is="Component" v-if="pagePath"/>
-                </div>
+              <keep-alive>                
+                  <component :is="Component" v-if="pagePath"/>                
               </keep-alive>
             </transition>
             <transition name="fade-transform" mode="out-in">
-              <div :key="pagePath">
-                <component :is="Component" v-if="!pagePath"/>
-              </div>
+                <component :is="Component" v-if="!pagePath"/>              
             </transition>
           </router-view>
         </div>

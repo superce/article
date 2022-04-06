@@ -35,22 +35,24 @@ export class DouyinService {
           data:{},
           message: '采集成功'
         }
-        const list = $('ul[class=ARNw21RN] li').length
+        const list = $('.FeJSrpNN').eq(0).find('ul[class=ARNw21RN] li').length // ul[class=ARNw21RN] li').length
         let douyinList = []
         console.log(`----共${list}条视频---`);
         
         for(var i = 0;i < list;i ++){
           try{
             console.log(`第${i}条视频`)
-            const href = $('ul[class=ARNw21RN] li').eq(i).find('a').attr('href')
+            const href = $('.FeJSrpNN').eq(0).find('ul[class=ARNw21RN] li').eq(i).find('a').attr('href')
             console.log(href);
-            
+            if(!href){
+              continue
+            }
             const cover = $('ul[class=ARNw21RN] li').eq(i).find('img').attr('src')
             const cover_url: string = 'https:' + cover
             const like = $('ul[class=ARNw21RN] li').eq(i).find('.jjKJTf4P span').text()
-            const video_url = await this.getVideoItem(href)
-            const time = '0'
-            let param = { authId, cover_url, video_url, like, time }
+            const {video_url, title} = await this.getVideoItem(href)
+            const time = '0'            
+            let param = {title, authId, cover_url, video_url, like, time }
             const infor = this.videoListInfor.create(param)
             await this.videoListInfor.save(infor)
             douyinList.push(param)
@@ -70,7 +72,7 @@ export class DouyinService {
   }
   getVideoItem(url: string){
     const u = 'https:' + url
-    return new Promise<string>(async (resove, reject) =>{
+    return new Promise<any>(async (resove, reject) =>{
       let option = {
         //使用无头模式，默认为有头(true为无界面模式)
         headless: false,
@@ -81,15 +83,28 @@ export class DouyinService {
         }
       }
       try{
-        const browser = await puppeteer.launch(option);
+        const browser = await puppeteer.launch({headless: false});
         const page = await browser.newPage();
         console.log('打开窗口');
-        await page.goto(u, { waitUntil: 'load', timeout: 0 });
-        const link = await page.$eval('#root video source', el => el.getAttribute('src'))
-        console.log(link);
-        console.log('关闭窗口');        
+        await page.goto(u, { waitUntil: 'networkidle0', timeout: 0 });
+        await page.content()
+        const domNode = await page.$('video source:nth-child(1)')
+        console.log('domNode', domNode);
+        let msg = {
+          video_url: '', title: ''
+        }
+        if(domNode){
+          let video_url = await page.evaluate(body => body.getAttribute('src'), domNode)
+          const title = await page.$eval('.z8_VexPf .Nu66P_ba', el => el.textContent)
+          video_url = 'https:'+video_url
+          msg = {
+            video_url, title
+          }
+        }
+        console.log('关闭窗口');    
+        await page.close()    
         await browser.close()
-        resove('https:'+link)
+        resove(msg)
       }catch(e){
         reject(e)        
       }
@@ -114,11 +129,16 @@ export class DouyinService {
     const list = await this.authorInfor.find()
     result.data = list
     throw new HttpException(result, HttpStatus.OK); 
-    // try{
-    // }catch(err){
-    //   console.log('err', err);
-      
-    //   throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    // }
+  }
+  // 视频列表
+  async getVideoList(authId: string){
+    let result = {
+      code: 200,
+      data:[],
+      message: 'ok'
+    }
+    const list = await this.videoListInfor.find({where: {authId}})
+    result.data = list
+    throw new HttpException(result, HttpStatus.OK)
   }
 }

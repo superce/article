@@ -21,7 +21,7 @@ export default defineConfig({
     }
   },
   server:{
-    port: 3100,
+    // port: 3100,
     // proxy: {
     //   // 选项写法
     //   '/api': {
@@ -30,6 +30,5 @@ export default defineConfig({
     //     rewrite: (path) => path.replace(/^\/api/, '')
     //   }
     // },
-    https: true,
   },
 })

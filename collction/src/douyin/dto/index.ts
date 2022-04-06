@@ -4,3 +4,6 @@ export class urlDTO {
 export class authorListDTO{
   auth: string
 }
+export class videoListDTO{
+  authId: string
+}
