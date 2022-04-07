@@ -8,11 +8,12 @@ async function bootstrap() {
   // console.log(app);
   
   app.enableCors({
-    "origin": "*",
+    "origin": ["http://localhost:3000", "https://health-longevity.top"],
     "credentials": true,
-    // "allowedHeaders":['Authorization','content-type'],
+    // "allowedHeaders":['Content-Type', 'Authorization'],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
+    
     "optionsSuccessStatus": 204
   })  
   hbsView(app)

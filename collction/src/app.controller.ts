@@ -17,8 +17,6 @@ export class AppController {
     const article ={
       title: '身材管理'
     }
-    console.log('list---------', list, total);
-    
     return { list, article, total, currentPageIndex }
   }
   @Get('list')

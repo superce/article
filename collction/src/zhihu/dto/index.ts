@@ -10,3 +10,6 @@ export class editCategroyDTO {
     readonly id: number
     readonly categroy_id: number
 }
+export class deleteArticleDTO {
+    readonly id:number
+}

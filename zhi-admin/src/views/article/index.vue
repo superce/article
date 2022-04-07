@@ -15,6 +15,7 @@
     <el-table-column prop="categroy_name" label="操作">
       <template #default="{row}">
         <el-button type="primary" @click="editTag(row)" size="small">修改标签</el-button>
+        <el-button type="danger" @click="onDelete(row)" size="small">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -37,7 +38,7 @@
 </template>
 <script setup>
   import { reactive, ref, onMounted, computed } from 'vue'
-  import { apiGetArticleList, apiEditArticleTag } from '@src/api/list'
+  import { apiGetArticleList, apiEditArticleTag, apiDeleteItem } from '@src/api/list'
   import tip from '@src/utils/Tip'
   const tableData = ref([])
   onMounted(() => {
@@ -54,6 +55,16 @@
     apiGetArticleList().then(res => {
       if(res.code === 200){
         tableData.value = res.data
+      }
+    })
+  }
+  const onDelete = (row) => {
+    apiDeleteItem(row.id).then(res => {
+      if(res.code === 200){
+        ElMessage.success('删除成功')
+        list()
+      }else{
+        ElMessage.error(res.message)
       }
     })
   }

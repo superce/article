@@ -10,7 +10,7 @@ export const instance = axios.create({
     baseURL,
     timeout: 50000
 })
-instance.defaults.headers['Content-Type'] = 'application/json'
+instance.defaults.headers['Content-Type'] = 'application/json; charset=utf-8'
 instance.defaults.headers['accept'] = 'text/plain'
 
 /**

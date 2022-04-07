@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Render, UseGuards, Header } from '@nestjs/common';
 import { ZhihuService, zhihu_listServer } from './zhihu.service'
-import { zhihuDTO, editCategroyDTO } from './dto/index'
+import { zhihuDTO, editCategroyDTO, deleteArticleDTO } from './dto/index'
 import { AuthGuard } from '@nestjs/passport';
 @Controller('/api/home')
 export class ZhihuController {
@@ -8,8 +8,6 @@ export class ZhihuController {
         private ZhihuService:ZhihuService, 
         private zhihu_list: zhihu_listServer,
     ){}
-    // @Header('Access-Control-Allow-Origin', '*')
-    // @Header('Access-Control-Allow-Methods', 'POST, GET, PUT, OPTIONS, DELETE')
     @UseGuards(AuthGuard('jwt'))
     @Post()
     @HttpCode(200)
@@ -20,17 +18,21 @@ export class ZhihuController {
         const result = await this.zhihu_list.list(article_id, articleThumbnail, title, categroy_id) 
         throw new HttpException(result, HttpStatus.OK);
     }
-
+    @UseGuards(AuthGuard('jwt'))
     @Post('/editcategroy')
     async editCategroy(@Body() editCategroy: editCategroyDTO){
         const { id, categroy_id } = editCategroy
-        const result = await this.zhihu_list.edit(id, categroy_id)        
-        throw new HttpException(result, HttpStatus.OK)
+        await this.zhihu_list.edit(id, categroy_id)        
     }
-    @Get('/list')
+    @UseGuards(AuthGuard('jwt'))
+    @Get('list')
     async getList(){
-        const result = await this.zhihu_list.lists()
-        throw new HttpException(result, HttpStatus.OK)
+        await this.zhihu_list.lists()
     }
-
+    @UseGuards(AuthGuard('jwt'))
+    @Get('delete/:id')
+    async deleteListItem(@Param() Param: deleteArticleDTO){
+        const { id } = Param
+        await this.zhihu_list.onDelete(id)        
+    }
 }
