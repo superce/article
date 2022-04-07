@@ -68,7 +68,7 @@
     isCollapse.value = !isCollapse.value
   }
   const toHome = () => {
-    store.commit("meun/SAVE_ACTIVE", '/')
+    // store.commit("meun/SAVE_ACTIVE", '/')
   }
   // 退出登錄
   const onOutLogin = () => {

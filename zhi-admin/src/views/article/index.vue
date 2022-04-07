@@ -1,6 +1,6 @@
 <template>
 <div class="article-list">
-  <el-table :data="tableData" stripe style="width: 100%;overflow-y:scroll" height="calc(100% - 30px)">
+  <el-table :data="tableData" stripe style="width: 100%;overflow-y:scroll" height="calc(100% - 45px)">
     <el-table-column prop="title" label="标题" width="300" />
     <el-table-column prop="thumbnail" label="缩略图" width="100">
       <template #default="{ row }">

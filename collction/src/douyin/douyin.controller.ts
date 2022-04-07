@@ -20,7 +20,7 @@ export class DouyinController {
   }
   @Post('video')
   async getVideo(@Body() param: videoListDTO) {
-    const { authId } = param
-    await this.douyin.getVideoList(authId)    
+    const { authId, pageIndex, pageSize } = param  
+    await this.douyin.getVideoList(authId, pageIndex, pageSize)    
   }
 }

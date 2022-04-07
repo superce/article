@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "default-passive-events": "^2.0.0",
-    "element-plus": "^2.1.7",
+    "element-plus": "^2.1.8",
     "sass": "^1.49.9",
     "unplugin-auto-import": "^0.6.9",
     "unplugin-vue-components": "^0.18.5",

@@ -88,15 +88,14 @@ export class DouyinService {
         console.log('打开窗口');
         await page.goto(u, { waitUntil: 'networkidle0', timeout: 0 });
         await page.content()
-        const domNode = await page.$('video source:nth-child(1)')
-        console.log('domNode', domNode);
+        const domNode = await page.$('video source:nth-child(3)')
         let msg = {
           video_url: '', title: ''
         }
         if(domNode){
           let video_url = await page.evaluate(body => body.getAttribute('src'), domNode)
           const title = await page.$eval('.z8_VexPf .Nu66P_ba', el => el.textContent)
-          video_url = 'https:'+video_url
+          video_url = video_url.replace('//www.douyin.com/','https://aweme.snssdk.com/') //https://aweme.snssdk.com/aweme/v1/play/?video_id=v0200fg10000c96p2q3c77u06sc033rg&line=0&file_id=2ab43362149f484d8af4f00aac88be0f&sign=45a54d85108f7b22014dce376b5ec984&is_play_url=1&source=PackSourceEnum_AWEME_DETAIL&aid=6383
           msg = {
             video_url, title
           }
@@ -131,13 +130,19 @@ export class DouyinService {
     throw new HttpException(result, HttpStatus.OK); 
   }
   // 视频列表
-  async getVideoList(authId: string){
+  async getVideoList(authId: string, pageIndex: number, pageSize:number){
     let result = {
       code: 200,
       data:[],
-      message: 'ok'
+      message: 'ok',
+      count: 0
     }
-    const list = await this.videoListInfor.find({where: {authId}})
+    pageIndex = pageIndex - 1
+    const skip = pageIndex * pageSize
+    const list = await this.videoListInfor.createQueryBuilder("video_list").andWhere({authId}).orderBy({create_date: 'DESC'}).skip(skip).take(pageSize).getMany()
+    const count = await this.videoListInfor.createQueryBuilder("video_list").andWhere({authId}).getCount()
+    console.log(list);
+    result.count = count
     result.data = list
     throw new HttpException(result, HttpStatus.OK)
   }

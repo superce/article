@@ -6,4 +6,6 @@ export class authorListDTO{
 }
 export class videoListDTO{
   authId: string
+  pageIndex: number
+  pageSize: number
 }
