@@ -8,7 +8,7 @@ async function bootstrap() {
   // console.log(app);
   
   app.enableCors({
-    "origin": ["http://localhost:3000", "https://health-longevity.top"],
+    "origin": ["http://localhost:4000", "https://zh.health-longevity.top"],
     "credentials": true,
     // "allowedHeaders":['Content-Type', 'Authorization'],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",

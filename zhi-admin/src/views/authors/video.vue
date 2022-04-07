@@ -64,9 +64,9 @@
   })
   const openVideo = (row) => {
     let video_url = row.video_url
-    if (video_url.includes('/play/?')) {
-        video_url = video_url.replace('/play/?', '/playwm/?')
-    }
+    // if (video_url.includes('/play/?')) {
+    //     video_url = video_url.replace('/play/?', '/playwm/?')
+    // }
     drawerVideo.video_url = video_url
     drawerVideo.title = row.title
     drawerVideo.dialog = true

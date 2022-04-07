@@ -28,11 +28,8 @@ const userInfo = reactive({
 })
 const onLogin = () => {
   apiLogin(userInfo).then(res => {
-    console.log('res', res)
     if(res.code === 200){
-      console.log(res);
       store.commit("login/SAVE_LOGIN_INFOR", res);
-      // setLocal("SAVE_LOGIN_INFOR", res)
       router.replace('/')
     }
   }).catch(err => {

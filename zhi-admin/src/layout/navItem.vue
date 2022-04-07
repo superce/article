@@ -24,9 +24,7 @@
   const userInfor = computed(() =>  getLocal("SAVE_LOGIN_INFOR")) 
   const routerList = () => {
     let list = router.getRoutes()
-    console.log(list);
     let c = list.filter(item => item.name && item.meta.show && item.path !== '/login' && item.name !== '404'); 
-    console.log(c);
     return c
   }
   const menuList = ref(routerList())

@@ -83,7 +83,10 @@ export class DouyinService {
         }
       }
       try{
-        const browser = await puppeteer.launch({headless: false});
+        const browser = await puppeteer.launch({ 
+          headless: false,  
+          ignoreDefaultArgs:['--disable-extensions']
+        });
         const page = await browser.newPage();
         console.log('打开窗口');
         await page.goto(u, { waitUntil: 'networkidle0', timeout: 0 });
