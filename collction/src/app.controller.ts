@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Redirect, Render, Res, Response } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Param, Query, Redirect, Render, Res, Response } from '@nestjs/common';
 import { listParamDTO } from './zhihu/dto';
 import { getZhihuListServer, zhihuDetailServer } from './app.service'
 
@@ -11,15 +11,22 @@ export class AppController {
 
   @Get()
   @Render('index')
-  async viewsRoot(@Param() param: listParamDTO) {
-    const { pageSize, pageIndex } = param
-    const list = await this.getZhihuList.getList(pageSize, pageIndex)
-    console.log(list);
-    
+  async viewsRoot(@Query() param: listParamDTO) {
+    const { pageIndex } = param
+    const { list, total, currentPageIndex } = await this.getZhihuList.getList(pageIndex)    
     const article ={
       title: '身材管理'
     }
-    return { list, article }
+    console.log('list---------', list, total);
+    
+    return { list, article, total, currentPageIndex }
+  }
+  @Get('list')
+  async loadMoreList(@Query() param: listParamDTO) {
+    const { pageIndex } = param
+    const { list, total } = await this.getZhihuList.getList(pageIndex)    
+    const result = { list, total }
+    throw new HttpException(result, HttpStatus.OK)
   }
   @Get('/detail/:id')
   @Render('detail')

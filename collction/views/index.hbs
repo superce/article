@@ -1,11 +1,63 @@
 <div class="main">
     {{#each list}}
     <div class="list-item io">
-        <a href="/detail/{{article_id }}">
-            <h3>{{ title }}</h3>
-            <img class="lazy" src="{{ thumbnail }}" alt="{{ title }}">
+        <a href="/detail/{{ zhihu_list_article_id }}">
+            <h3>{{ zhihu_list_title }}</h3>
+            <img class="lazy" src="{{ zhihu_list_thumbnail }}" alt="{{ zhihu_list_title }}">
         </a>
     </div>
     {{/each}}
 </div>
+<div class="load-more" style="display: none;">
+    <div style="color: #666;display: flex;align-items: center;justify-content: center;padding-bottom: 10px;">
+        <span style="font-size: 14px;">加载中...</span>
+    </div>
+</div>
+<script>
+    var total = {{ total }}
+    var pageIndex = {{currentPageIndex}}
+    var loadMore = false
+    var isAddIndex = Math.ceil(total / 10)
+    if(pageIndex < isAddIndex){
+        pageIndex ++
+        loadMore = true
+    }    
+    $(window).scroll(function(){
+        var scrollTop = $('body, html').scrollTop() //滚动高度
+        var domHeight = $('.main').height() //总高度
+        var oHeight = $(window).scrollTop() //当前滚动条的位置
+        if((scrollTop + oHeight + 200) > domHeight && loadMore){
+            loadMore = false
+            console.log('jiazai')
+            onLoadMore()
+        }
+    })
+    function onLoadMore(){
+        $('.load-more').css('display', 'block')
+        $.ajax({
+            type: 'get',
+            url: '/list',
+            data:{
+                pageIndex:pageIndex
+            },
+            success:function(res){
+                pageIndex ++
+                if(pageIndex < isAddIndex){
+                    loadMore = true
+                }  
+                $('.load-more').css('display', 'none')
+                for(var i = 0;i < res.list.length;i ++){
+                    addHtml(res.list[i])
+                }
+            }
+        })
+    }
+    function addHtml(data){
+        var id = data.zhihu_list_article_id,
+            title = data.zhihu_list_title,
+            thumbnail = data.zhihu_list_thumbnail
+        var oHtml = '<div class="list-item io"><a href="/detail/'+ id +'"><h3>' + title + '</h3><img class="lazy" src="'+ thumbnail +'" alt="'+ title +'"></a></div>'
+        $('.main').append(oHtml)
+    }
+</script>
 

@@ -7,11 +7,18 @@ import { zhihu_article, zhihu_list } from './zhihu/entity/zhihu.entity';
 
 export class getZhihuListServer {
   constructor(@InjectRepository(zhihu_list) private readonly getZhihuList: Repository<any>) { }
-  async getList(pageSize = 10, pageParam = 1) {
-    // let db = await this.getZhihuList.createQueryBuilder('h').skip(pageSize * (pageParam - 1)).take(pageSize).getRawMany()
+  async getList(pageIndex = 1) {
+    let db = await this.getZhihuList.createQueryBuilder().skip(15 * (pageIndex - 1)).take(15).getRawMany()
+    let total = await this.getZhihuList.createQueryBuilder().getCount()
     // console.log(db)
     // return db
-    return await this.getZhihuList.find()
+    const currentPageIndex = pageIndex
+    const lists = {
+      list: db,
+      total,
+      currentPageIndex
+    }
+    return lists//await this.getZhihuList.find()
   }
 }
 
