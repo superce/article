@@ -26,9 +26,10 @@ export class DouyinService {
         const account = $('._1mISMfK2 .nLpBdOIE').text()
         const authId = guid()
         console.log(avatar, fans, likes, account, authId, author);
-        
+        console.log('保存博主')
         const save = this.authorInfor.create({ avatar, fans, likes, author, account, authId, categroy_id })
         let saveAuth = await this.authorInfor.save(save)
+        console.log('保存成功')
         // 采集视频信息
         let status = {
           code: 200,
@@ -82,11 +83,30 @@ export class DouyinService {
           height: 800
         }
       }
+      const optionsLaunch = {
+          headless: false,
+          devtools: false,
+          defaultViewport: {
+              width: 1200,
+              height: 900
+          },
+          slowMo: 250,
+          timeout: 0,
+          // product: "chrome",
+          ignoreHTTPSErrors: true,
+          ignoreDefaultArgs: ["--enable-automation"],
+          // channel: "chrome",
+          // executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+      };
+      // { 
+      //   headless: false,  
+      //   args: ['--use-gl=egl', '--no-sandbox']
+      // }
       try{
         const browser = await puppeteer.launch({ 
-          headless: false,  
-          ignoreDefaultArgs:['--disable-extensions']
-        });
+            headless: false,  
+            args: ['--use-gl=egl', '--no-sandbox']
+          });
         const page = await browser.newPage();
         console.log('打开窗口');
         await page.goto(u, { waitUntil: 'networkidle0', timeout: 0 });
