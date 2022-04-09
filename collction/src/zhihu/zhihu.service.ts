@@ -46,13 +46,13 @@ export class ZhihuService {
             // console.log('存储七牛成功');
             
             const qnImgUrl = `/fileimg/${a.name}`
-            $('figure').eq(i).find('img').attr('data-actualsrc', "")
-            $('figure').eq(i).find('img').attr('src', qnImgUrl)
-            $('figure').eq(i).find('img').attr('data-src', qnImgUrl)
+            $('figure').eq(i).find('img').removeAttr('data-actualsrc')
+            $('figure').eq(i).find('img').removeAttr('src')
+            $('figure').eq(i).find('img').removeAttr('data-src')
             $('figure').eq(i).find('img').addClass('lazy')
-            $('figure').eq(i).find('img').attr("data-default-watermark-src", "")
-            $('figure').eq(i).find('img').attr("data-original", "")
-            $('figure').eq(i).find('img').attr("data-actualsrc", "")
+            $('figure').eq(i).find('img').removeAttr("data-default-watermark-src")
+            $('figure').eq(i).find('img').attr("data-original", qnImgUrl)
+            $('figure').eq(i).find('img').removeAttr("data-actualsrc")
             if (figureLength > 1) {
                 if (i === 1) {
                     articleThumbnail = qnImgUrl
@@ -82,7 +82,10 @@ export class ZhihuService {
 }
 
 export class zhihu_listServer {
-    constructor(@InjectRepository(zhihu_list) private readonly zhihuList: Repository<zhihu_list>) { }
+    constructor(
+        @InjectRepository(zhihu_list) private readonly zhihuList: Repository<zhihu_list>,
+        @InjectRepository(zhihu_article) private readonly zhihuArticle: Repository<zhihu_list>        
+    ) { }
     async list(article_id: string, thumbnail: string, title: string, categroy_id: number) {
         const categroy_name = categroy(categroy_id)
         const newinsert = await this.zhihuList.create({ title, thumbnail, article_id, categroy_id, categroy_name })
@@ -147,10 +150,15 @@ export class zhihu_listServer {
         try{
             let articleRemove = await this.zhihuList.findOne({where:{id}});
             if(articleRemove){
-                const {id} = await this.zhihuList.remove(articleRemove);
-                if(id){
-                    result.code = 400
-                    result.message = '删除失败'
+                const { article_id } = articleRemove
+                const article = await this.zhihuArticle.findOne({where: {article_id}})
+                if(article){
+                    const {id} = await this.zhihuList.remove(articleRemove);
+                    await this.zhihuArticle.remove(article)
+                    if(id){
+                        result.code = 400
+                        result.message = '删除失败'
+                    }
                 }
             }else{
                 result.code = 400

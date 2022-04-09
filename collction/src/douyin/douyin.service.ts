@@ -110,6 +110,10 @@ export class DouyinService {
         const page = await browser.newPage();
         console.log('打开窗口');
         await page.goto(u, { waitUntil: 'networkidle0', timeout: 0 });
+        // await page.evaluate(() => {
+        //   localStorage.setItem('xmstr', "{ 'sTm': 1649480464465, 'acc': 1276 }");
+        // });
+        await page.goto(u, { waitUntil: 'networkidle0', timeout: 0 });
         await page.content()
         const domNode = await page.$('video source:nth-child(3)')
         let msg = {

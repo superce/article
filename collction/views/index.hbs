@@ -3,7 +3,7 @@
     <div class="list-item io">
         <a href="/detail/{{ zhihu_list_article_id }}">
             <h3>{{ zhihu_list_title }}</h3>
-            <img class="lazy" src="{{ zhihu_list_thumbnail }}" alt="{{ zhihu_list_title }}">
+            <img class="lazy" data-original="{{ zhihu_list_thumbnail }}">
         </a>
     </div>
     {{/each}}
@@ -17,7 +17,7 @@
     var total = {{ total }}
     var pageIndex = {{currentPageIndex}}
     var loadMore = false
-    var isAddIndex = Math.ceil(total / 10)
+    var isAddIndex = Math.ceil(total / 15)
     if(pageIndex < isAddIndex){
         pageIndex ++
         loadMore = true
@@ -49,14 +49,20 @@
                 for(var i = 0;i < res.list.length;i ++){
                     addHtml(res.list[i])
                 }
+                lazyImg()
             }
         })
+    }
+    function lazyImg(){
+        $(function () {
+            $("img.lazy").lazyload({ effect: "fadeIn" });
+        });
     }
     function addHtml(data){
         var id = data.zhihu_list_article_id,
             title = data.zhihu_list_title,
             thumbnail = data.zhihu_list_thumbnail
-        var oHtml = '<div class="list-item io"><a href="/detail/'+ id +'"><h3>' + title + '</h3><img class="lazy" src="'+ thumbnail +'" alt="'+ title +'"></a></div>'
+        var oHtml = '<div class="list-item io"><a href="/detail/'+ id +'"><h3>' + title + '</h3><img class="lazy" data-original="'+ thumbnail +'" alt="'+ title +'"></a></div>'
         $('.main').append(oHtml)
     }
 </script>
