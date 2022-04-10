@@ -1,7 +1,7 @@
 <template>
   <el-menu router :default-active="defaultActive" :collapse="isCollapse" class="el-menu-vertical-demo">
       <el-menu-item index="/instantchat" class="header-title">
-        <el-avatar :src="icon" fit="none"></el-avatar>
+        <el-avatar :src="icon" fit="cover"></el-avatar>
         <template #title>
           助手
         </template>

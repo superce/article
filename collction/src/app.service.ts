@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { zhihu_article, zhihu_list } from './zhihu/entity/zhihu.entity';
+import { zhihu_article, zhihu_list } from './entity/zhihu.entity';
 
 @Injectable()
 

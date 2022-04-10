@@ -1,5 +1,5 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Query, Redirect, Render, Res, Response } from '@nestjs/common';
-import { listParamDTO } from './zhihu/dto';
+import { listParamDTO } from './DTO/index';
 import { getZhihuListServer, zhihuDetailServer } from './app.service'
 
 @Controller()

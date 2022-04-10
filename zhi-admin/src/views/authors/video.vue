@@ -1,6 +1,6 @@
 <template>
   <div class="video-list">
-    <el-table :data="videoList.list" style="width: 100%;overflow-y:scroll" height="calc(100% - 45px)">
+    <el-table v-loading="videoList.loading" :data="videoList.list" style="width: 100%;overflow-y:scroll" height="calc(100% - 45px)">
       <el-table-column prop="缩略图" label="Date" width="180" >
         <template #default="{row}">
           <el-image @click="openVideo(row)" style="width: 100px; height: 100px" :src="row.cover_url" fit="cover" />
@@ -11,7 +11,7 @@
       <el-table-column prop="time" label="视频时长" />
     </el-table>
     <!-- 分页 -->
-    <page-nations :total="videoList.total" @currenChage="onCurrentChange"></page-nations>
+    <page-nations :total="videoList.total" :page-size="videoList.param.pageSize" @currenChage="onCurrentChange"></page-nations>
     <!-- 视频 -->
     <el-drawer v-model="drawerVideo.dialog" :title="drawerVideo.title" append-to-body @closed="closedDrawer" size="450px">
       <div>
@@ -31,6 +31,7 @@
   const videoList = reactive({
     list: [],
     total: 0,
+    loading: false,
     param:{
       authId:route.query.authId,
       pageIndex: 1,
@@ -41,11 +42,14 @@
     list()
   })
   const list = () => {
+    videoList.loading = true
     apiVideoList(videoList.param).then(res => {
       if(res.code === 200){
         videoList.list = res.data
         videoList.total = res.count
       }
+    }).catch(err => {}).finally(() => {
+      videoList.loading = false
     })
   }
   // 分页跳转

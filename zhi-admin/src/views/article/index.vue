@@ -1,6 +1,6 @@
 <template>
 <div class="article-list">
-  <el-table :data="tableData" stripe style="width: 100%;overflow-y:scroll" height="calc(100% - 45px)">
+  <el-table v-loading="loading" :data="tableData" stripe style="width: 100%;overflow-y:scroll" height="calc(100% - 45px)">
     <el-table-column prop="title" label="标题" width="300" />
     <el-table-column prop="thumbnail" label="缩略图" width="100">
       <template #default="{ row }">
@@ -19,6 +19,8 @@
       </template>
     </el-table-column>
   </el-table>
+  <!-- 分页 -->
+  <!-- <pagi-nation :total="" :page-size="" @currenChage="onCurrentChange"></pagi-nation> -->
   <el-dialog
     v-model="edit.dialog" :title="edit.title" width="400px">
     <el-select v-model="edit.categroy_id" placeholder="分类">
@@ -39,8 +41,10 @@
 <script setup>
   import { reactive, ref, onMounted, computed } from 'vue'
   import { apiGetArticleList, apiEditArticleTag, apiDeleteItem } from '@src/api/list'
+  // import pagiNation from '@src/components/pagination.vue'
   import tip from '@src/utils/Tip'
   const tableData = ref([])
+  const loading = ref(false)
   onMounted(() => {
     list()
   })
@@ -52,11 +56,12 @@
     return baseURL
   })
   function list(){
+    loading.value = true
     apiGetArticleList().then(res => {
       if(res.code === 200){
         tableData.value = res.data
       }
-    })
+    }).catch(err => {}).finally(() => {loading.value = false})
   }
   const onDelete = (row) => {
     apiDeleteItem(row.id).then(res => {

@@ -2,9 +2,9 @@
 import axios from 'axios'
 import { getToken } from '@src/utils/storage'
 import router from '@src/router/index'
-let baseURL = 'https://www.health-longevity.top'
+let baseURL = 'https://api.health-longevity.top'
 if (import.meta.env.DEV){
-    baseURL = 'http://localhost:3001'
+    baseURL = 'http://localhost:3002'
 }
 export const instance = axios.create({
     baseURL,

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-table :data="tableData" stripe style="width: 100%;overflow-y:scroll" height="calc(100% - 45px)">
+    <el-table v-loading="loading" :data="tableData" stripe style="width: 100%;overflow-y:scroll" height="calc(100% - 45px)">
       <el-table-column prop="avatar" label="头像" width="180" />
       <el-table-column prop="author" label="博主" width="180" >
         <template #default="{ row }">
-          <span style="color:#409eff" @click="toCideoList(row)">{{ row.author }}</span>
+          <span style="color:#409eff;cursor:pointer" @click="toCideoList(row)">{{ row.author }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="categroy_id" label="分类" width="180" />
@@ -29,13 +29,15 @@ const toCideoList = ({authId}) => {
   router.push({ name: 'VideoList', query:{authId} })  
 }
 const tableData = ref([])
+const loading = ref(false)
 const getAuth = () => {
+  loading.value = true
   apiAuthList().then(res => {
     console.log(res);
     if(res.code ===200){
       tableData.value = res.data
     }
-  })
+  }).catch(err => {}).finally(() =>{loading.value = false})
 }
 </script>
 

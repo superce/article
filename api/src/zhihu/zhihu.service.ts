@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios from 'axios'
 import { downloadImg, crop } from '../utils/download'
 import { uploadQiniu } from '../utils/uploadQiniu'
-const cheerio = require('cheerio')
+import * as cheerio from 'cheerio';
 import { Repository, Entity } from 'typeorm';
 import  { InjectRepository } from '@nestjs/typeorm'
 import { zhihu_article, zhihu_list } from './entity/zhihu.entity';
@@ -42,10 +42,13 @@ export class ZhihuService {
             // const a:{name:string,path:string} = await downloadImg(imgurl)
             const a: { name: string, path: string } = await crop(imgurl)
             console.log(a)
-            // await uploadQiniu(a)
-            // console.log('存储七牛成功');
-            
-            const qnImgUrl = `/fileimg/${a.name}`
+            const {data} = await uploadQiniu(a)
+            console.log('存储七牛成功', data);
+            let ossUrl = 'http://img.health-longevity.top'
+            if(process.env.NODE_ENV === 'development'){
+                ossUrl = 'http://r8q5v9tvi.hb-bkt.clouddn.com';
+            }
+            const qnImgUrl = `${ossUrl}/${data.key}`
             $('figure').eq(i).find('img').removeAttr('data-actualsrc')
             $('figure').eq(i).find('img').removeAttr('src')
             $('figure').eq(i).find('img').removeAttr('data-src')

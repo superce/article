@@ -3,8 +3,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
-import { getZhihuListServer, zhihuDetailServer } from './app.service';
-import { zhihu_article, zhihu_list } from './entity/zhihu.entity'
+import { ZhihuModule } from './zhihu/zhihu.module';
+import { UserModule } from './user/user.module';
+import { zhihu_article, zhihu_list } from './zhihu/entity/zhihu.entity'
+import { DouyinModule } from './douyin/douyin.module';
 import connectMysql from './connectMysql';
 
 console.log(connectMysql)
@@ -13,9 +15,12 @@ console.log(connectMysql)
   imports: [
     TypeOrmModule.forRoot(connectMysql),
     ConfigModule.forRoot(),
+    ZhihuModule,
+    UserModule,
     TypeOrmModule.forFeature([zhihu_list, zhihu_article]),
+    DouyinModule
   ],
   controllers: [AppController],
-  providers: [getZhihuListServer, zhihuDetailServer],
+  providers: [],
 })
 export class AppModule {}

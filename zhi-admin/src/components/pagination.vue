@@ -1,6 +1,6 @@
 <template>
     <div class="pagination" style="padding: 10px 0">
-        <el-pagination background layout="prev, pager, next" :total="total" @current-change="onCurrentChange"/>
+        <el-pagination background layout="total, prev, pager, next" :total="total" :page-size="pageSize" @current-change="onCurrentChange"/>
     </div>
 </template>
 <script setup>
@@ -9,6 +9,10 @@
         total: {
             type: Number,
             default: 0
+        },
+        pageSize: {
+            type: Number,
+            default: 20
         }
     })
     const emits = defineEmits(['currenChage'])
