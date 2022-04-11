@@ -47,9 +47,9 @@ function uploadFile(uptoken, key, localFile) {
 export const uploadQiniu = async (info:{name: string, path: string} ) => {
     //要上传的空间
     let bucket = 'health-img-save'; 
-    // if(process.env.NODE_ENV === 'development'){
-    //     bucket = 'zhihu-img-save';
-    // }   
+    if(process.env.NODE_ENV === 'development'){
+        bucket = 'zhihu-img-save';
+    }   
     console.log('存储的空间',bucket);    
     //上传到七牛后保存的文件名
     const key =info.name;
