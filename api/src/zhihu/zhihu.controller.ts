@@ -10,7 +10,6 @@ export class ZhihuController {
     ){}
     @UseGuards(AuthGuard('jwt'))
     @Post()
-    @HttpCode(200)
     async postGetZhihu(@Body() zhihuDTO: zhihuDTO){
         const { url } = zhihuDTO            
         if(!url) throw new HttpException("url不能为空", HttpStatus.OK)        

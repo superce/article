@@ -45,9 +45,9 @@ export class ZhihuService {
             const {data} = await uploadQiniu(a)
             console.log('存储七牛成功', data);
             let ossUrl = 'http://img.health-longevity.top'
-            if(process.env.NODE_ENV === 'development'){
-                ossUrl = 'http://r8q5v9tvi.hb-bkt.clouddn.com';
-            }
+            // if(process.env.NODE_ENV === 'development'){
+            //     ossUrl = 'http://r8q5v9tvi.hb-bkt.clouddn.com';
+            // }
             const qnImgUrl = `${ossUrl}/${data.key}`
             $('figure').eq(i).find('img').removeAttr('data-actualsrc')
             $('figure').eq(i).find('img').removeAttr('src')

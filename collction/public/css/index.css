@@ -30,6 +30,14 @@ a{text-decoration: none;display: block;}
 .main-detail .detail > span{font-size: 0.32rem;color:#B6B9C0;display: block;margin: 0.36rem 0}
 .main-detail .page{box-shadow: 0 0 8px 5px #ddd;border-radius: 0.2rem;margin-bottom: 0.2rem;padding: 0.3rem;}
 .main-detail .page p, .main-detail .page li{ font-size: 0.36rem; line-height: 0.6rem;color:#333;margin-bottom: 0.5rem;word-break: break-word;}
+.main-detail .page h1,
+.main-detail .page h2,
+.main-detail .page h3,
+.main-detail .page h4{
+    font-size: 20px;
+    margin-bottom: 4px;
+    color: #333;
+}
 .main-detail .page h2{font-size: 0.4rem;color:#333;font-weight: 800;margin-bottom: 0.5rem;padding-top: 0.5rem;}
 .main-detail .page img{width:100%;border-radius: 0.2rem 0.2rem 0 0;}
 .main-detail .text{padding: 0 0.2rem;}

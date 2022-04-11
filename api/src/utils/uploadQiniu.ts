@@ -54,7 +54,7 @@ export const uploadQiniu = async (info:{name: string, path: string} ) => {
     //上传到七牛后保存的文件名
     const key =info.name;
     //要上传文件的本地路径
-    const filePath = info.path + '\\' + key
+    const filePath = info.path + '/' + key
     // console.log('qiniu', qiniu);
     
     //生成上传 Token
