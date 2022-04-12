@@ -4,7 +4,7 @@
     <el-table-column prop="title" label="标题" width="300" />
     <el-table-column prop="thumbnail" label="缩略图" width="100">
       <template #default="{ row }">
-        <img :src="href+row.thumbnail" alt="">
+        <img :src="isHasHttps(row.thumbnail)" alt="">
       </template>
     </el-table-column>
     <el-table-column prop="categroy_name" label="分类名称">
@@ -55,6 +55,9 @@
     }
     return baseURL
   })
+  const isHasHttps = (htps) =>{
+    return htps.includes('https') ? htps : href.value + htps
+  }
   function list(){
     loading.value = true
     apiGetArticleList().then(res => {

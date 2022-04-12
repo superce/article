@@ -44,7 +44,7 @@ export class ZhihuService {
             console.log(a)
             const {data} = await uploadQiniu(a)
             console.log('存储七牛成功', data);
-            let ossUrl = 'http://img.health-longevity.top'
+            let ossUrl = 'https://img.health-longevity.top'
             if(process.env.NODE_ENV === 'development'){
                 ossUrl = 'http://r8q5v9tvi.hb-bkt.clouddn.com';
             }
