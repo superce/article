@@ -28,12 +28,16 @@ export function hbsView(app: { useStaticAssets: (arg0: string) => void; setBaseV
     hbs.registerHelper('block', (name: string | number, context: any) => {
         if (context.hash.article.id){
             const { title, article_id, thumbnail } = context.hash.article
+            let url = ''
+            if (thumbnail.includes('fileimg')){
+                url = 'https://health-longevity.top'
+            }
             return new hbs.SafeString(
                 `<meta property="og:type" content="article">
             <meta id="og-title" property="og:title" content="${title}">
             <meta id="og-url" property="og:url" content="https://health-longevity.top/detail/${article_id}">
-            <meta id="og-image" property="og:image" content="https://health-longevity.top${thumbnail}">
-            <meta id="t-imgage" name="twitter:image" content="https://health-longevity.top${thumbnail}">`
+            <meta id="og-image" property="og:image" content="${url}${thumbnail}">
+            <meta id="t-imgage" name="twitter:image" content="${url}${thumbnail}">`
             )
         }
     })
