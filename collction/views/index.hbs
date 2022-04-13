@@ -42,7 +42,7 @@
             },
             success:function(res){
                 pageIndex ++
-                if(pageIndex < isAddIndex){
+                if(pageIndex <= isAddIndex){
                     loadMore = true
                 }  
                 $('.load-more').css('display', 'none')
