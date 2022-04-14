@@ -16,3 +16,15 @@ export class user {
   date: Date
   
 }
+
+@Entity()
+export class meun {
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @Column()
+    name: string
+
+    @CreateDateColumn()
+    date: Date
+}

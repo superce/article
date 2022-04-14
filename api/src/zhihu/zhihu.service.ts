@@ -13,7 +13,7 @@ import { categroy } from '../utils/categroy'
 
 export class ZhihuService {
     constructor(@InjectRepository(zhihu_article) private readonly zhihuRepos: Repository<zhihu_article>){}
-    async collection(param:{url: string, categroy_id: number} ){
+    async collection(param:{url: string, categroy_id: number, meun_id: number} ){
         const { url, categroy_id } = param //`https://www.zhihu.com/${param}`
         const { data } = await axios.get(url)
         const $ = cheerio.load(data) 
@@ -127,7 +127,7 @@ export class zhihu_listServer {
                 result.data = await this.zhihuList.save(item)
                 console.log(result);
             }
-        }catch{
+        }catch(err){
             result = {
                 code:400,
                 data:{},

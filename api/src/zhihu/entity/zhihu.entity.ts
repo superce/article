@@ -4,6 +4,9 @@ export class zhihu_article{
     @PrimaryGeneratedColumn()
     id: number
 
+    @Column('number')
+    meun_id: number
+
     @Column()
     article_id: string
 
@@ -23,6 +26,9 @@ export class zhihu_article{
 export class zhihu_list {
     @PrimaryGeneratedColumn()
     id: number
+
+    @Column('number')
+    meun_id: number
 
     @Column()
     article_id: string
