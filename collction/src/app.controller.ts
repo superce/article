@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Query, Redirect, Render, Res, Response } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Param, Post, Query, Redirect, Render, Res, Response } from '@nestjs/common';
 import { listParamDTO } from './DTO/index';
 import { getZhihuListServer, zhihuDetailServer } from './app.service'
 
@@ -42,4 +42,5 @@ export class AppController {
     const article = await this.getZhihuDetail.detail(id)
     return { article }
   }
+  
 }

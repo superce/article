@@ -1,6 +1,7 @@
 export class zhihuDTO {
     readonly url: string
     readonly categroy_id: number
+    readonly meun_id: number
 }
 export class listParamDTO {
     readonly pageSize: number

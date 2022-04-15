@@ -1,6 +1,6 @@
 import { Body, ClassSerializerInterceptor, Controller, Header, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { userDTO } from './dto';
+import { userDTO, meunDTO } from './dto';
 import { UserService, RegisterService } from './user.service'
 // @ApiTags('验证')
 @Controller('api/user')
@@ -24,6 +24,14 @@ export class UserController {
   @Post('/register')
   async register(@Body() user: userDTO){
     return await this.registerService.register(user)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  // 创建菜单
+  @Post('/create/meun')  
+  async onCreateMeun(@Body() name: meunDTO) {
+    console.log('name', name);
+    return await this.userService.onCreateMeun(name)
   }
 }
 

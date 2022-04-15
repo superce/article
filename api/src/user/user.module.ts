@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService, RegisterService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { user } from './entity/user.entity';
+import { user, meun } from './entity/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStorage } from './strategy/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
@@ -11,7 +11,7 @@ import { JwtStrategy } from './jwt.strategy'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([user]), 
+    TypeOrmModule.forFeature([user,meun]), 
     PassportModule, 
     JwtModule.register({
       secret: jwtContants.secret
