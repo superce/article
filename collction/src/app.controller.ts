@@ -19,13 +19,23 @@ export class AppController {
     }
     return { list, article, total, currentPageIndex }
   }
-  @Get('list')
+  @Get('home')
   async loadMoreList(@Query() param: listParamDTO) {
     const { pageIndex } = param
     const { list, total } = await this.getZhihuList.getList(pageIndex)    
     const result = { list, total }
     throw new HttpException(result, HttpStatus.OK)
   }
+
+  @Get('list/:id')
+  @Render('list')
+  async viewsList(@Param('id') id:string){
+    console.log(id)
+    return {
+      meun: 'fsa'
+    }
+  }
+
   @Get('/detail/:id')
   @Render('detail')
   async viewsDetail(@Param('id') id: string) {
