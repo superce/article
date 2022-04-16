@@ -38,8 +38,28 @@ export class UserService {
       code: 200
     }
     try{
-      const meun = this.meunReq.create(name)
-      info.data = await this.meunReq.save(meun)
+      const findMeun = await this.meunReq.findOne({where:{name: name.name}})
+      if(findMeun){
+        info.message = '菜单名不能重复'
+        info.code = 400
+      }else{
+        const meun = this.meunReq.create(name)
+        info.data = await this.meunReq.save(meun)
+      }
+    }catch(err){
+      info.message = err
+      info.code = 400
+    }
+    throw new HttpException(info, HttpStatus.OK)
+  }
+  async onGetMeunList(){
+    let info = {
+      data:[],
+      message: 'ok',
+      code: 200
+    }
+    try{
+      info.data = await this.meunReq.find()
     }catch(err){
       info.message = err
       info.code = 400

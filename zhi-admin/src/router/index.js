@@ -65,6 +65,23 @@ const routes = [
         component: () => import('@src/views/authors/video.vue')
       }
     ]
+  },
+  {
+    path: '/meun',
+    component: layout,
+    children: [
+      {
+        path: '',
+        name: 'Meun',
+        meta: {
+          title: "菜单管理",
+          icon: 'el-icon-files',
+          show: true,
+          index: 3,
+        },
+        component: () => import('@src/views/meun/index.vue')
+      }
+    ]
   }
 ]
 export default createRouter({

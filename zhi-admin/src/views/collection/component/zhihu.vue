@@ -6,11 +6,8 @@
         <el-input v-model="formInline.url" placeholder="url" @keyup.capture.enter="doCollection"/>
       </el-form-item>
       <el-form-item label="分类">
-        <el-select v-model="formInline.categroy_id" placeholder="分类">
-          <el-option label="全部" :value="0" />
-          <el-option label="美女" :value="1" />
-          <el-option label="美腿" :value="2" />
-          <el-option label="身材" :value="3" />
+        <el-select v-model="formInline.categroy_id" placeholder="分类">          
+          <el-option v-for="item in list" :key="item.name" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -21,10 +18,23 @@
 </template>
 <script setup>
   import { apiGetZhihu } from '@src/api/collection'
-  import {reactive, ref} from 'vue'
+  import {computed, reactive, ref} from 'vue'
+  const props = defineProps({
+    list:{
+      type: Array,
+      defalut: []
+    }
+  })
+  const defaultMeunId = computed(() => {
+    if(props.list.length > 0){
+      return list[0].id
+    }else{
+      return ""
+    }
+  })
   const formInline = reactive({
     url: '',
-    categroy_id: 0
+    categroy_id: defaultMeunId.value
   })
   const form = ref(null)
   const rules = reactive({
