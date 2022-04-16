@@ -4,7 +4,7 @@ export class zhihu_article{
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column('number')
+    @Column()
     meun_id: number
 
     @Column()
@@ -27,7 +27,7 @@ export class zhihu_list {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column('number')
+    @Column()
     meun_id: number
 
     @Column()

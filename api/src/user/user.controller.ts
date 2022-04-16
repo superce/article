@@ -1,4 +1,4 @@
-import { Body, ClassSerializerInterceptor, Controller, Header, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, Header, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { userDTO, meunDTO } from './dto';
 import { UserService, RegisterService } from './user.service'
@@ -33,5 +33,11 @@ export class UserController {
     console.log('name', name);
     return await this.userService.onCreateMeun(name)
   }
+   // 创建列表
+   @Get('/meun/list')  
+   async onListMeun() {
+    //  console.log('name', name);
+     return await this.userService.onGetMeunList()
+   }
 }
 
