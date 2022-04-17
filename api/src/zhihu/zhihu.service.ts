@@ -5,23 +5,21 @@ import { uploadQiniu } from '../utils/uploadQiniu'
 import * as cheerio from 'cheerio';
 import { Repository, Entity } from 'typeorm';
 import  { InjectRepository } from '@nestjs/typeorm'
-import { zhihu_article, zhihu_list } from './entity/zhihu.entity';
+import { article, list } from './entity/zhihu.entity';
 import { guid } from '../utils/GUID'
 import { translate } from 'src/utils/opencc';
 import { categroy } from '../utils/categroy'
 @Injectable()
 
 export class ZhihuService {
-    constructor(@InjectRepository(zhihu_article) private readonly zhihuRepos: Repository<zhihu_article>){}
-    async collection(param:{url: string, categroy_id: number, meun_id: number} ){
-        const { url, categroy_id } = param //`https://www.zhihu.com/${param}`
+    constructor(@InjectRepository(article) private readonly zhihuRepos: Repository<article>){}
+    async collection(param:{url: string, meun_id: number} ){
+        const { url, meun_id } = param //`https://www.zhihu.com/${param}`
         const { data } = await axios.get(url)
         const $ = cheerio.load(data) 
         let openccTitle = $('.QuestionHeader-title').text()
         const title = await translate(openccTitle)
-        console.log('title------', title, openccTitle)
         const figureLength =  $('figure').length  
-        console.log('figureLength', figureLength);
               
         let articleThumbnail: string = ''
         for(var i = 0;i < figureLength;i++){
@@ -41,9 +39,7 @@ export class ZhihuService {
             
             // const a:{name:string,path:string} = await downloadImg(imgurl)
             const a: { name: string, path: string } = await crop(imgurl)
-            console.log(a)
             const {data} = await uploadQiniu(a)
-            console.log('存储七牛成功', data);
             let ossUrl = 'https://img.health-longevity.top'
             if(process.env.NODE_ENV === 'development'){
                 ossUrl = 'http://r8q5v9tvi.hb-bkt.clouddn.com';
@@ -65,19 +61,27 @@ export class ZhihuService {
             }
         }
         let html = $('.RichContent-inner').eq(0).find('.RichText').html()
+        let text = $('.RichContent-inner').eq(0).find('.RichText').text()
         html = await translate(html)
-        const success = await this.saveZhi(title, html, articleThumbnail)    
+        const article_id = guid()
+        let introduction:string = ''
+        if (text.length > 48){
+            introduction = text.substring(0, 48)
+        }else{
+            introduction = text
+        }
+        const success = await this.saveZhi(title, html, article_id, articleThumbnail)    
         let result = {
             title,
-            article_id: success.article_id,
             articleThumbnail,
-            categroy_id
+            meun_id,
+            article_id,
+            introduction
         }
         return result
     }
-    async saveZhi(title: string, content: string, thumbnail: string){
-        const article_id = guid()
-        const newinsert = await this.zhihuRepos.create({ title, content, article_id, thumbnail })
+    async saveZhi(title: string, content: string, article_id: string, thumbnail: string){
+        const newinsert = this.zhihuRepos.create({ title, content, article_id, thumbnail })
         const zhi = await this.zhihuRepos.save(newinsert)    
         return zhi
     }
@@ -86,12 +90,12 @@ export class ZhihuService {
 
 export class zhihu_listServer {
     constructor(
-        @InjectRepository(zhihu_list) private readonly zhihuList: Repository<zhihu_list>,
-        @InjectRepository(zhihu_article) private readonly zhihuArticle: Repository<zhihu_list>        
+        @InjectRepository(list) private readonly zhihuList: Repository<list>,
+        @InjectRepository(article) private readonly zhihuArticle: Repository<article>        
     ) { }
-    async list(article_id: string, thumbnail: string, title: string, categroy_id: number) {
-        const categroy_name = categroy(categroy_id)
-        const newinsert = await this.zhihuList.create({ title, thumbnail, article_id, categroy_id, categroy_name })
+    async list(thumbnail: string, title: string, meun_id: number, article_id: string, introduction: string) {
+        // const categroy_name = categroy(categroy_id)
+        const newinsert = this.zhihuList.create({ title, introduction, thumbnail, meun_id, article_id })
         const list = await this.zhihuList.save(newinsert)
         let code = 400
         let message = '采集失败'
@@ -106,7 +110,7 @@ export class zhihu_listServer {
         }
         return retsult
     }
-    async edit(id: number, categroy_id: number){
+    async edit(id: number, meun_id: number){
         let result = {
             code:200,
             data:{},
@@ -121,9 +125,7 @@ export class zhihu_listServer {
                     message: '没有此条数据'
                 }
             }else{
-                const categroy_name = categroy(categroy_id)
-                item.categroy_id = categroy_id
-                item.categroy_name = categroy_name
+                item.meun_id = meun_id
                 result.data = await this.zhihuList.save(item)
                 console.log(result);
             }

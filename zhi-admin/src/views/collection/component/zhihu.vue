@@ -6,7 +6,7 @@
         <el-input v-model="formInline.url" placeholder="url" @keyup.capture.enter="doCollection"/>
       </el-form-item>
       <el-form-item label="分类">
-        <el-select v-model="formInline.categroy_id" placeholder="分类">          
+        <el-select v-model="formInline.meun_id" placeholder="分类">          
           <el-option v-for="item in list" :key="item.name" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
@@ -34,7 +34,7 @@
   })
   const formInline = reactive({
     url: '',
-    categroy_id: defaultMeunId.value
+    meun_id: defaultMeunId.value
   })
   const form = ref(null)
   const rules = reactive({

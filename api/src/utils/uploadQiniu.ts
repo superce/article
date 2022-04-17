@@ -11,7 +11,6 @@ function uptoken(bucket: string, key: string) {
     console.log('uptoken');
     
     var putPolicy = new qiniu.rs.PutPolicy({scope: bucket+":"+key});
-    console.log(putPolicy);
     
     return putPolicy.uploadToken(mac);
   }
@@ -25,21 +24,17 @@ function uploadFile(uptoken, key, localFile) {
         const extra = new qiniu.form_up.PutExtra();
         const config = new qiniu.conf.Config();
         const formUploader = new qiniu.form_up.FormUploader(config);
-        console.log('formUploader', formUploader);
         
         formUploader.putFile(uptoken, key, localFile, extra, (err: any, body:any, res:any) => {
-            console.log(uptoken, key, localFile);
-            console.log('err------', err, 'res---', res);
-            
+            console.log(uptoken, key, localFile);            
             if(err) {
                 reject(err)
                 throw err
             }
             if(res.statusCode === 200){
-                console.log(body);
                 resolve(res)
             }else{
-                console.log(res.statusCode);
+                
             }
         })
     })
@@ -50,12 +45,10 @@ export const uploadQiniu = async (info:{name: string, path: string} ) => {
     if(process.env.NODE_ENV === 'development'){
         bucket = 'zhihu-img-save';
     }   
-    console.log('存储的空间',bucket);    
     //上传到七牛后保存的文件名
     const key =info.name;
     //要上传文件的本地路径
     const filePath = info.path + '/' + key
-    // console.log('qiniu', qiniu);
     
     //生成上传 Token
     const token = uptoken(bucket, key);

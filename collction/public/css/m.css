@@ -39,13 +39,13 @@
 .pagelist > b { padding: 0; border: 0; }
 }
 @media only screen and (max-width: 479px) {
-#mnav, article { width: 96%; overflow: hidden }
+#mnav, article { width: 96%; overflow: auto }
 #mnavh { display: block; }
 #starlist { display: none; width: 100%; }
 #starlist li { float: none; display: block; padding: 0 0 0 0; width: 100%; text-align: center }
 #starlist li { padding: 0 0 0 20px; }
 .hometitle span { display: none }
-.tuijian li { width: 45%; padding: 6px }
+.tuijian li { width: 49%; padding: 6px 0.5%}
 .pics ul li { width: 100%; }
 .pics ul li:nth-child(2) { margin: 10px 0 }
 .rightbox { display: none }

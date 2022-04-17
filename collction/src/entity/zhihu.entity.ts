@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, PrimaryColumn } from 'typeorm'
 @Entity()
-export class zhihu_article{
+export class article {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -15,14 +15,17 @@ export class zhihu_article{
 
     @Column()
     thumbnail: string
-    
+
     @CreateDateColumn()
     date: Date
 }
 @Entity()
-export class zhihu_list {
+export class list {
     @PrimaryGeneratedColumn()
     id: number
+
+    @Column()
+    meun_id: number
 
     @Column()
     article_id: string
@@ -31,11 +34,21 @@ export class zhihu_list {
     title: string
 
     @Column()
+    introduction: string
+
+    @Column()
     thumbnail: string
 
-    @Column("int")
-    categroy_id: number //0,1, 2, 3
-    @Column()
-    categroy_name: string
+}
 
+@Entity()
+export class meun {
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @Column()
+    name: string
+
+    @CreateDateColumn()
+    date: Date
 }

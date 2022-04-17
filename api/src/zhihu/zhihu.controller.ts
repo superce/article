@@ -13,15 +13,15 @@ export class ZhihuController {
     async postGetZhihu(@Body() zhihuDTO: zhihuDTO){
         const { url } = zhihuDTO            
         if(!url) throw new HttpException("url不能为空", HttpStatus.OK)        
-        const {article_id, articleThumbnail, title, categroy_id} = await this.ZhihuService.collection(zhihuDTO) 
-        const result = await this.zhihu_list.list(article_id, articleThumbnail, title, categroy_id) 
+        const {articleThumbnail, title, meun_id, article_id, introduction } = await this.ZhihuService.collection(zhihuDTO) 
+        const result = await this.zhihu_list.list(articleThumbnail, title, meun_id, article_id, introduction) 
         throw new HttpException(result, HttpStatus.OK);
     }
     @UseGuards(AuthGuard('jwt'))
     @Post('/editcategroy')
     async editCategroy(@Body() editCategroy: editCategroyDTO){
-        const { id, categroy_id } = editCategroy
-        await this.zhihu_list.edit(id, categroy_id)        
+        const { id, meun_id } = editCategroy
+        await this.zhihu_list.edit(id, meun_id)        
     }
     @UseGuards(AuthGuard('jwt'))
     @Get('list')

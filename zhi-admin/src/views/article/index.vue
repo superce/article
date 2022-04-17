@@ -9,7 +9,7 @@
     </el-table-column>
     <el-table-column prop="categroy_name" label="分类名称">
       <template #default="{row}">
-        <el-tag>{{ row.categroy_name }}</el-tag>
+        <el-tag>{{ row.meun_id }}</el-tag>
       </template>
     </el-table-column>
     <el-table-column prop="categroy_name" label="操作">
@@ -23,12 +23,9 @@
   <!-- <pagi-nation :total="" :page-size="" @currenChage="onCurrentChange"></pagi-nation> -->
   <el-dialog
     v-model="edit.dialog" :title="edit.title" width="400px">
-    <el-select v-model="edit.categroy_id" placeholder="分类">
-      <el-option label="全部" :value="0" />
-      <el-option label="美女" :value="1" />
-      <el-option label="美腿" :value="2" />
-      <el-option label="身材" :value="3" />
-    </el-select>
+        <el-select v-model="edit.meun_id" placeholder="分类">          
+          <el-option v-for="item in meunList" :key="item.name" :label="item.name" :value="item.id" />
+        </el-select>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="onCancel">Cancel</el-button>
@@ -42,11 +39,13 @@
   import { reactive, ref, onMounted, computed } from 'vue'
   import { apiGetArticleList, apiEditArticleTag, apiDeleteItem } from '@src/api/list'
   // import pagiNation from '@src/components/pagination.vue'
+  import { apiMeunList } from '@src/api/meun'
   import tip from '@src/utils/Tip'
   const tableData = ref([])
   const loading = ref(false)
   onMounted(() => {
     list()
+    getMeunList()
   })
   const href = computed(() => {
     let baseURL = 'https://www.health-longevity.top'
@@ -56,7 +55,16 @@
     return baseURL
   })
   const isHasHttps = (htps) =>{
-    return htps.includes('https') ? htps : href.value + htps
+    return htps.includes('http') ? htps : href.value + htps
+  }
+  const meunList = ref([])
+  const getMeunList = () => {
+    apiMeunList().then(res => {
+      if(res.code === 200){
+        meunList.value = res.data
+        edit.categroy_id = res.data[0].id
+      }
+    })
   }
   function list(){
     loading.value = true
@@ -80,14 +88,12 @@
     dialog: false,
     title: '',
     id: 0,
-    categroy_name: '',
-    categroy_id: 0
+    meun_id: 0
   })
-  function editTag({id, title, categroy_name, categroy_id = 0}){
+  function editTag({id, title, meun_id = 0}){
     edit.id = id
     edit.title = title
-    edit.categroy_name = categroy_name
-    edit.categroy_id = categroy_id
+    edit.meun_id = meun_id
     edit.dialog = true
   }
   function onCommit(){

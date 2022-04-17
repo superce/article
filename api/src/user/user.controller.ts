@@ -26,13 +26,14 @@ export class UserController {
     return await this.registerService.register(user)
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(AuthGuard('jwt'))
   // 创建菜单
   @Post('/create/meun')  
   async onCreateMeun(@Body() name: meunDTO) {
     console.log('name', name);
     return await this.userService.onCreateMeun(name)
   }
+  @UseGuards(AuthGuard('jwt'))
    // 创建列表
    @Get('/meun/list')  
    async onListMeun() {
