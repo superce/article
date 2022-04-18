@@ -5,30 +5,41 @@
             <ul>
                 {{#each list}}
                     <li>
-                        <h3 class="blogtitle"><a href="/detail{{ article_id }}">{{ title }}</a></h3>
+                        <h3 class="blogtitle"><a href="/detail/{{ article_id }}">{{ title }}</a></h3>
                         <div class="bloginfo">
                             <span class="blogpic">
-                                <a href="/detail{{ article_id }}" title=""><img src="{{thumbnail}}"></a>
+                                <a href="/detail/{{ article_id }}" title=""><img src="{{thumbnail}}"></a>
                             </span>
                             <p>{{introduction}}</p>
                         </div>
                         <div class="autor">
                             {{!-- <span class="lm f_l"><a href="/">杨青个人博客</a></span> --}}
-                            <span class="f_r"><a href="/detail{{ article_id }}" class="more">阅读原文</a></span>
+                            <span class="f_r"><a href="/detail/{{ article_id }}" class="more">阅读原文</a></span>
                         </div>
                     </li>
                 {{/each}}
                 
             </ul>
-            {{!-- <div class="pagelist"><a title="Total record">&nbsp;<b>142</b> </a>&nbsp;&nbsp;<a
-                    href="/jstt/index.html">首页</a>&nbsp;<a href="/jstt/index.html">上一页</a>&nbsp;<a
-                    href="/jstt/index.html">1</a>&nbsp;<b>2</b>&nbsp;<a href="/jstt/index_3.html">3</a>&nbsp;<a
-                    href="/jstt/index_4.html">4</a>&nbsp;<a href="/jstt/index_5.html">5</a>&nbsp;<a
-                    href="/jstt/index_6.html">6</a>&nbsp;<a href="/jstt/index_3.html">下一页</a>&nbsp;<a
-                    href="/jstt/index_6.html">尾页</a></div> --}}
         </div>
     </div>
-   
+    <div class="rightbox">
+        <div class="paihang">
+            <h2 class="ab_title"><a href="/">點擊排行</a></h2>
+            <ul>
+                {{#each fiveList.list}}
+                <li>
+                    <b><a href="/detail/{{list_article_id}}">{{list_title}}</a></b>
+                    <p>
+                        <i>
+                            <img src="{{list_thumbnail}}" alt="">
+                        </i>
+                        {{list_introduction}}
+                    </p>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
 </article>
 <script>
   

@@ -48,19 +48,21 @@
 .tuijian li { width: 49%; padding: 6px 0.5%}
 .pics ul li { width: 100%; }
 .pics ul li:nth-child(2) { margin: 10px 0 }
-.rightbox { display: none }
+.rightbox { width: 100% }
 .leftbox { width: 100% }
 .autor .more, .viewnum { display: none }
-.blogpic { display: block; width: 100%; margin: auto; max-height: 120px; float: none }
-.blogpic img { margin: auto }
+.blogpic { display: block; width: 100%; margin: auto; height: 200px; float: none }
+.blogpic img { margin: auto;height:200px }
 .bloginfo p { clear: both }
 .dasbox { display: none }
 .diggit { margin: auto; float: none }
 .zsm { display: block }
 .zsm img { width: 60%; margin: auto }
 .news_infos img { width: 100% }
-.otherlink li { width: 90%; height: auto }
+.otherlink li { width: 100%; height: auto }
+.otherlink li img{height: 200px}
 .ffsm p img { position: inherit; float: none; }
 .pagelist a { margin: 0x; border: 0; padding: 5px 0px; }
 .pagelist > b { padding: 0; border: 0; }
+
 }

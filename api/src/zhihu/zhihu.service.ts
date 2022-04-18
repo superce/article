@@ -42,7 +42,7 @@ export class ZhihuService {
             const {data} = await uploadQiniu(a)
             let ossUrl = 'https://img.health-longevity.top'
             if(process.env.NODE_ENV === 'development'){
-                ossUrl = 'http://r8q5v9tvi.hb-bkt.clouddn.com';
+                ossUrl = 'http://rajgtbfsj.hb-bkt.clouddn.com';
             }
             const qnImgUrl = `${ossUrl}/${data.key}`
             $('figure').eq(i).find('img').removeAttr('data-actualsrc')

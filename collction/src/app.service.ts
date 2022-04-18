@@ -18,6 +18,10 @@ export class getZhihuListServer {
     }
     return lists//await this.getZhihuList.find()
   }
+  async getFiveArticle(){
+    let list = await this.getZhihuList.createQueryBuilder().skip(0).take(5).getRawMany()
+    return { list }
+  }
   async getMeunItemList(id:number){
     const list = await this.getZhihuList.find({where: {meun_id: id}})
     return list

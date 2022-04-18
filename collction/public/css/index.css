@@ -1,6 +1,7 @@
  @charset "gb2312";
 .leftbox { width: 70%; float: left; overflow: hidden; }
 .rightbox { width: 28%; float: right; overflow: hidden; }
+
 /*图片展示*/
 .pics { margin: 20px 0 0 0; overflow: hidden }
 .pics ul li { width: 32.3%; float: left; display: block; overflow: hidden; border-radius: 5px; position: relative; }
@@ -34,7 +35,7 @@ a.ayulan { float: right; color: #333; }
 .newblogs { background: #fff; overflow: hidden; width: 100%; clear: both; border-radius: 10px; margin: 20px 0 }
 h3.blogtitle { line-height: 30px; margin: 10px 0; }
 h3.blogtitle:hover a { color: #000 }
-.blogpic { overflow: hidden; width: 30%; max-height: 100px; display: block; float: left; margin-right: 20px; border-radius: 5px; }
+.blogpic { overflow: hidden; width: 30%; height: 140px; display: block; float: left; margin-right: 20px; border-radius: 5px; }
 .newblogs ul { padding: 10px; overflow: hidden }
 .newblogs li { border-bottom: #ccc 1px solid; margin-bottom: 10px; overflow: hidden; }
 .autor { width: 100%; overflow: hidden; clear: both; margin: 20px 0 0 0; display: inline-block; color: #838383; font-size: 12px }
@@ -45,7 +46,7 @@ h3.blogtitle:hover a { color: #000 }
 .dtime { background: url(../img/newsbg02.png) no-repeat left center }
 .viewnum { background: url(../img/newsbg04.png) no-repeat left center }
 .pingl { background: url(../img/like.jpg) no-repeat left center }
-.blogpic img { width: 100%; }
+.blogpic img { width: 100%; height: 140px;object-fit: cover;}
 .bloginfo p { color: #888; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3; padding-top: 10px; font-size: 14px; }
 .more { font-size: 14px; }
 /*关于我*/
@@ -66,10 +67,14 @@ h3.blogtitle:hover a { color: #000 }
 .paihang { background: #FFF; border-radius: 10px; overflow: hidden; margin: 20px 0 }
 .paihang ul { padding: 10px; }
 .paihang ul li { border-bottom: solid 1px #EAEAEA; font-size: 14px; margin: 0 0 10px 0; padding: 0 0 10px 0; overflow: hidden; }
-.paihang ul li b { height: 30px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block; }
+.paihang ul li b { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block; }
+.paihang ul li b img{width: 100%;height: 200px;object-fit:cover;}
 .paihang li i { width: 100px; height: 90px; overflow: hidden; display: block; border: #efefef 1px solid; float: left; margin-right: 10px; }
 .paihang li i img { height: 100%; margin: auto; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; transition: all .5s ease; }
-.paihang ul li p { line-height: 24px; color: #888 }
+.paihang ul li p { line-height: 24px;
+    color: #333;
+    font-size: 14px;
+    margin: 10px 0; }
 .paihang ul li a:hover { color: #000; }
 .paihang ul li:hover { border-bottom: #000 1px solid; }/* 鼠标放上去的效果 */
 .paihang ul li:hover p { color: #000; }
@@ -109,7 +114,8 @@ h3.blogtitle:hover a { color: #000 }
 .tags a { background: #F4650E; padding: 3px 8px; margin: 0 5px 5px 0; color: #fff; display: inline-block; }
 .tags { margin: 10px 0; }
 .news_infos { line-height: 24px; text-align: justify; padding: 20px 0 }
-.news_infos p { margin-bottom: 10px }
+.news_infos h1,.news_infos h2,.news_infos h3,.news_infos h4,.news_infos h5{font-size: 18px;color:#333;margin-bottom: 10px;font-weight: 500;}
+.news_infos p { margin-bottom: 10px; font-size: 16px; color: #888; line-height: 28px; }
 .news_infos img { max-width: 650px; height: auto; }
 .share { margin: 0 0 20px 0; overflow: hidden; width: 100%; }
 .nextinfo { line-height: 24px; width: 100%; background: #FFF; border-radius: 10px; overflow: hidden; margin: 20px 0 }/*上一篇下一篇*/
@@ -118,8 +124,10 @@ h3.blogtitle:hover a { color: #000 }
 /*相关文章*/
 .otherlink, .xzsm, .ffsm { width: 100%; background: #FFF; border-radius: 10px; overflow: hidden; margin: 20px 0 }
 .otherlink h2 { border-bottom: #000 2px solid; line-height: 40px; font-size: 14px; background: url(../img/5794.png) left 10px center no-repeat; padding-left: 40px; color: #000 }
-.otherlink ul { margin: 10px 0 }
-.otherlink li { line-height: 24px; height: 24px; display: block; width: 290px; float: left; overflow: hidden; margin-right: 30px; padding-left: 10px; }
+.otherlink ul { margin: 10px 0;display: flex;flex-wrap: wrap; }
+.otherlink li { line-height: 24px; display: block; width:calc(33.33% - 10px); overflow: hidden; margin:0 5px; }
+.otherlink li img{width: 100%;height: 150px;object-fit: cover;}
+.otherlink li p{font-size: 16px;line-height: 26px;margin: 4px 0}
 .otherlink li a:hover { text-decoration: underline; color: #000 }
 /*文章评论*/
 .news_pl { margin: 10px 0; width: 100%; background: #FFF; border-radius: 10px; overflow: hidden; margin: 20px 0 }

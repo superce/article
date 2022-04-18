@@ -1,11 +1,4 @@
 <article>
-    {{!-- <div class="pics">
-        <ul>
-            <li><i><a href="/"><img src="img/t01.jpeg"></a></i><span>这组图片中的静物等非常的日系</span></li>
-            <li><i><a href="/"><img src="img/t04.jpeg"></a></i><span>这组图片中的静物等非常的日系</span></li>
-            <li><i><a href="/"><img src="img/t03.jpeg"></a></i><span>这组图片中的静物等非常的日系</span></li>
-        </ul>
-    </div> --}}
     <div class="blank"></div>
     <div class="leftbox">
         <div class="tuijian">
@@ -30,7 +23,7 @@
                     <h3 class="blogtitle"><a href="/detail/{{ list_article_id }}">{{ list_title }}</a></h3>
                     <div class="bloginfo">
                         <span class="blogpic">
-                            <a href="/detail{{ list_article_id }}" title=""><img src="{{list_thumbnail}}"></a>
+                            <a href="/detail/{{ list_article_id }}" title=""><img src="{{list_thumbnail}}"></a>
                         </span>
                         <p>{{list_introduction}}</p>
                     </div>
@@ -45,13 +38,15 @@
     </div>
     <div class="rightbox">        
         <div class="paihang">
-            <h2 class="ab_title"><a href="/">點擊排行</a></h2>
+            <h2 class="ab_title">點擊排行</h2>
             <ul>
                 {{#each topArticle}}
                 <li>
                     <b><a href="/detail/{{list_article_id}}">{{list_title}}</a></b>
                     <p>
-                        <i></i>
+                        <i>
+                            <img src="{{list_thumbnail}}" alt="">
+                        </i>
                         {{list_introduction}}
                     </p>
                 </li>  

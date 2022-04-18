@@ -7,8 +7,12 @@
     <div class="leftbox">
         <div class="infos">
             <div class="newsview">
-               
-                
+                <h2 class="intitle">您现在的位置是：<a href="/">网站首页</a></h2>
+                <h3 class="news_title">{{article.title}}</h3>
+                <div class="news_author"><span class="au02 date">{{article.date}}</span></div>
+                <div class="news_infos">
+                    {{{article.content}}}
+                </div>
             </div>
         </div>    
         <div class="nextinfo">
@@ -18,80 +22,46 @@
         <div class="otherlink">
             <h2>相关文章</h2>
             <ul>
-                <li><a href="/" title="云南之行——丽江古镇玉龙雪山">云南之行——丽江古镇玉龙雪山</a></li>
-                <li><a href="/" title="云南之行——大理洱海一日游">云南之行——大理洱海一日游</a></li>
-                <li><a href="/" target="_blank">住在手机里的朋友</a></li>
-                <li><a href="/" target="_blank">豪雅手机正式发布! 在法国全手工打造的奢侈品</a></li>
-                <li><a href="/" target="_blank">教你怎样用欠费手机拨打电话</a></li>
-                <li><a href="/" target="_blank">原来以为，一个人的勇敢是，删掉他的手机号码...</a></li>
+                {{#each recommend}}
+                <li>
+                    <a href="/detail/{{list_article_id}}">
+                        <img src="{{list_thumbnail}}" alt="">
+                        <p>{{list_title}}</p>
+                    </a>
+                </li>            
+                {{/each}}   
             </ul>
         </div>
     </div>
     <div class="rightbox">
-        <div class="search">
-            <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
-                <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字"
-                    style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}"
-                    onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
-                <input name="show" value="title" type="hidden">
-                <input name="tempid" value="1" type="hidden">
-                <input name="tbname" value="news" type="hidden">
-                <input name="Submit" class="input_submit" value="搜索" type="submit">
-            </form>
-        </div>
         <div class="paihang">
-            <h2 class="ab_title"><a href="/">本栏推荐</a></h2>
+            <h2 class="ab_title">点击排行</h2>
             <ul>
-                <li><b><a href="/" target="_blank">住在手机里的朋友</a></b>
-                    <p>对于刚毕业的学生来说，想学习建网站，掌握一技之长，最简单的入门无学...</p>
+                {{#each topArticle}}
+                <li>
+                    <b>
+                        <a href="/detail/{{list_article_id}}">
+                            <img src="{{list_thumbnail}}" alt="">
+                        </a>
+                    </b>
+                    <p>{{list_title}}</p>
                 </li>
-                <li><b><a href="/" target="_blank">教你怎样用欠费手机拨打电话</a></b>
-                    <p>对于刚毕业的学生来说，想学习建网站，掌握一技之长，最简单的入门...</p>
-                </li>
-                <li><b><a href="/" target="_blank">原来以为，一个人的勇敢是，删掉他的手机号码</a></b>
-                    <p>.先前发表过一篇文章《如果要学习web前端开发，需要学习什么？》</p>
-                </li>
-                <li><b><a href="/" target="_blank">手机的16个惊人小秘密，据说99.999%的人都不知</a></b>
-                    <p>对于刚毕业的学生来说，.需要学习什么？》</p>
-                </li>
-                <li><b><a href="/" target="_blank">你面对的是生活而不是手机</a></b>
-                    <p>.最简单的入门无非就是学会html和css，先前发表过一篇文章...</p>
-                </li>
-            </ul>
-            <div class="ad"><img src="img/ad300x100.jpeg"></div>
-        </div>
-        <div class="paihang">
-            <h2 class="ab_title"><a href="/">点击排行</a></h2>
-            <ul>
-                <li><b><a href="/" target="_blank">住在手机里的朋友</a></b>
-                    <p>对于刚毕业的学生来说，想学习建网站，掌握一技之长，最简单的入门无学...</p>
-                </li>
-                <li><b><a href="/" target="_blank">教你怎样用欠费手机拨打电话</a></b>
-                    <p>对于刚毕业的学生来说，想学习建网站，掌握一技之长，最简单的入门...</p>
-                </li>
-                <li><b><a href="/" target="_blank">原来以为，一个人的勇敢是，删掉他的手机号码</a></b>
-                    <p>.先前发表过一篇文章《如果要学习web前端开发，需要学习什么？》</p>
-                </li>
-                <li><b><a href="/" target="_blank">手机的16个惊人小秘密，据说99.999%的人都不知</a></b>
-                    <p>对于刚毕业的学生来说，.需要学习什么？》</p>
-                </li>
-                <li><b><a href="/" target="_blank">你面对的是生活而不是手机</a></b>
-                    <p>.最简单的入门无非就是学会html和css，先前发表过一篇文章...</p>
-                </li>
-            </ul>
-            <div class="ad"><img src="img/ad01.jpeg"></div>
-        </div>
-        <div class="weixin">
-            <h2 class="ab_title">微信关注</h2>
-            <ul>
-                <img src="img/wx.jpeg">
+                {{/each}}
             </ul>
         </div>
     </div>
 </article>
 <script>
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+        return Y + M + D;
+    }
+
     var date = document.querySelector('.date').innerText
-    date = new Date(date)
-    var t = date.toLocaleString('chinese', { hour12: false }).replace(/\//g, '-')
+    var t = timestampToTime(date)
+    {{!-- var t = date.toLocaleString('chinese', { hour12: false }).replace(/\//g, '-') --}}
     document.querySelector('.date').innerText = t
 </script>

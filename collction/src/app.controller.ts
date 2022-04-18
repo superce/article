@@ -51,15 +51,31 @@ export class AppController {
   @Render('list')
   async viewsList(@Param('id') id: number) {
     const list = await this.getZhihuList.getMeunItemList(id)
-    console.log(list)
-    return { list }
+    const meunList = await this.meun.findList()
+    const fiveList = await this.getZhihuList.getFiveArticle()
+    console.log('---', fiveList);
+    
+    return { list, meunList, fiveList }
   }
 
   @Get('/detail/:id')
   @Render('detail')
   async viewsDetail(@Param('id') id: string) {
     const article = await this.getZhihuDetail.detail(id)
-    return { article }
+    const meunList = await this.meun.findList()
+    console.log(article)
+    const { list } = await this.getZhihuList.getList(1)
+    let recommend = []
+    let topArticle = []
+    list.forEach((item, index) => {
+      if (index < 5) {
+        recommend.push(item)
+      } else {
+        topArticle.push(item)
+      }
+    })
+    console.log(recommend, topArticle)
+    return { article, meunList, recommend, topArticle }
   }
 
 }
