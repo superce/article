@@ -1,13 +1,14 @@
 
 
-{{#extend "meta" title=article.title article_id=article.article_id thumbnail=article.thumbnail}}
+{{#extend "meta"}}
     {{> partial}}
-{{/extend}}
+{{/extend}} 
 <article>
     <div class="leftbox">
+        <div class="blank"></div>
         <div class="infos">
             <div class="newsview">
-                <h2 class="intitle">您现在的位置是：<a href="/">网站首页</a></h2>
+                <h2 class="intitle">您现在的位置是：<a href="/">网站首页</a>>>><span>{{title}}</span></h2>
                 <h3 class="news_title">{{article.title}}</h3>
                 <div class="news_author"><span class="au02 date">{{article.date}}</span></div>
                 <div class="news_infos">
@@ -16,8 +17,12 @@
             </div>
         </div>    
         <div class="nextinfo">
-            <p>上一篇：<a href="/">传微软将把入门级Surface平板价格下调150美元</a></p>
-            <p>下一篇：<a href="/">云南之行——大理洱海一日游</a></p>
+            {{#if takePage.pre.id}}
+            <p>上一篇：<a href="/detail/{{takePage.pre.article_id}}">{{takePage.pre.title}}</a></p>
+            {{/if}}
+            {{#if takePage.next.id}}
+            <p>下一篇：<a href="/detail/{{takePage.next.article_id}}">{{ takePage.next.title }}</a></p>
+            {{/if}}
         </div>
         <div class="otherlink">
             <h2>相关文章</h2>
@@ -35,7 +40,7 @@
     </div>
     <div class="rightbox">
         <div class="paihang">
-            <h2 class="ab_title">点击排行</h2>
+            <h2 class="ab_title">點擊排行</h2>
             <ul>
                 {{#each topArticle}}
                 <li>

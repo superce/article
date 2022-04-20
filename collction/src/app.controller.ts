@@ -25,6 +25,7 @@ export class AppController {
     const { pageIndex } = param
     const meunList = await this.meun.findList()
     const { list } = await this.getZhihuList.getList(pageIndex)
+    const title = '知識百科'
     let recommend = []    
     let newArticle = []
     let topArticle = []
@@ -37,7 +38,7 @@ export class AppController {
         topArticle.push(item)
       }
     })
-    return { meunList, recommend, topArticle, newArticle }
+    return { meunList, recommend, topArticle, newArticle, title }
   }
   @Get('home')
   async loadMoreList(@Query() param: listParamDTO) {
@@ -53,9 +54,14 @@ export class AppController {
     const list = await this.getZhihuList.getMeunItemList(id)
     const meunList = await this.meun.findList()
     const fiveList = await this.getZhihuList.getFiveArticle()
-    console.log('---', fiveList);
-    
-    return { list, meunList, fiveList }
+    let title = ''
+    const paramId = Number(id)
+    meunList.forEach(item => {
+      if (item.id === paramId){
+        title = item.name
+      }
+    })
+    return { list, meunList, fiveList, title }
   }
 
   @Get('/detail/:id')
@@ -63,8 +69,8 @@ export class AppController {
   async viewsDetail(@Param('id') id: string) {
     const article = await this.getZhihuDetail.detail(id)
     const meunList = await this.meun.findList()
-    console.log(article)
     const { list } = await this.getZhihuList.getList(1)
+    const takePage = await this.getZhihuDetail.nextArticle(id)
     let recommend = []
     let topArticle = []
     list.forEach((item, index) => {
@@ -74,8 +80,8 @@ export class AppController {
         topArticle.push(item)
       }
     })
-    console.log(recommend, topArticle)
-    return { article, meunList, recommend, topArticle }
+    let title = article.title
+    return { article, meunList, recommend, topArticle, takePage, title }
   }
 
 }

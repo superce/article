@@ -46,7 +46,8 @@
   function doCollection(){
     form.value.validate(valid => {
       if(!valid) return
-      if(!formInline.url.includes('https://www.zhihu.com/question/')){
+      const isRight = formInline.url.includes('https://www.zhihu.com/question/') || formInline.url.includes('https://zhuanlan.zhihu.com/')
+      if(!isRight){
         ElMessage.error('地址不对')
         return
       }

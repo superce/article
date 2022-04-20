@@ -12,7 +12,7 @@ a { text-decoration: none; color: #555 }
 .f_r { float: right }
 .line46 { height: 46px; width: 100% }
 /* header */
-header { width: 100%; color: #FFF; background: #333; line-height: 46px; overflow: hidden; position: fixed; top: 0; z-index: 100 }
+header { width: 100%; color: #FFF; background: #009688; line-height: 46px; overflow: hidden; position: fixed; top: 0; z-index: 100 }
 .logo { float: left; font-size: 22px }
 #mnav { width: 1100px; margin: auto }
 #mnav a { color: #FFF }
@@ -29,7 +29,7 @@ header { width: 100%; color: #FFF; background: #333; line-height: 46px; overflow
 .open .navicon:before, .open .navicon:after { content: ''; display: block; width: 30px; height: 5px; position: absolute; background: #fff; }
 /* article */
 article { width: 1100px; margin: auto; overflow: auto }
-footer { width: 100%; background: #333; color: #a5a4a4; text-align: center; padding: 20px 0; }
+footer { width: 100%; background: #009688; color: #fff; text-align: center; padding: 20px 0; }
 footer a { color: #a5a4a4 }
 article::-webkit-scrollbar {
 

@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import axios from 'axios'
+import * as request from 'request'
 import { downloadImg, crop } from '../utils/download'
 import { uploadQiniu } from '../utils/uploadQiniu'
 import * as cheerio from 'cheerio';
@@ -22,44 +23,9 @@ export class ZhihuService {
         const figureLength =  $('figure').length  
               
         let articleThumbnail: string = ''
-        for(var i = 0;i < figureLength;i++){
-            console.log(i)
-            let img = $('figure').eq(i).find('img').attr('data-actualsrc')
-            $('figure noscript').remove()
-            console.log('img.split', img)
-            if(!img) {
-                $('figure').eq(i).remove()
-                continue
-            }
-            const imgurl = img.split('?')[0]
-            if (imgurl.includes('.gif')) {
-                $('figure').eq(i).remove()
-                continue
-            }
-            
-            // const a:{name:string,path:string} = await downloadImg(imgurl)
-            const a: { name: string, path: string } = await crop(imgurl)
-            const {data} = await uploadQiniu(a)
-            let ossUrl = 'https://img.health-longevity.top'
-            if(process.env.NODE_ENV === 'development'){
-                ossUrl = 'http://rajgtbfsj.hb-bkt.clouddn.com';
-            }
-            const qnImgUrl = `${ossUrl}/${data.key}`
-            $('figure').eq(i).find('img').removeAttr('data-actualsrc')
-            $('figure').eq(i).find('img').removeAttr('src')
-            $('figure').eq(i).find('img').removeAttr('data-src')
-            $('figure').eq(i).find('img').addClass('lazy')
-            $('figure').eq(i).find('img').removeAttr("data-default-watermark-src")
-            $('figure').eq(i).find('img').attr("data-original", qnImgUrl)
-            $('figure').eq(i).find('img').removeAttr("data-actualsrc")
-            if (figureLength > 1) {
-                if (i === 1) {
-                    articleThumbnail = qnImgUrl
-                }
-            } else {
-                articleThumbnail = qnImgUrl
-            }
-        }
+        // 处理图片
+        articleThumbnail =  await this.setImgs($, figureLength, 'qs')
+
         let html = $('.RichContent-inner').eq(0).find('.RichText').html()
         let text = $('.RichContent-inner').eq(0).find('.RichText').text()
         html = await translate(html)
@@ -70,7 +36,9 @@ export class ZhihuService {
         }else{
             introduction = text
         }
-        const success = await this.saveZhi(title, html, article_id, articleThumbnail)    
+        introduction = await translate(introduction)
+        introduction += '...'
+        await this.saveZhi(title, html, article_id, articleThumbnail)    
         let result = {
             title,
             articleThumbnail,
@@ -80,12 +48,100 @@ export class ZhihuService {
         }
         return result
     }
+    // 知乎专栏
+    async zhuanlan(param: { url: string, meun_id: number }): Promise<any>{
+        const { url, meun_id } = param
+        return new Promise((resove, reject) => {
+            request(url, async (err: any, res: any, body: any) => {
+                const $ = cheerio.load(body)  
+                const img = $('.App-main .Post-content .TitleImage').attr('src')
+                const openccTitle = $('.Post-Main .Post-Title').text()
+                const title = await translate(openccTitle)
+                let articleThumbnail: string = ''
+                const figureLength = $('figure').length 
+                let thumbnail = await this.setImgs($, figureLength, 'zhuanlan')
+                if(img){
+                    articleThumbnail = img
+                }else{
+                    articleThumbnail = thumbnail
+                }
+                let html = $('.Post-Main .RichText').html()
+                let text = $('.Post-Main .RichText').text()
+                html = await translate(html)
+                const article_id = guid()
+                let introduction: string = ''
+                if (text.length > 48) {
+                    introduction = text.substring(0, 48)
+                } else {
+                    introduction = text
+                }
+                introduction = await translate(introduction)
+                introduction += '...'
+                await this.saveZhi(title, html, article_id, articleThumbnail)
+                let result = {
+                    title,
+                    articleThumbnail,
+                    meun_id,
+                    article_id,
+                    introduction
+                }
+                resove(result)
+            })
+        })
+    }
     async saveZhi(title: string, content: string, article_id: string, thumbnail: string){
         const newinsert = this.zhihuRepos.create({ title, content, article_id, thumbnail })
         const zhi = await this.zhihuRepos.save(newinsert)    
         return zhi
     }
-   
+    //    处理图片
+    async setImgs($: any, figureLength: number, zl:string): Promise<string>{
+        let articleThumbnail: string;
+        for (var i = 0; i < figureLength; i++) {
+            let img = $('figure').eq(i).find('img').attr('data-actualsrc')
+            $('figure noscript').remove()
+            console.log('img.split', img)
+            if (!img) {
+                $('figure').eq(i).remove()
+                continue
+            }
+            const imgurl = img.split('?')[0]
+            if (imgurl.includes('.gif')) {
+                $('figure').eq(i).remove()
+                continue
+            }
+
+            // const a:{name:string,path:string} = await downloadImg(imgurl)
+            const a: { name: string, path: string } = await crop(imgurl)
+            const { data } = await uploadQiniu(a)
+            let ossUrl = 'https://img.health-longevity.top'
+            if (process.env.NODE_ENV === 'development') {
+                ossUrl = 'http://rajgtbfsj.hb-bkt.clouddn.com';
+            }
+            const qnImgUrl = `${ossUrl}/${data.key}`
+            $('figure').eq(i).find('img').removeAttr('data-actualsrc')
+            $('figure').eq(i).find('img').removeAttr('src')
+            $('figure').eq(i).find('img').removeAttr('data-src')
+            $('figure').eq(i).find('img').addClass('lazy')
+            $('figure').eq(i).find('img').removeAttr("data-default-watermark-src")
+            $('figure').eq(i).find('img').attr("data-original", qnImgUrl)
+            $('figure').eq(i).find('img').removeAttr("data-actualsrc")
+            if(zl === 'zhuanlan'){
+                if (i === 1) {
+                    articleThumbnail = qnImgUrl
+                }
+            }else{
+                if (figureLength > 1) {
+                    if (i === 1) {
+                        articleThumbnail = qnImgUrl
+                    }
+                } else {
+                    articleThumbnail = qnImgUrl
+                }
+            }
+        }
+        return articleThumbnail
+    }
 }
 
 export class zhihu_listServer {
@@ -93,7 +149,8 @@ export class zhihu_listServer {
         @InjectRepository(list) private readonly zhihuList: Repository<list>,
         @InjectRepository(article) private readonly zhihuArticle: Repository<article>        
     ) { }
-    async list(thumbnail: string, title: string, meun_id: number, article_id: string, introduction: string) {
+    async list(param: {thumbnail: string, title: string, meun_id: number, article_id: string, introduction: string}) {
+        const { thumbnail, title, meun_id, article_id, introduction } = param
         // const categroy_name = categroy(categroy_id)
         const newinsert = this.zhihuList.create({ title, introduction, thumbnail, meun_id, article_id })
         const list = await this.zhihuList.save(newinsert)

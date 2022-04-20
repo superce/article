@@ -33,6 +33,21 @@ export class zhihuDetailServer {
   async detail(article_id: string) {
     return await this.getDetail.findOneByOrFail({ article_id })
   }
+  // 上一篇下一篇
+  async nextArticle(article_id: string){
+    const thisArticle = await this.getDetail.findOneByOrFail({ article_id })
+    const preId = thisArticle.id - 1
+    const nextId = thisArticle.id + 1
+    const preArticle = await this.getDetail.findOne({where:{id: preId}})
+    const nextArticle = await this.getDetail.findOne({ where: { id: nextId } })
+    let article = {
+      pre: {},
+      next: {}
+    }
+    if (preArticle) article.pre = preArticle
+    if (nextArticle) article.next = nextArticle
+    return article
+  }
 }
 
 export class meunService{

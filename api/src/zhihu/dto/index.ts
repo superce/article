@@ -13,3 +13,10 @@ export class editCategroyDTO {
 export class deleteArticleDTO {
     readonly id:number
 }
+export class returnData {
+    readonly title: string
+    readonly articleThumbnail: string
+    readonly meun_id: number
+    readonly article_id: string
+    readonly introduction: string
+}
