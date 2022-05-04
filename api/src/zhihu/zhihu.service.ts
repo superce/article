@@ -25,7 +25,15 @@ export class ZhihuService {
         let articleThumbnail: string = ''
         // 处理图片
         articleThumbnail =  await this.setImgs($, figureLength, 'qs')
-
+        let time = $('.ContentItem-time').text()        
+        let splitDate = time.split(' ')
+        console.log('true', splitDate[2].split('・'))
+        let splitDate2 = splitDate[2]
+        if (splitDate[2].includes('・')){
+            splitDate2 = splitDate[2].split('・')[0]
+        }
+        let toDate: string = splitDate[1] + ' ' + splitDate2
+        let date = new Date(toDate)
         let html = $('.RichContent-inner').eq(0).find('.RichText').html()
         let text = $('.RichContent-inner').eq(0).find('.RichText').text()
         html = await translate(html)
@@ -38,13 +46,14 @@ export class ZhihuService {
         }
         introduction = await translate(introduction)
         introduction += '...'
-        await this.saveZhi(title, html, article_id, articleThumbnail)    
+        await this.saveZhi(title, html, article_id, articleThumbnail, date)    
         let result = {
             title,
             articleThumbnail,
             meun_id,
             article_id,
-            introduction
+            introduction, 
+            date
         }
         return result
     }
@@ -65,32 +74,41 @@ export class ZhihuService {
                 }else{
                     articleThumbnail = thumbnail
                 }
+                let time = $('.ContentItem-time').text()              
+                let splitDate = time.split(' ') 
+                let toDate: string = splitDate[1] + ' ' + splitDate[2]
+                console.log(toDate)
+                let date = new Date(toDate)
+                console.log('时间', date)
                 let html = $('.Post-Main .RichText').html()
                 let text = $('.Post-Main .RichText').text()
                 html = await translate(html)
+                console.log('html', html)
                 const article_id = guid()
                 let introduction: string = ''
-                if (text.length > 48) {
-                    introduction = text.substring(0, 48)
+                if (text.length > 60) {
+                    introduction = text.substring(0, 60)
                 } else {
                     introduction = text
                 }
                 introduction = await translate(introduction)
                 introduction += '...'
-                await this.saveZhi(title, html, article_id, articleThumbnail)
+                await this.saveZhi(title, html, article_id, articleThumbnail, date)
                 let result = {
                     title,
                     articleThumbnail,
                     meun_id,
                     article_id,
-                    introduction
+                    introduction,
+                    date
                 }
+                console.log('result', result)
                 resove(result)
             })
         })
     }
-    async saveZhi(title: string, content: string, article_id: string, thumbnail: string){
-        const newinsert = this.zhihuRepos.create({ title, content, article_id, thumbnail })
+    async saveZhi(title: string, content: string, article_id: string, thumbnail: string, date: Date){
+        const newinsert = this.zhihuRepos.create({ title, content, article_id, thumbnail, date })
         const zhi = await this.zhihuRepos.save(newinsert)    
         return zhi
     }
@@ -149,10 +167,10 @@ export class zhihu_listServer {
         @InjectRepository(list) private readonly zhihuList: Repository<list>,
         @InjectRepository(article) private readonly zhihuArticle: Repository<article>        
     ) { }
-    async list(param: {thumbnail: string, title: string, meun_id: number, article_id: string, introduction: string}) {
-        const { thumbnail, title, meun_id, article_id, introduction } = param
+    async list(param: { thumbnail: string, title: string, meun_id: number, article_id: string, introduction: string, date: Date}) {
+        const { thumbnail, title, meun_id, article_id, introduction, date } = param
         // const categroy_name = categroy(categroy_id)
-        const newinsert = this.zhihuList.create({ title, introduction, thumbnail, meun_id, article_id })
+        const newinsert = this.zhihuList.create({ title, introduction, thumbnail, meun_id, article_id, date })
         const list = await this.zhihuList.save(newinsert)
         let code = 400
         let message = '采集失败'

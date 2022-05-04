@@ -18,15 +18,16 @@ export class ZhihuController {
             title: '',
             meun_id: 0,
             article_id: '',
-            introduction: ''
+            introduction: '',
+            date: new Date() as Date
         }  
         if (url.includes('zhuanlan.zhihu')) {
             //const { articleThumbnail, title, meun_id, article_id, introduction } = 
-            const { articleThumbnail, title, meun_id, article_id, introduction } = await this.ZhihuService.zhuanlan(zhihuDTO)             
-            param = { thumbnail:articleThumbnail, title, meun_id, article_id, introduction }
+            const { articleThumbnail, title, meun_id, article_id, introduction, date } = await this.ZhihuService.zhuanlan(zhihuDTO)             
+            param = { thumbnail: articleThumbnail, title, meun_id, article_id, introduction, date }
         }else{
-            const {articleThumbnail, title, meun_id, article_id, introduction } = await this.ZhihuService.collection(zhihuDTO) 
-            param = { thumbnail: articleThumbnail, title, meun_id, article_id, introduction }
+            const { articleThumbnail, title, meun_id, article_id, introduction, date } = await this.ZhihuService.collection(zhihuDTO) 
+            param = { thumbnail: articleThumbnail, title, meun_id, article_id, introduction, date }
         }
         const result = await this.zhihu_list.list(param) 
         throw new HttpException(result, HttpStatus.OK);

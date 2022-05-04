@@ -23,7 +23,7 @@
 .tuijian ul:after { content: ""; position: absolute; background: #fff; width: 100%; height: 1px; bottom: 20px; left: 0; }
 .tuijian li { border-bottom: #ccc 1px solid; overflow: hidden; padding:0 0.5%;width: 48%; -moz-transition: all .5s ease; -webkit-transition: all .5s ease; transition: all .5s ease; }
 .tpic { width: 100%; height: 200px; overflow: hidden; border-radius: 10px; background: #CCC; }
-.tpic img { display: inline-block; width: 100%;height:100%;object-fit: cover; height: auto; vertical-align: middle; transition: all .5s ease-out .1s; }
+.tpic img { display: inline-block; width: 100%;height:100%;object-fit:cover; height: auto; vertical-align: middle; transition: all .5s ease-out .1s; }
 .tuijian li b { display: block; width: 100%; overflow: hidden; height: 30px; line-height: 30px; margin: 10px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
 .tuijian li span { color: #999; overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3; font-size: 14px;height: 62px; }
 a.ayulan { float: right; color: #333; }

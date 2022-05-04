@@ -4,69 +4,67 @@
     {{> partial}}
 {{/extend}} 
 <article>
-    <div class="leftbox">
-        <div class="blank"></div>
-        <div class="infos">
-            <div class="newsview">
-                <h2 class="intitle">您现在的位置是：<a href="/">网站首页</a>>>><span>{{title}}</span></h2>
-                <h3 class="news_title">{{article.title}}</h3>
-                <div class="news_author"><span class="au02 date">{{article.date}}</span></div>
-                <div class="news_infos">
-                    {{{article.content}}}
+    <!--lbox begin-->
+    <div class="lbox">        
+        <div class="content_box whitebg">    
+            <h2 class="htitle"></h2>        
+            <h1 class="con_tilte">{{article.title}}</h1>
+            <p class="bloginfo"><span class="date">{{article.date}}</span></p>
+            {{!-- <span>
+                <script src="js/count.js" type="text/javascript" language="javascript"></script>人已围观
+            </span> --}}
+            <div class="con_text">
+               {{{article.content}}}
+                <div class="nextinfo">
+                    {{#if takePage.pre.id}}
+                    <p>上一篇：<a href="/detail/{{takePage.pre.article_id}}">{{takePage.pre.title}}</a></p>
+                    {{/if}}
+                    {{#if takePage.next.id}}
+                    <p>下一篇：<a href="/detail/{{takePage.next.article_id}}">{{ takePage.next.title }}</a></p>
+                    {{/if}}
                 </div>
             </div>
-        </div>    
-        <div class="nextinfo">
-            {{#if takePage.pre.id}}
-            <p>上一篇：<a href="/detail/{{takePage.pre.article_id}}">{{takePage.pre.title}}</a></p>
-            {{/if}}
-            {{#if takePage.next.id}}
-            <p>下一篇：<a href="/detail/{{takePage.next.article_id}}">{{ takePage.next.title }}</a></p>
-            {{/if}}
         </div>
-        <div class="otherlink">
-            <h2>相关文章</h2>
-            <ul>
-                {{#each recommend}}
+        <div class="whitebg">
+            <h2 class="htitle">隨機圖文</h2>
+            <ul class="xiangsi">
+                {{#each matchArticle}}
                 <li>
                     <a href="/detail/{{list_article_id}}">
-                        <img src="{{list_thumbnail}}" alt="">
+                    <i><img src="{{list_thumbnail}}" alt=""></i>
                         <p>{{list_title}}</p>
+                        <span>{{list_introduction}}</span>
                     </a>
-                </li>            
-                {{/each}}   
-            </ul>
-        </div>
-    </div>
-    <div class="rightbox">
-        <div class="paihang">
-            <h2 class="ab_title">點擊排行</h2>
-            <ul>
-                {{#each topArticle}}
-                <li>
-                    <b>
-                        <a href="/detail/{{list_article_id}}">
-                            <img src="{{list_thumbnail}}" alt="">
-                        </a>
-                    </b>
-                    <p>{{list_title}}</p>
                 </li>
-                {{/each}}
+               {{/each}}
             </ul>
         </div>
     </div>
+    <!--lbox end-->
+<div class="rbox">
+    <div class="whitebg paihang">
+        <h2 class="htitle">點擊排行榜</h2>
+        <ul>
+            {{#each topArticle}}
+            <li><i></i><a href="/detail/{{list_article_id}}">{{list_title}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="whitebg tuijian">
+        <h2 class="htitle">猜你喜歡</h2>
+        <ul>
+            {{#each hotArticle}}
+            <li>
+                <a href="/detail/{{list_article_id}}">
+                    <i>
+                        <img src="{{list_thumbnail}}">
+                    </i>
+                    <p>{{ list_title }}</p>
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
 </article>
-<script>
-    function timestampToTime(timestamp) {
-        var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-        var Y = date.getFullYear() + '-';
-        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-        var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
-        return Y + M + D;
-    }
 
-    var date = document.querySelector('.date').innerText
-    var t = timestampToTime(date)
-    {{!-- var t = date.toLocaleString('chinese', { hour12: false }).replace(/\//g, '-') --}}
-    document.querySelector('.date').innerText = t
-</script>

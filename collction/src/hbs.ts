@@ -12,7 +12,6 @@ export function hbsView(app:
     app.setViewEngine('hbs');
     // 设置hbs模板，局部引用
     hbs.registerHelper('extend', (name: string | number, context: { fn: (arg0: any) => any, hash: any, data:any }) => {
-        console.log('extend', context)
         // options.name: 当前helper的名称, 例如: debug
     // options.hash[hashKey1] === hashValue1
     // options.hash[hashKey2] === hashValue2
@@ -31,7 +30,6 @@ export function hbsView(app:
     // )
     })
     hbs.registerHelper('block', (name: any, context: any) => {
-        console.log('block',context)
         if(context.hash.article){
             if (context.hash.article.id){
                 const { title, article_id, thumbnail } = context.data.root.article

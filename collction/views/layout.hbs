@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,58 +8,95 @@
   {{{block "meta" article=article}}}
   <title>{{title}}</title>
   <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/index.css">
+  {{!-- <link rel="stylesheet" href="/css/index.css"> --}}
   <link rel="stylesheet" href="/css/m.css">
-  <script src="/js/jquery-ias.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7649165793800344"
+    crossorigin="anonymous"></script>
+  <script src="/js/jquery-1.8.3.min.js"></script>
+  <script src="/js/comm.js"></script>
   <script src="/js/lazy.js"></script>
   <script>
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
       var hm = document.createElement("script");
       hm.src = "https://hm.baidu.com/hm.js?11ff46d54d33f388244a143cf64bd435";
-      var s = document.getElementsByTagName("script")[0]; 
+      var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
-</script>
+  </script>
 
 </head>
+
 <body>
-  
-  <header>
-    <div id="mnav">
-      <div class="logo"><a href="/">知識百科</a></div>
+
+  <!--top begin-->
+  <header id="header">
+    <div class="navbox">
       <h2 id="mnavh"><span class="navicon"></span></h2>
-      <ul id="starlist">
-        {{#each meunList}}
-          <li><a href="/list/{{id}}">{{ name }}</a></li>
-        {{/each}}
-      </ul>
+      <div class="logo"><a href="/">知識百科</a></div>
+      <nav>
+        <ul id="starlist">
+          <li><a href="/">首頁</a></li>
+          {{#each meunList}}
+          <li><a href="/list/{{id}}">{{name}}</a></li>
+          {{/each}}
+        </ul>
+      </nav>
     </div>
-    <script>
-      window.onload = function () {
-        var oH2 = document.getElementById("mnavh");
-        var oUl = document.getElementById("starlist");
-        oH2.onclick = function () {
-          var style = oUl.style;
-          style.display = style.display == "block" ? "none" : "block";
-          oH2.className = style.display == "block" ? "open" : ""
-        }
-      }
-    </script>
   </header>
-  <div class="line46"></div>
+  
+  <!--top end-->
   {{{body}}}
   <footer>
-    <p>©2022 www.health-longevity.top. All Rights Reserved.</p>
+    <div class="box">
+      <div class="endnav">
+        <style>
+          .footer-ul {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+          }
+        
+          .footer-ul li {
+            margin: 0 10px
+          }
+        
+          .footer-ul li a {
+            color: #fff
+          }
+        </style>
+        <ul class="footer-ul">
+          <li class="about now"><a href="/about" onclick="shouabout('about')">關於我們</a></li>
+          <li class="policy"><a href="/policy" onclick="shouabout('policy')">政策與安全</a></li>
+          <li class="copyright"><a href="/copyright" onclick="shouabout('copyright')">版權</a></li>
+          <li class="privacy"><a href="/privacy" onclick="shouabout('privacy')">隱私權</a></li>
+          <li class="terms"><a href="/terms" onclick="shouabout('terms')">條款</a></li>
+        </ul>
+        <p>©2022 www.health-longevity.top. All Rights Reserved.</p>
+      </div>
+    </div>
+    <a href="#">
+      <div class="top"></div>
+    </a>
   </footer>
   <script>
     $(function () {
-        $("img.lazy").lazyload({ effect: "fadeIn" });
+      $("img.lazy").lazyload({ effect: "fadeIn" });
     });
     let ch = window.innerHeight
     let hh = document.querySelector('header').clientHeight
     let fh = document.querySelector('footer').clientHeight
-    document.querySelector('article').style.minHeight = ch - hh - fh - 1 + 'px'
+    document.querySelector('article').style.minHeight = ch - hh - fh - 1 + 'px'    
+  </script>
+  <script type="text/javascript" src="/js/theia-sticky-sidebar.min.js"></script>
+  <script type="text/javascript">
+    jQuery(document).ready(function () {
+      jQuery('.rbox').theiaStickySidebar({
+        // Settings
+        additionalMarginTop: 30
+      });
+    });
   </script>
 </body>
+
 </html>

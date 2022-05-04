@@ -1,58 +1,58 @@
+<!--top end-->
 <article>
-    <div class="leftbox">
-        <div class="newblogs">
-            <h2 class="hometitle">{{title}}</h2>
+    <!--lbox begin-->
+    <div class="lbox">
+        <div class="whitebg lanmu">
+            <h1>{{title}}</h1>
+        </div>
+        <div class="whitebg bloglist">
+            <h2 class="htitle">最近更新</h2>
             <ul>
                 {{#each list}}
-                    <li>
-                        <h3 class="blogtitle"><a href="/detail/{{ article_id }}">{{ title }}</a></h3>
-                        <div class="bloginfo">
-                            <span class="blogpic">
-                                <a href="/detail/{{ article_id }}" title=""><img src="{{thumbnail}}"></a>
-                            </span>
-                            <p>{{introduction}}</p>
-                        </div>
-                        <div class="autor">
-                            {{!-- <span class="lm f_l"><a href="/">杨青个人博客</a></span> --}}
-                            <span class="f_r"><a href="/detail/{{ article_id }}" class="more">阅读原文</a></span>
-                        </div>
-                    </li>
+                <li>
+                    <div class="blogpic imgscale">
+                        <a href="/detail/{{article_id}}" class="article-a">
+                            <img src="{{thumbnail}}" alt="{{title}}">
+                        </a>
+                    </div>
+                    <div class="infor">
+                        <a href="/detail/{{article_id}}" class="article-a">
+                            <h3 class="blogtitle">{{title}}</h3>
+                            <p class="blogtext">{{ introduction }}</p>
+                        </a>
+                        <p class="bloginfo">
+                            <span class="date">{{date}}</span>
+                        </p>
+                    </div>
+                </li>
                 {{/each}}
-                
             </ul>
         </div>
+        <!--bloglist end-->
     </div>
-    <div class="rightbox">
-        <div class="paihang">
-            <h2 class="ab_title"><a href="/">點擊排行</a></h2>
+    <div class="rbox">
+        <div class="whitebg paihang">
+            <h2 class="htitle">點擊排行榜</h2>
             <ul>
-                {{#each fiveList.list}}
+                {{#each clicks}}
+                <li><i></i><a href="/detail/{{list_article_id}}">{{list_title}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="whitebg tuijian">
+            <h2 class="htitle">猜你喜歡</h2>
+            <ul>
+                {{#each loves}}
                 <li>
-                    <b><a href="/detail/{{list_article_id}}">{{list_title}}</a></b>
-                    <p>
+                    <a href="/detail/{{list_article_id}}">
                         <i>
-                            <img src="{{list_thumbnail}}" alt="">
+                            <img src="{{list_thumbnail}}">
                         </i>
-                        {{list_introduction}}
-                    </p>
+                        <p>{{ list_title }}</p>
+                    </a>
                 </li>
                 {{/each}}
             </ul>
         </div>
     </div>
 </article>
-<script>
-  
-    function lazyImg() {
-        $(function () {
-            $("img.lazy").lazyload({ effect: "fadeIn" });
-        });
-    }
-    function addHtml(data) {
-        var id = data.zhihu_list_article_id,
-            title = data.zhihu_list_title,
-            thumbnail = data.zhihu_list_thumbnail
-        var oHtml = '<div class="list-item io"><a href="/detail/' + id + '"><h3>' + title + '</h3><img class="lazy" data-original="' + thumbnail + '" alt="' + title + '"></a></div>'
-        $('.main').append(oHtml)
-    }
-</script>

@@ -1,61 +1,101 @@
+<!--top end-->
 <article>
-    <div class="blank"></div>
-    <div class="leftbox">
-        <div class="tuijian">
-            <h2 class="hometitle">特別推薦</h2>
+    <!--lbox begin-->
+    <div class="lbox">
+        <!--banbox begin-->
+        <div class="banbox">
+            <div class="banner">
+                <div id="banner" class="fader">
+                    {{#each lunbo}}
+                    <li class="slide"><a href="/detail/{{ list_article_id }}"><img src="{{list_thumbnail}}"></a></li>                  
+                    {{/each}}
+                    <div class="fader_controls">
+                        <div class="page prev" data-target="prev"></div>
+                        <div class="page next" data-target="next"></div>
+                        <ul class="pager_list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--banbox end-->
+
+        <div class="zhuanti whitebg">
+            <h2 class="htitle">特別推薦</h2>
             <ul>
-                {{#each recommend }}
-                    <li>
-                        <a href="/detail/{{ list_article_id }}">
-                            <div class="tpic"><img src="{{list_thumbnail}}"></div>
-                            <b>{{list_title}}</b>
-                            <span>{{list_introduction}}</span>
+                {{#each recommend}}
+                <li> 
+                    <i class="ztpic">
+                        <a href="/detail/{{list_article_id}}">
+                            <img src="{{list_thumbnail}}">
                         </a>
-                    </li>
-                {{/each}}
-            </ul>
-        </div>
-        <div class="newblogs">
-            <h2 class="hometitle">最近文章</h2>
-            <ul id="list">
-                {{#each newArticle}}
-                <li>
-                    <h3 class="blogtitle"><a href="/detail/{{ list_article_id }}">{{ list_title }}</a></h3>
-                    <div class="bloginfo">
-                        <span class="blogpic">
-                            <a href="/detail/{{ list_article_id }}" title=""><img src="{{list_thumbnail}}"></a>
-                        </span>
-                        <p>{{list_introduction}}</p>
-                    </div>
-                    <div class="autor">
-                        {{!-- <span class="lm f_l"><a href="/">杨青个人博客</a></span> --}}
-                        <span class="f_r"><a href="/" class="more">阅读原文</a></span>
-                    </div>
-                </li>    
-                {{/each}}     
-            </ul>
-        </div>
-    </div>
-    <div class="rightbox">        
-        <div class="paihang">
-            <h2 class="ab_title">點擊排行</h2>
-            <ul>
-                {{#each topArticle}}
-                <li>
-                    <b><a href="/detail/{{list_article_id}}">{{list_title}}</a></b>
-                    <p>
-                        <i>
-                            <img src="{{list_thumbnail}}" alt="">
-                        </i>
-                        {{list_introduction}}
-                    </p>
-                </li>  
+                    </i>
+                    <b>{{ list_title }}</b>
+                    <span>{{list_introduction}}</span>
+                </li> 
                 {{/each}}             
             </ul>
         </div>
+        {{!-- <div class="ad whitebg">
+            <div class="pcd_ad">
+                <table width="860" height="90" bgcolor="#D10101">
+                    <tbody>
+                        <tr align="center">
+                            <td style="text-align: center;color: #fff;line-height: 90px;">广告位</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> --}}
+        <div class="whitebg bloglist">
+            <h2 class="htitle">最新文章</h2>
+            <ul>
+                {{#each newArticle}}
+                <li>
+                    <div class="blogpic imgscale">
+                        <a href="/detail/{{list_article_id}}" class="article-a">
+                            <img src="{{list_thumbnail}}" alt="{{list_title}}">
+                        </a>
+                    </div>
+                    <div class="infor">
+                        <a href="/detail/{{list_article_id}}" class="article-a">
+                            <h3 class="blogtitle">{{list_title}}</h3>
+                            <p class="blogtext">{{ list_introduction }}</p>
+                        </a>
+                        <p class="bloginfo">
+                            <span>【<a href="/list/{{list_meun_id}}">{{ meunName }}</a>】</span>
+                            <span class="date">{{list_date}}</span>
+                        </p>
+                    </div>
+                </li>
+                {{/each}}            
+            </ul>
+        </div>
+        <!--bloglist end-->
+    </div>
+    <div class="rbox">
+        <div class="whitebg paihang">
+            <h2 class="htitle">點擊排行榜</h2>
+            <ul>
+                {{#each topArticle}}
+                <li><i></i><a href="/detail/{{list_article_id}}">{{list_title}}</a></li>               
+                {{/each}}
+            </ul>
+        </div>
+        <div class="whitebg tuijian">
+            <h2 class="htitle">猜你喜歡</h2>           
+            <ul>
+                {{#each hotArticle}}
+                <li>
+                    <a href="/detail/{{list_article_id}}">
+                        <i>
+                            <img src="{{list_thumbnail}}">
+                        </i>
+                        <p>{{ list_title }}</p>
+                    </a>
+                </li>  
+                {{/each}}            
+            </ul>
+        </div>    
     </div>
 </article>
-
-
-
-

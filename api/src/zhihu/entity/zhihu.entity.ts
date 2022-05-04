@@ -39,4 +39,6 @@ export class list {
     @Column()
     thumbnail: string
 
+    @CreateDateColumn()
+    date: Date 
 }
