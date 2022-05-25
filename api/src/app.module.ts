@@ -7,6 +7,7 @@ import { ZhihuModule } from './zhihu/zhihu.module';
 import { UserModule } from './user/user.module';
 import { article, list } from './zhihu/entity/zhihu.entity'
 import { DouyinModule } from './douyin/douyin.module';
+import { BaijiahaoModule } from './baijiahao/baijiahao.module';
 import connectMysql from './connectMysql';
 
 console.log(connectMysql)
@@ -18,7 +19,8 @@ console.log(connectMysql)
     ZhihuModule,
     UserModule,
     TypeOrmModule.forFeature([list, article]),
-    DouyinModule
+    DouyinModule,
+    BaijiahaoModule
   ],
   controllers: [AppController],
   providers: [],
