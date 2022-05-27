@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@wangeditor/editor": "^5.1.0",
+    "@wangeditor/editor-for-vue": "^5.1.11",
     "axios": "^0.26.1",
     "default-passive-events": "^2.0.0",
     "element-plus": "^2.1.8",

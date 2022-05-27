@@ -82,7 +82,24 @@ const routes = [
         component: () => import('@src/views/meun/index.vue')
       }
     ]
-  }
+  },
+  {
+    path:'/edit',
+    component: layout,
+    children:[
+      {
+        path:'',
+        name:'editArticle',
+        meta: {
+          title: "富文本",
+          icon: 'el-icon-files',
+          show: true,
+          index: 1,
+        },
+        component:() => import('@src/views/editArticle/index.vue')
+      }
+    ]
+  },
 ]
 export default createRouter({
   history: createWebHashHistory(),

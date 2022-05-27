@@ -1,12 +1,14 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { BaijiahaoService } from './baijiahao.service'
 
-@Controller('api/baijiahao')
+@Controller('api/baijia')
 export class BaijiahaoController {
-  constructor() { }
+  constructor(private baijia: BaijiahaoService){}
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  async dList() {
-    return 'ddd'
+  async getBaijia(@Query() query) {
+    // this.baijia.collection(query)
+    return this.baijia.collection(query)
   }
 }

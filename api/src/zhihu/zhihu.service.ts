@@ -6,7 +6,7 @@ import { uploadQiniu } from '../utils/uploadQiniu'
 import * as cheerio from 'cheerio';
 import { Repository, Entity } from 'typeorm';
 import  { InjectRepository } from '@nestjs/typeorm'
-import { article, list } from './entity/zhihu.entity';
+import { article, list } from '../entity/article.entity';
 import { guid } from '../utils/GUID'
 import { translate } from 'src/utils/opencc';
 import { categroy } from '../utils/categroy'
