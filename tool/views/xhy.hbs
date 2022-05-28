@@ -1,0 +1,35 @@
+<div class="page ">
+  <h5>歇後語</h5>
+  <div class="search-ip">
+    <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
+      <label for="inputPassword2" class="sr-only">請輸入关键词：</label>
+      <input type="text" class="form-control" id="inputPassword2" placeholder="請輸入关键词：">
+    </div>
+    <button class="btn btn-primary mb-2" onclick="getQuest()">查询</button>
+  </div>
+  
+</div>
+<script>
+  function getQuest() {
+    var v = $('#inputPassword2').val()
+    if (!v) {
+      return
+    }
+    var param = { keyword: v, pagenum: 1, pagesize: 2 }
+    $.ajax({
+      type: "post",
+      url: "/xhy",
+      data: param,
+      dataType: "json",
+      success: function (res) {
+        console.log(res)
+        var data = res.result
+        resultMsg(data)
+      }
+    });
+  }
+  function resultMsg(data) {
+    $('.request').html(data.content)
+    $('.requestion').css("display", 'block')
+  }
+</script>

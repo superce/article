@@ -1,0 +1,82 @@
+<div class="page phone">
+  <h5>手機號碼歸屬地查詢</h5>
+  <div class="form-inline">
+    <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
+      <label for="inputPassword2" class="sr-only">手機號碼：</label>
+      <input type="text" class="form-control" id="inputPassword2" placeholder="手機號碼">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2" onclick="getPhone()">查詢</button>
+  </div>
+  <table style="display: none">
+    <thead>
+      <tr>
+        <th colspan="2">
+          <p class="search-result"></p>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <p>所属省份：</p>
+        </td>
+        <td>
+          <p class="province"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>所属城市：</p>
+        </td>
+        <td>
+          <p class="city"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>城市区号：</p>
+        </td>
+        <td>
+          <p class="areacode"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>号码类型：</p>
+        </td>
+        <td>
+          <p class="company"></p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  function getPhone() {
+      var ip = $('#inputPassword2').val()
+      if (!ip) {
+        return
+      }
+      var param = { phone: ip }
+      console.log(param)
+      $.ajax({
+        type: "get",
+        url: "/phone",
+        data: param,
+        dataType: "json",
+        success: function (res) {
+          console.log(res)
+          var data = res.result
+          resultMsg(data)
+        }
+      });
+    }
+    function resultMsg(data) {
+      $('.search-result').text(data.shouji)
+      $('.province').text(data.province)
+      $('.city').text(data.city)
+      $('.areacode').text(data.areacode)
+      $('.company').text(data.company)
+      $('table').css("display", 'block')
+    }
+</script>

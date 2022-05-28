@@ -1,0 +1,94 @@
+<div class="page weight">
+  <h5>標準體重計算器</h5>
+  <div class="row">
+    <div class="col-md-2 mb-3">
+      <label for="gender">性別</label>
+      <select class="custom-select d-block w-100" id="gender">
+        <option value="male">男性</option>
+        <option value="female">女性</option>
+      </select>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="zip">身高(CM)</label>
+      <input type="text" class="form-control" id="height" placeholder="身高">
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="zip">體重(KG)</label>
+      <input type="text" class="form-control" id="weight" placeholder="體重">
+    </div>
+    <div class="col-md-2 mb-3" style="display: flex;flex-direction: column-reverse">
+      <button class="btn btn-primary" onclick="getWeight()">查詢</button>
+    </div>
+  </div>
+  <div>
+    <table style="display: none;">
+      <thead>
+        <tr>
+          <th colspan="2">
+            <p class="search-result search-result-ip">標準體重計算器</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p>BMI指数</p>
+          </td>
+          <td class="bmi"></td>
+        </tr>
+        <tr>
+          <td>正常BMI指数</td>
+          <td class="normbmi"></td>
+        </tr>
+        <tr>
+          <td>理想体重</td>
+          <td class="idealweight"></td>
+        </tr>
+        <tr>
+          <td>水平</td>
+          <td class="level"></td>
+        </tr>
+        <tr>
+          <td>相关疾病发病的危险</td>
+          <td class="danger"></td>
+        </tr>
+        <tr>
+          <td>是否正常</td>
+          <td class="status"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  function getWeight() {
+    var sex = $('#gender').val()
+    var height = $('#height').val()
+    var weight = $('#weight').val()
+    console.log(sex, height, weight)
+    if (!sex || !height || !weight) {
+      return
+    }
+    var param = { sex: sex, height: height, weight: weight }
+    $.ajax({
+      type: "post",
+      url: "/weight",
+      data: param,
+      dataType: "json",
+      success: function (res) {
+        var data = res.result
+        resultMsg(data)
+      }
+    });
+  }
+  function resultMsg(data) {
+    $('.bmi').text(data.bmi)
+    $('.normbmi').text(data.normbmi)
+    $('.idealweight').text(data.idealweight)
+    $('.level').text(data.level)
+    $('.danger').text(data.danger)
+    var status = data.status === 1 ? '正常' : '異常'
+    $('.status').text(status)
+    $('table').css("display", 'block')
+  }
+</script>

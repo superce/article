@@ -1,0 +1,64 @@
+<div class="page ip">
+  <h5>IP地址查詢</h5>
+  <div class="search-ip">
+    <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
+      <label for="inputPassword2" class="sr-only">IP地址：</label>
+      <input type="text" class="form-control" id="inputPassword2" placeholder="ip地址">
+    </div>
+    <button class="btn btn-primary mb-2" onclick="getip()">查詢</button>
+  </div>
+  <table style="display: none;">
+    <thead>
+      <tr>
+        <th colspan="2">
+          <p class="search-result search-result-ip"></p>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <p>國家</p>
+        </td>
+        <td class="country">
+        </td>
+      </tr>
+      <tr>
+        <td>城市</td>
+        <td class="location"></td>
+      </tr>
+      <tr>
+        <td>網絡類型</td>
+        <td class="type"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  function getip() {
+    var ip = $('#inputPassword2').val()
+    if(!ip){
+      return 
+    }
+    var param = { ip: ip }
+    console.log(param)
+    $.ajax({
+      type: "get",
+      url: "/ip",
+      data: param,
+      dataType: "json",
+      success: function (res) {
+        console.log(res)
+        var data = res.result
+        resultMsg(data)
+      }
+    });
+  }
+  function resultMsg(data){
+    $('.search-result-ip').text(data.ip)
+    $('.country').text(data.country)
+    $('.location').text(data.area)
+    $('.type').text(data.type)
+    $('table').css("display", 'block')
+  }
+</script>

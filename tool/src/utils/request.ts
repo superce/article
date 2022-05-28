@@ -24,6 +24,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 // 请求拦截器
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
+    console.log(config)
     return config
   },
   (err) => Promise.reject(err)
@@ -95,15 +96,14 @@ function request(arr: IAxiosData) {
 export const apiPostFunction = async (url:string, data?: any) => {
   const res = await request({ url, method: 'post', json: true, data });
   console.log(res)
-  if (res.error_code === 0) {
+  if (res.status === 0) {
       return Promise.resolve(res);
   }
   return Promise.reject(res);
 }
 export const apiGetFunction = async (url: string, data?: any) => {
   const res = await request({ url,method:'get', json: true,params:data});
-  console.log(res.error_code)
-  if (res.error_code === 0) {
+  if (res.status === 0) {
     console.log('返回结果', res)
     return Promise.resolve(res);
   }

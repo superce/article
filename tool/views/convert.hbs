@@ -1,0 +1,35 @@
+<div class="page">
+  <h5>汉字简体繁体转换</h5>
+  <div class="font">
+    <textarea id="inputPassword2" cols="30" rows="10"></textarea>
+    <div class="button">
+      <button type="button" class="btn btn-primary" onclick="getFont('2s')">转成简体</button>
+      <button type="button" class="btn btn-secondary" onclick="getFont('2t')">2t转成繁体</button>
+      <button type="button" class="btn btn-success" onclick="getFont('2h')">2h转成火星文</button>
+    </div>
+    <textarea id="font-convert" cols="30" rows="10" disabled></textarea>
+  </div>
+</div>
+<script>
+  function getFont(font) {
+    var ip = $('#inputPassword2').val()
+    if (!ip) {
+      return
+    }
+    var param = { content: ip, type: font }
+    console.log(param)
+    $.ajax({
+      type: "post",
+      url: "/convert",
+      data: param,
+      dataType: "json",
+      success: function (res) {
+        var data = res.result
+        resultMsg(data)
+      }
+    });
+  }
+  function resultMsg(data) {
+    $('#font-convert').val(data.rcontent)        
+  }
+</script>
