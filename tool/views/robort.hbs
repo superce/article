@@ -1,5 +1,5 @@
 <div class="page robort">
-  <h5>智能問答機器人</h5>
+  <h5>智能问答机器人</h5>
   <div class="search-ip">
     <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
       <label for="inputPassword2" class="sr-only">請輸入問題：</label>
@@ -61,14 +61,14 @@
     if (!v) {
       return
     }
-    var param = { question: v }
+    var t = '{{t}}'
+    var param = { question: v, t: t }
     $.ajax({
       type: "post",
       url: "/robort",
       data: param,
       dataType: "json",
       success: function (res) {
-        console.log(res)
         var data = res.result
         resultMsg(data)
       }

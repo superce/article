@@ -1,5 +1,5 @@
-<div class="page ">
-  <h5>歇後語</h5>
+<div class="page xhy">
+  <h5>歇后语</h5>
   <div class="search-ip">
     <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
       <label for="inputPassword2" class="sr-only">請輸入关键词：</label>
@@ -7,29 +7,73 @@
     </div>
     <button class="btn btn-primary mb-2" onclick="getQuest()">查询</button>
   </div>
-  
+  <div class="table">
+    
+  </div>
+  <div class="about-key">
+    <ul>
+      <li onclick="getQuest('八仙过海')">八仙过海</li>
+      <li onclick="getQuest('泥菩萨过江')">泥菩萨过江</li>
+      <li onclick="getQuest('蚕豆开花')">蚕豆开花</li>
+      <li onclick="getQuest('孔夫子搬家')">孔夫子搬家</li>
+      <li onclick="getQuest('打破砂锅')">打破砂锅</li>
+      <li onclick="getQuest('和尚打伞')">和尚打伞</li>
+      <li onclick="getQuest('虎落平阳')">虎落平阳</li>
+      <li onclick="getQuest('画蛇添足')">画蛇添足</li>
+      <li onclick="getQuest('箭在弦上')">箭在弦上</li>
+      <li onclick="getQuest('井底青蛙')">井底青蛙</li>
+      <li onclick="getQuest('大海捞针')">大海捞针</li>
+      <li onclick="getQuest('竹篮打水')">竹篮打水</li>
+      <li onclick="getQuest('打开天窗')">打开天窗</li>
+      <li onclick="getQuest('船到桥头')">船到桥头</li>
+      <li onclick="getQuest('飞蛾扑火')">飞蛾扑火</li>
+      <li onclick="getQuest('百米赛跑')">百米赛跑</li>
+      <li onclick="getQuest('拔苗助长')">拔苗助长</li>
+      <li onclick="getQuest('仇人相见')">仇人相见</li>
+      <li onclick="getQuest('芝麻开花')">芝麻开花</li>
+      <li onclick="getQuest('新官上任')">新官上任</li>
+      <li onclick="getQuest('瞎子点灯')">瞎子点灯</li>
+      <li onclick="getQuest('兔子尾')">兔子尾</li>
+      <li onclick="getQuest('王婆卖瓜')">王婆卖瓜</li>
+      <li onclick="getQuest('老虎拉车')">老虎拉车</li>
+      <li onclick="getQuest('麻雀虽小')">麻雀虽小</li>
+      <li onclick="getQuest('墙上茅草')">墙上茅草</li>
+      <li onclick="getQuest('八仙聚会')">八仙聚会</li>
+      <li onclick="getQuest('霸王敬酒')">霸王敬酒</li>
+    </ul>
+  </div>
 </div>
 <script>
-  function getQuest() {
-    var v = $('#inputPassword2').val()
-    if (!v) {
-      return
+  function getQuest(search) {
+    var v = ''
+    if(search){
+      v = search
+    }else{
+      v = $('#inputPassword2').val()
+      if (!v) {
+        return
+      }
     }
-    var param = { keyword: v, pagenum: 1, pagesize: 2 }
+    var t = '{{t}}'
+    var param = { keyword: v, pagenum: 1, pagesize: 2, t: t }
     $.ajax({
       type: "post",
       url: "/xhy",
       data: param,
       dataType: "json",
       success: function (res) {
-        console.log(res)
-        var data = res.result
-        resultMsg(data)
+        $('.table').children().remove()
+        if(res.status === 0){
+          var data = res.result.list             
+          for(var i = 0;i < data.length;i++){
+            var oDiv = '<div class="result"><p>' + data[i].content + '：' + '<span>' + data[i].answer + '</span></div>'
+            $('.table').append(oDiv)               
+          }       
+        }else{          
+          var msg = '<p>' + res.msg + '</p>'
+          $('.table').append(msg)
+        }
       }
     });
-  }
-  function resultMsg(data) {
-    $('.request').html(data.content)
-    $('.requestion').css("display", 'block')
   }
 </script>

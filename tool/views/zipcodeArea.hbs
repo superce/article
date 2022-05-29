@@ -1,0 +1,58 @@
+<div class="page">
+  <h5>区域查询</h5>
+  <div class="search-ip">
+    <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
+      <label for="inputPassword2" class="sr-only">地址</label>
+      <input type="text" class="form-control" id="inputPassword2" placeholder="請輸入地址：">
+    </div>
+    <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
+      <label for="inputPassword2" class="sr-only">請輸入区域ID：</label>
+      <input type="text" class="form-control" id="inputPassword3" placeholder="請輸入区域ID：">
+    </div>
+    <button class="btn btn-primary mb-2" onclick="getQuest()">查询</button>
+  </div>
+  <div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>省份</th>
+          <th>城市</th>
+          <th>区</th>
+          <th>地址</th>
+          <th>邮编</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  function getQuest(search) {
+    var v = $('#inputPassword2').val() 
+    var areaid = $('#inputPassword3').val()
+    if (!v || !areaid) {
+      return
+    }
+    var t = '{{t}}'
+    var param = { address: v, areaid: areaid, t: t }
+    $.ajax({
+      type: "post",
+      url: "/zipcode",
+      data: param,
+      dataType: "json",
+      success: function (res) {
+        if (res.status === 0) {
+          var data = res.result
+          for (var i = 0; i < data.length; i++) {
+            var oDiv = '<tr><td>' + data[i].province + '</td><td>' + data[i].city + '</td><td>' + data[i].town + '</td><td>' + data[i].address + '</td><td>' + data[i].zipcode + '</td></tr>'
+            $('tbody').append(oDiv)
+          }
+        }else{
+          alert(res.msg)
+        }
+      }
+    });
+  }
+</script>

@@ -1,7 +1,7 @@
 <div class="page idcard">
-  <h5>身份證查詢驗證信息</h5>
+  <h5>身份证信息查询</h5>
   <div class="search-ip">
-    <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
+    <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;width: 300px">
       <label for="inputPassword2" class="sr-only">請輸入15位或者18位身份證號</label>
       <input type="text" class="form-control" id="inputPassword2" placeholder="請輸入15位或者18位身份證號">
     </div>
@@ -56,15 +56,14 @@
       alert('身份证信息不正确')
       return
     }
-    var param = { idcard: idCard }
-    console.log(param)
+    var t = '{{t}}'
+    var param = { idcard: idCard, t: t }
     $.ajax({
       type: "post",
       url: "/idcard",
       data: param,
       dataType: "json",
       success: function (res) {
-        console.log(res)
         var data = res.result
         resultMsg(data)
       }

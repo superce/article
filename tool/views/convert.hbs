@@ -16,8 +16,8 @@
     if (!ip) {
       return
     }
-    var param = { content: ip, type: font }
-    console.log(param)
+    var t = '{{t}}'
+    var param = { content: ip, type: font, t: t }
     $.ajax({
       type: "post",
       url: "/convert",

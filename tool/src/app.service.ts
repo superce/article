@@ -9,6 +9,13 @@ export class AppService {
     this.apiUrl = 'https://api.jisuapi.com'
     this.appkey = "f480c3bdf019fe5f"
   }
+  getTime(): string {
+    const t: string = new Date().getTime().toString()
+    const n = 'tool'
+    const add = `${t}.${n}`
+    const b = btoa(add)
+    return b
+  }
   async getIp(ip: string) {
     try {
       const url = this.apiUrl + '/ip/location'      
@@ -17,7 +24,7 @@ export class AppService {
       return result
     } catch (err) {
       console.log('err', err)
-      throw new HttpException(err, HttpStatus.BAD_REQUEST)
+      throw new HttpException(err, HttpStatus.OK)
     }
   }
   async getPhoneLocation(shouji: string){
@@ -28,7 +35,7 @@ export class AppService {
       return result
     } catch (err) {
       console.log('err', err)
-      throw new HttpException(err, HttpStatus.BAD_REQUEST)
+      throw new HttpException(err, HttpStatus.OK)
     }
   }
   async fontconvert({ content, type }) {
@@ -39,7 +46,7 @@ export class AppService {
       return result
     } catch (err) {
       console.log('err', err)
-      throw new HttpException(err, HttpStatus.BAD_REQUEST)
+      throw new HttpException(err, HttpStatus.OK)
     }
   }
   // 身高體重計算
@@ -52,7 +59,7 @@ export class AppService {
       return result
     } catch (err) {
       console.log('err', err)
-      throw new HttpException(err, HttpStatus.BAD_REQUEST)
+      throw new HttpException(err, HttpStatus.OK)
     }
   }
   // 智能問答機器人
@@ -65,7 +72,7 @@ export class AppService {
       return result
     } catch (err) {
       console.log('err', err)
-      throw new HttpException(err, HttpStatus.BAD_REQUEST)
+      throw new HttpException(err, HttpStatus.OK)
     }
   }
   // 周公解夢
@@ -76,7 +83,7 @@ export class AppService {
       return result
     } catch (err) {
       console.log('err', err)
-      throw new HttpException(err, HttpStatus.BAD_REQUEST)
+      throw new HttpException(err, HttpStatus.OK)
     }
   }
   // 身份證號查詢
@@ -87,7 +94,7 @@ export class AppService {
       return result
     } catch (err) {
       console.log('err', err)
-      throw new HttpException(err, HttpStatus.BAD_REQUEST)
+      throw new HttpException(err, HttpStatus.OK)
     }
   }
   // 歇後語
@@ -98,7 +105,29 @@ export class AppService {
       return result
     } catch (err) {
       console.log('err', err)
-      throw new HttpException(err, HttpStatus.BAD_REQUEST)
+      throw new HttpException(err, HttpStatus.OK)
+    }
+  }
+  // 邮编查地址/zipcode/query
+  async zipcode({ zipcode }) {
+    try {
+      const url = this.apiUrl + '/zipcode/query'
+      const result = await apiGetFunction(url, { appkey: this.appkey, zipcode })
+      return result
+    } catch (err) {
+      console.log('err', err)
+      throw new HttpException(err, HttpStatus.OK)
+    }
+  }
+  // 地址查邮编
+  async addrcode({ address, areaid }) {
+    try {
+      const url = this.apiUrl + '/zipcode/addr2code'
+      const result = await apiGetFunction(url, { appkey: this.appkey, address, areaid })
+      return result
+    } catch (err) {
+      console.log('err', err)
+      throw new HttpException(err, HttpStatus.OK)
     }
   }
 }

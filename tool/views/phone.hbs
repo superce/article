@@ -1,5 +1,5 @@
 <div class="page phone">
-  <h5>手機號碼歸屬地查詢</h5>
+  <h5>手机号码归属地查询</h5>
   <div class="form-inline">
     <div class="form-group mx-sm-3 mb-2" style="margin-left: 0 !important;">
       <label for="inputPassword2" class="sr-only">手機號碼：</label>
@@ -57,15 +57,14 @@
       if (!ip) {
         return
       }
-      var param = { phone: ip }
-      console.log(param)
+      var t = '{{t}}'
+      var param = { phone: ip, t: t }
       $.ajax({
         type: "get",
         url: "/phone",
         data: param,
         dataType: "json",
         success: function (res) {
-          console.log(res)
           var data = res.result
           resultMsg(data)
         }

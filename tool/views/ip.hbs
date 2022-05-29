@@ -40,15 +40,14 @@
     if(!ip){
       return 
     }
-    var param = { ip: ip }
-    console.log(param)
+    const t = '{{t}}'
+    var param = { ip: ip, t: t }
     $.ajax({
       type: "get",
       url: "/ip",
       data: param,
       dataType: "json",
       success: function (res) {
-        console.log(res)
         var data = res.result
         resultMsg(data)
       }

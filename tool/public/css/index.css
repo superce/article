@@ -10,12 +10,13 @@ p {
   margin-bottom: 0;
   font-family: cursive;
 }
-
+.nav-pills .nav-link{border-radius: 0;}
 a {
   color: #555;
   font-family: cursive;
 }
-h5,th, td, tr{font-family: cursive;}
+h5,th, td, tr, h6, li, span{font-family: cursive;}
+li{list-style: none;}
 .wrap {
   display: flex;
   width: 100%;
@@ -32,9 +33,12 @@ h5,th, td, tr{font-family: cursive;}
   display: flex;
   width: 100%;
   flex-shrink: 0;
-  background: #343a40;
+  background: #009688;
 }
-
+.wrap>.nav .site-nav svg{
+  width: 50px;height: 50px;
+}
+.wrap>.nav .site-nav span{color:#fff;font-size: 16px;}
 .wrap>.nav a {
   color: #f8f9fa
 }
@@ -46,7 +50,7 @@ h5,th, td, tr{font-family: cursive;}
 .content-nav {
   width: calc(100% - 200px)
 }
-
+.content-nav .breadcrumb-item.active{color:#fff}
 .site-bar {
   width: 200px;
   background: #f8f9fa;
@@ -66,7 +70,9 @@ h5,th, td, tr{font-family: cursive;}
   padding: 0;
   background: none;
 }
-
+.right-content .jumbotron .container{
+  padding-bottom: 40px;
+}
 .page h5 {
   padding: 10px 0
 }
@@ -97,14 +103,14 @@ table td {
 }
 
 .nav-pills .nav-link.active {
-  background-color: #343a40;
+  background-color: #009688;
 }
 .search-ip{display: flex;}
 .search-result {
   width: 500px;
   line-height: 36px;
   text-align: center;
-  background: #343a40;
+  background: #009688;
   color: #fff;
 }
 .font{
@@ -112,3 +118,18 @@ table td {
 }
 .font .button{margin:10px 0;}
 .font textarea{padding: 10px;}
+.xhy .result{margin-top: 20px;}
+.xhy .about-key ul{display: flex;flex-wrap: wrap;width: 800px}
+.xhy .about-key ul li{border: 1px solid #ccc;padding: 2px 4px;border-radius: 6px;cursor: pointer;margin: 4px;}
+.dream h6{margin-top: 10px;font-size: 20px;font-weight: 800;}
+.dream .table p{line-height: 30px;}
+.footer{
+  position: fixed;
+    bottom: 0;
+    height: 40px;
+    text-align: center;
+    width: calc(100% - 200px);
+    box-shadow: 5px 0 4px 1px #ddd;
+    line-height: 40px;
+    background: #fff;
+}

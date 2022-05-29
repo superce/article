@@ -1,5 +1,5 @@
 $(function () {
-    $(".btn-default,.btn-primary").click(function () {
+    $(".btn-success,.btn-primary").click(function () {
         eval("hash('" + $(this).html() + "')");
     });
 
