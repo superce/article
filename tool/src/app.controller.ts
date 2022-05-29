@@ -8,11 +8,6 @@ export class AppController {
     this.t = ''
   }
   @Get()
-
-  onBtoa(){
-
-  }
-  @Get()
   @Render('home')
   layout() { 
     const msg = {
@@ -60,13 +55,15 @@ export class AppController {
     return {msg,t}
   }
   @Get('/phone')
-  async getPhone(@Query('phone') param: { phone: string, t: string}) {
+  async getPhone(@Query() param: { phone: string, t: string}) {
     const { phone, t } = param
     const at = atob(t)
+    console.log(at, t)
     if (this.t !== at) {
       throw new HttpException('无权限', HttpStatus.OK);
     }
     console.log(phone)
+
     const result = await this.appService.getPhoneLocation(phone)
     throw new HttpException(result, HttpStatus.OK);
   }

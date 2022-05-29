@@ -72,6 +72,8 @@ li{list-style: none;}
 }
 .right-content .jumbotron .container{
   padding-bottom: 40px;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 .page h5 {
   padding: 10px 0
