@@ -4,18 +4,19 @@ body {
   height: 100%;
   left: 0;
   top: 0;
+  font-family: 'Microsoft Yahei','微软雅黑','宋体',\5b8b\4f53,Tahoma,Arial,Helvetica,STHeiti;
 }
 
 p {
   margin-bottom: 0;
-  font-family: cursive;
+  font-family: 'Microsoft Yahei','微软雅黑','宋体',\5b8b\4f53,Tahoma,Arial,Helvetica,STHeiti;
 }
 .nav-pills .nav-link{border-radius: 0;}
 a {
-  color: #555;
-  font-family: cursive;
+  color: #666;
+  font-family: 'Microsoft Yahei','微软雅黑','宋体',\5b8b\4f53,Tahoma,Arial,Helvetica,STHeiti;
 }
-h5,th, td, tr, h6, li, span{font-family: cursive;}
+h5,th, td, tr, h6, li, span{font-family: 'Microsoft Yahei','微软雅黑','宋体',\5b8b\4f53,Tahoma,Arial,Helvetica,STHeiti;}
 li{list-style: none;}
 .wrap {
   display: flex;
@@ -24,32 +25,24 @@ li{list-style: none;}
   flex-direction: column;
 }
 
-.wrap .content {
-  display: flex;
-  height: calc(100% - 48px);
-}
-
 .wrap>.nav {
   display: flex;
   width: 100%;
+  height: 80px;
   flex-shrink: 0;
-  background: #009688;
+  border-top: 4px solid #009688;
+  box-shadow: 0 0 4px 1px #ddd;
 }
+.wrap>.nav .width{width: 1200px;margin: 0 auto;display: flex;justify-content: space-between;align-items: center;}
+.wrap>.nav ul{display: flex;align-items: center;padding: 0;margin: 0;}
 .wrap>.nav .site-nav svg{
   width: 50px;height: 50px;
 }
-.wrap>.nav .site-nav span{color:#fff;font-size: 16px;}
+.wrap>.nav .site-nav span{color:#009688;font-size: 16px;}
 .wrap>.nav a {
-  color: #f8f9fa
+  color: #666;padding: 4px 6px;
 }
-
-.site-nav {
-  width: 200px
-}
-
-.content-nav {
-  width: calc(100% - 200px)
-}
+.wrap>.nav a.active{color:#009688}
 .content-nav .breadcrumb-item.active{color:#fff}
 .site-bar {
   width: 200px;
@@ -60,9 +53,8 @@ li{list-style: none;}
   margin-bottom: 0;
   background: none;
 }
-
 .right-content {
-  width: calc(100% - 200px)
+  width: 1200px;margin: 0 auto;padding-bottom: 80px;
 }
 
 .right-content .jumbotron {
@@ -74,6 +66,15 @@ li{list-style: none;}
   padding-bottom: 40px;
   width: 100% !important;
   max-width: 100% !important;
+}
+.right-content .content-nav ul{
+  display: flex;align-items: center;
+  padding: 0;
+}
+.right-content .content-nav ul li{font-weight: 800;}
+.right-content .content-nav ul a{font-size: 14px;font-weight: 400;color:#009688}
+.right-content .content-nav ul a:hover{
+  color:#f4645f
 }
 .page h5 {
   padding: 10px 0
@@ -126,12 +127,14 @@ table td {
 .dream h6{margin-top: 10px;font-size: 20px;font-weight: 800;}
 .dream .table p{line-height: 30px;}
 .footer{
-  position: fixed;
-    bottom: 0;
-    height: 40px;
     text-align: center;
-    width: calc(100% - 200px);
+    width: 100%;
     box-shadow: 5px 0 4px 1px #ddd;
     line-height: 40px;
-    background: #fff;
+    background: #009688;
+    position: fixed;
+    bottom: 0;
+    z-index: 99;
 }
+.footer p{color:#ddd}
+.content-nav h6{border-bottom: 1px solid #ddd;padding-bottom: 10px;color:#666;font-size: 24px;}

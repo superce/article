@@ -1,0 +1,78 @@
+<div class="page">
+    <h5>Json/Xml格式互转</h5>
+    <div class="col10main">
+
+        <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="panel">
+                    <form id="form1" class="form-horizontal" action="/xmltojson/" method="post">
+                        <div class="form-group">
+                            <div>
+                                <input type="button" onclick="javascript:demo_xml();" value="示例Xml"
+                                    class="btn btn-success">
+                                <input type="button" onclick="javascript:demo_json();" value="示例Json"
+                                    class="btn btn-success"><br>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <textarea class="form-control" id="input" rows="12" style="max-height: 2222px;"
+                                    placeholder="输入要转换的Json字符串或者Xml代码"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input type="button" onclick="javascript:xml_2_json();" value="Xml转Json"
+                                    class="btn btn-success">
+                                <input type="button" onclick="javascript:json_2_xml();" value="Json转Xml"
+                                    class="btn btn-success">
+                                <label class="btn btn-default">
+                                    <input type="checkbox" id="pretty_json" checked="">格式化Json</label>
+                                <input type="button" onclick="Empty();" value="清空输入框" class="btn btn-danger">
+                                <span id="copyallcode" class="btn btn-success" data-clipboard-target="#output"
+                                    data-original-title="">复制完整内容</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <textarea onmouseover="this.focus();" id="output" class="form-control" rows="12"
+                                    style="max-height: 2222px;" placeholder="转换后得到的Json字符串或者Xml代码"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <div class="alert alert-success alert-dismissible text-center" id="codeall"
+                                    role="alert">
+                                    <span id="errdiv">JSON转XML成功</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+            <div class="accordion-group">
+                <div id="demo1" class="in bs-docs-demoexample">
+                    <h4 style="color: #009688; margin-bottom:20px;">
+                        在线Xml和Json字符串互相转换工具 简介</h4>
+                    <h5>
+                        1,支持将Xml数据转为Json字符串格式</h5>
+                    <h5>
+                        2,支持将Json字符串转换为Xml格式的数据</h5>
+                    <h5>
+                        3,Json转为Xml数据时,支持自动检测Json格式的规范性,保证生成的Xml数据的准确</h5>
+                    <h5>
+                        4,提供详细的Xml数据和Json字符串数据,示例Demo演示仅供大家测试使用</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/js/fileSave.js"></script>
+<script src="/js/copy.min.js"></script>
+<script src="/js/copy.js"></script>
+<script src="/js/xmltojsonjs.js"></script>
+<script src="/js/xmljson.js"></script>

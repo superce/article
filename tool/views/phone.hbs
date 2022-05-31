@@ -7,11 +7,11 @@
     </div>
     <button type="submit" class="btn btn-primary mb-2" onclick="getPhone()">查詢</button>
   </div>
-  <table style="display: none">
+  <table>
     <thead>
       <tr>
         <th colspan="2">
-          <p class="search-result"></p>
+          <p class="search-result">查询结果</p>
         </th>
       </tr>
     </thead>
@@ -71,7 +71,7 @@
       });
     }
     function resultMsg(data) {
-      $('.search-result').text(data.shouji)
+      $('.search-result').text('查询结果：' + data.shouji)
       $('.province').text(data.province)
       $('.city').text(data.city)
       $('.areacode').text(data.areacode)
