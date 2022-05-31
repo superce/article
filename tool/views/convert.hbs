@@ -24,8 +24,12 @@
       data: param,
       dataType: "json",
       success: function (res) {
-        var data = res.result
-        resultMsg(data)
+        if(res.status === 0){
+          var data = res.result
+          resultMsg(data)
+        }else{
+          alert(res.msg)
+        }
       }
     });
   }
