@@ -56,13 +56,6 @@ app.get('/pue', async (req, res) => {
   await page.waitForTimeout(2000)
   const path = __dirname + '/collect.js'
   await page.addScriptTag({ path });
-  // const result = await page.evaluate((j) => {
-  //   console.log('j', j)
-    
-  // })
-  // console.log('-------------', result)
-
-  // browser.close()
   res.send()
 })
 const server = app.listen(1000, () => {
