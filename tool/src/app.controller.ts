@@ -34,9 +34,6 @@ export class AppController {
   async getIp(@Query() param:{ip: string, t: string}) {
     const { ip, t } = param
     const at = atob(t)
-    // if(this.t !== at){
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     if (ip) {
       const result = await this.appService.getIp(ip)
       throw new HttpException(result, HttpStatus.OK);
@@ -58,12 +55,6 @@ export class AppController {
   async getPhone(@Query() param: { phone: string, t: string}) {
     const { phone, t } = param
     const at = atob(t)
-    console.log(at, t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
-    console.log(phone)
-
     const result = await this.appService.getPhoneLocation(phone)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -84,9 +75,6 @@ export class AppController {
   async fontconvert(@Body() param: { content: string, type: string, t: string }) {
     console.log(param)    
     const at = atob(param.t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     // 转换类型 2s转成简体 2t转成繁体 2h转成火星文
     const result = await this.appService.fontconvert(param)
     throw new HttpException(result, HttpStatus.OK);
@@ -111,9 +99,6 @@ export class AppController {
     // height	string	是	身高 CM
     // weight	string	是	体重 KG
     const at = atob(param.t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     const result = await this.appService.weightBmi(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -134,9 +119,6 @@ export class AppController {
   async robort(@Body() param: { question: string, t: string }) {
     console.log(param)
     const at = atob(param.t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     // question	string	是	提问的问题
     const result = await this.appService.robort(param)
     throw new HttpException(result, HttpStatus.OK);
@@ -161,9 +143,6 @@ export class AppController {
     // pagenum	int	是	当前页 默认1
     // pagesize	int	是	每页条数 默认10 最大10
     const at = atob(param.t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     const result = await this.appService.dream(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -184,9 +163,6 @@ export class AppController {
   async idcard(@Body() param: { idcard: string, t }) {
     console.log(param)
     const at = atob(param.t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     // idcard	string	是	身份证或身份证前6位
     const result = await this.appService.idCard(param)
     throw new HttpException(result, HttpStatus.OK);
@@ -212,9 +188,6 @@ export class AppController {
     // pagenum	int	是	当前页
     // pagesize	int	是	每页数据 最大为2
     const at = atob(param.t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     const result = await this.appService.xhy(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -236,9 +209,6 @@ export class AppController {
     console.log(param)
     // zipcode	string	是	邮编
     const at = atob(param.t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     const result = await this.appService.zipcode(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -260,9 +230,6 @@ export class AppController {
     // address	string	是	地址
     // areaid	int	是	区域ID
     const at = atob(param.t)
-    // if (this.t !== at) {
-    //   throw new HttpException('无权限', HttpStatus.OK);
-    // }
     const result = await this.appService.addrcode(param)
     throw new HttpException(result, HttpStatus.OK);
   }

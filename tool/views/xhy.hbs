@@ -11,6 +11,7 @@
     
   </div>
   <div class="about-key">
+    <h6>例子：</h6>
     <ul>
       <li onclick="getQuest('八仙过海')">八仙过海</li>
       <li onclick="getQuest('泥菩萨过江')">泥菩萨过江</li>
@@ -57,6 +58,7 @@
     }
     var t = '{{t}}'
     var param = { keyword: v, pagenum: 1, pagesize: 2, t: t }
+    $('.loading-content').show()
     $.ajax({
       type: "post",
       url: "/xhy",
@@ -74,6 +76,10 @@
           var msg = '<p>' + res.msg + '</p>'
           $('.table').append(msg)
         }
+        $('.loading-content').hide()
+      },
+      error: function(){
+        $('.loading-content').hide()
       }
     });
   }

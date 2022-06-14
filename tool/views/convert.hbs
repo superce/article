@@ -19,6 +19,7 @@
     }
     var t = '{{t}}'
     var param = { content: ip, type: font, t: t }
+    $('.loading-content').show()
     $.ajax({
       type: "post",
       url: "/convert",
@@ -31,6 +32,10 @@
         }else{
           alert(res.msg)
         }
+        $('.loading-content').hide()
+      },
+      error: function(){
+        $('.loading-content').hide()
       }
     });
   }

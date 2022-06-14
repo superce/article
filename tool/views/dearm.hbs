@@ -8,7 +8,8 @@
     <button class="btn btn-primary mb-2" onclick="getQuest()">查詢</button>
   </div>
   <div class="table">
-
+    <p class="d">祝您好梦</p>
+    <p class="d">good dreams</p>
   </div>
 </div>
 {{> nav}}
@@ -20,6 +21,7 @@
     }
     var t = '{{t}}'
     var param = { keyword: v, pagenum: 1, pagesize: 10, t: t }
+    $('.loading-content').show()
     $.ajax({
       type: "post",
       url: "/dearm",
@@ -37,6 +39,10 @@
           var msg = '<p>' + res.msg + '</p>'
           $('.table').append(msg)
         }
+        $('.loading-content').hide()
+      },
+      error: function(){
+        $('.loading-content').hide()
       }
     });
   }

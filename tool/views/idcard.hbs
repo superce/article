@@ -59,6 +59,7 @@
     }
     var t = '{{t}}'
     var param = { idcard: idCard, t: t }
+    $('.loading-content').show()
     $.ajax({
       type: "post",
       url: "/idcard",
@@ -71,6 +72,10 @@
         }else{
           alert(res.msg)
         }
+        $('.loading-content').hide()
+      },
+      error: function(){
+        $('.loading-content').hide()
       }
     });
   }

@@ -38,6 +38,7 @@
     }
     var t = '{{t}}'
     var param = { address: v, areaid: areaid, t: t }
+    $('.loading-content').show()
     $.ajax({
       type: "post",
       url: "/zipcode",
@@ -53,6 +54,10 @@
         }else{
           alert(res.msg)
         }
+        $('.loading-content').hide()
+      },
+      error: function(){
+        $('.loading-content').hide()
       }
     });
   }

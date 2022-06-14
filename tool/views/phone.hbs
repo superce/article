@@ -60,6 +60,7 @@
       }
       var t = '{{t}}'
       var param = { phone: ip, t: t }
+      $('.loading-content').show()
       $.ajax({
         type: "get",
         url: "/phone",
@@ -72,6 +73,10 @@
           }else{
             alert(res.msg)
           }
+          $('.loading-content').hide()
+        },
+        error: function(){
+          $('.loading-content').hide()
         }
       });
     }

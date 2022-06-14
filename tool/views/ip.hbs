@@ -43,6 +43,7 @@
     }
     const t = '{{t}}'
     var param = { ip: ip, t: t }
+    $('.loading-content').show()
     $.ajax({
       type: "get",
       url: "/ip",
@@ -55,6 +56,10 @@
         }else{
           alert(res.msg)          
         }
+        $('.loading-content').hide()
+      },
+      error: function(){
+        $('.loading-content').hide()
       }
     });
   }
