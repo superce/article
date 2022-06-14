@@ -11,7 +11,7 @@ export class AppController {
   @Render('home')
   layout() { 
     const msg = {
-      title: '月亮科技工具站',
+      title: '书简科技工具站',
       keyword: '在线工具站',
       des: '这是一款可实现在线工具站'
     }
