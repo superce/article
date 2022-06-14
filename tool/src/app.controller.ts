@@ -11,11 +11,11 @@ export class AppController {
   @Render('home')
   layout() { 
     const msg = {
-      title: '书简科技工具站',
+      title: '书简工具站',
       keyword: '在线工具站',
       des: '这是一款可实现在线工具站'
     }
-    return msg
+    return {msg}
   }
 
   @Get('/page/ip')
@@ -34,9 +34,9 @@ export class AppController {
   async getIp(@Query() param:{ip: string, t: string}) {
     const { ip, t } = param
     const at = atob(t)
-    if(this.t !== at){
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if(this.t !== at){
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     if (ip) {
       const result = await this.appService.getIp(ip)
       throw new HttpException(result, HttpStatus.OK);
@@ -59,9 +59,9 @@ export class AppController {
     const { phone, t } = param
     const at = atob(t)
     console.log(at, t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     console.log(phone)
 
     const result = await this.appService.getPhoneLocation(phone)
@@ -84,9 +84,9 @@ export class AppController {
   async fontconvert(@Body() param: { content: string, type: string, t: string }) {
     console.log(param)    
     const at = atob(param.t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     // 转换类型 2s转成简体 2t转成繁体 2h转成火星文
     const result = await this.appService.fontconvert(param)
     throw new HttpException(result, HttpStatus.OK);
@@ -111,9 +111,9 @@ export class AppController {
     // height	string	是	身高 CM
     // weight	string	是	体重 KG
     const at = atob(param.t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     const result = await this.appService.weightBmi(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -134,9 +134,9 @@ export class AppController {
   async robort(@Body() param: { question: string, t: string }) {
     console.log(param)
     const at = atob(param.t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     // question	string	是	提问的问题
     const result = await this.appService.robort(param)
     throw new HttpException(result, HttpStatus.OK);
@@ -161,9 +161,9 @@ export class AppController {
     // pagenum	int	是	当前页 默认1
     // pagesize	int	是	每页条数 默认10 最大10
     const at = atob(param.t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     const result = await this.appService.dream(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -184,9 +184,9 @@ export class AppController {
   async idcard(@Body() param: { idcard: string, t }) {
     console.log(param)
     const at = atob(param.t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     // idcard	string	是	身份证或身份证前6位
     const result = await this.appService.idCard(param)
     throw new HttpException(result, HttpStatus.OK);
@@ -212,9 +212,9 @@ export class AppController {
     // pagenum	int	是	当前页
     // pagesize	int	是	每页数据 最大为2
     const at = atob(param.t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     const result = await this.appService.xhy(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -236,9 +236,9 @@ export class AppController {
     console.log(param)
     // zipcode	string	是	邮编
     const at = atob(param.t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     const result = await this.appService.zipcode(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -260,9 +260,9 @@ export class AppController {
     // address	string	是	地址
     // areaid	int	是	区域ID
     const at = atob(param.t)
-    if (this.t !== at) {
-      throw new HttpException('无权限', HttpStatus.OK);
-    }
+    // if (this.t !== at) {
+    //   throw new HttpException('无权限', HttpStatus.OK);
+    // }
     const result = await this.appService.addrcode(param)
     throw new HttpException(result, HttpStatus.OK);
   }
@@ -275,7 +275,7 @@ export class AppController {
       keyword: '随机数,随机字符串,安全密码,在线工具,生成工具,随机字符串/安全密码生成工具',
       des: '这是一款可实现在线生成随机字符串/安全密码的工具，增加了结果的复制、清空等功能。用户根据界面选项勾选所需要生成的随机字符串/安全密码类型、长度，即可一键生成所需要的随机字符串。还可根据需要自定义安全字符与密码位数，非常简单实用。'
     }
-    return msg
+    return {msg}
   }
 
   @Get('page/encrypt')
@@ -286,6 +286,45 @@ export class AppController {
       keyword: '字符串加密,解密,JS,算法,混淆,密钥,解码,编码,在线,安全,保护,隐私',
       des: '这是一款可实现在线生成字符串加密,解密,JS,算法,混淆,密钥,解码,编码,在线,安全,保护,隐私，增加了结果的复制、清空等功能。用户根据界面选项勾选所需要生成的随机字符串/安全密码类型、长度，即可一键生成所需要的随机字符串。还可根据需要自定义安全字符与密码位数，非常简单实用。'
     }
-    return msg
+    return {msg}
   }  
+  @Get('page/json')
+  @Render('json')
+  pageJson() { 
+    const msg = {
+      title: 'Json在线解析格式化-Json在线校验Json格式化压缩-Jsons在线工具',
+      keyword: 'json在线解析,json格式化,json解析,json,json在线格式化,json校验工具,json压缩,json序列化,json校验,json转xml,json在线工具,json格式化压缩,在线json格式化,jsons',
+      des: 'Json在线解析格式化工具:提供Json在线解析器,Json格式化,Json序列化,Json解析,Json校验,Json压缩,Json转xml,在线Json格式化,并提供多种Json在线解析格式化工具'
+    }
+    return {msg}
+  }
+  @Get('page/xmljson')
+  @Render('xmltojson')
+  pageXmlJson() { 
+    const msg = {
+      title: 'Xml和Json字符串在线转换-Xml转换为Json-Json转换为Xml-Json在线解析格式化工具',
+      keyword: 'json转xml,xml转json,json工具,json转xml 在线,xml转json 在线,java json转xml,xml json 转换,在线Xml和Json互相转换',
+      des: 'Xml和Json字符串在线转换工具:在线Json转为Xml格式,支持Xml转换成Json格式的字符串,同时包含Json格式化校验功能,ios xml转json,xml转json在线工具'
+    }
+    return {msg}
+  }
+
+
+  @Get('/about')
+  @Render('about/about')
+  aboutPage(){
+    
+  }
+  @Get('/policy')
+  @Render('about/policy')
+  policyPage() { }
+  @Get('/privacy')
+  @Render('about/privacy')
+  privacyPage() { }
+  @Get('/terms')
+  @Render('about/terms')
+  termsPage() { }
+  @Get('/copyright')
+  @Render('about/copyright')
+  copyrightPage() { }
 }

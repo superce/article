@@ -21,7 +21,7 @@
     </div>
   </div>
   <div>
-    <table style="display: none;">
+    <table>
       <thead>
         <tr>
           <th colspan="2">
@@ -60,6 +60,7 @@
     </table>
   </div>
 </div>
+{{> nav}}
 <script>
   function getWeight() {
     var sex = $('#gender').val()
@@ -76,8 +77,12 @@
       data: param,
       dataType: "json",
       success: function (res) {
-        var data = res.result
-        resultMsg(data)
+        if(res.status === 0){
+          var data = res.result
+          resultMsg(data)
+        }else{
+          alert(res.msg)
+        }
       }
     });
   }
@@ -89,6 +94,5 @@
     $('.danger').text(data.danger)
     var status = data.status === 1 ? '正常' : '異常'
     $('.status').text(status)
-    $('table').css("display", 'block')
   }
 </script>

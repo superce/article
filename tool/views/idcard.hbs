@@ -7,7 +7,7 @@
     </div>
     <button class="btn btn-primary mb-2" onclick="getIdcard()">查詢</button>
   </div>
-  <table style="display: none;">
+  <table>
     <thead>
       <tr>
         <th colspan="2">
@@ -46,6 +46,7 @@
     </tbody>
   </table>
 </div>
+{{> nav}}
 <script>
   function getIdcard() {
     var idCard = $('#inputPassword2').val()
@@ -64,8 +65,12 @@
       data: param,
       dataType: "json",
       success: function (res) {
-        var data = res.result
-        resultMsg(data)
+        if(res.status === 0){
+          var data = res.result
+          resultMsg(data)
+        }else{
+          alert(res.msg)
+        }
       }
     });
   }

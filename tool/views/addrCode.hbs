@@ -28,6 +28,7 @@
     </table>
   </div>
 </div>
+{{> nav}}
 <script>
   function getQuest(search) {
     var v = $('#inputPassword2').val()
@@ -49,6 +50,8 @@
             var oDiv = '<tr><td>' + data[i].province + '</td><td>' + data[i].city + '</td><td>' + data[i].town + '</td><td>' + data[i].address + '</td><td>' + data[i].zipcode + '</td></tr>'
             $('tbody').append(oDiv)
           }
+        }else{
+          alert(res.msg)
         }
       }
     });

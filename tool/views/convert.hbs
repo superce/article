@@ -10,6 +10,7 @@
     <textarea id="font-convert" cols="30" rows="10" disabled></textarea>
   </div>
 </div>
+{{> nav}}
 <script>
   function getFont(font) {
     var ip = $('#inputPassword2').val()
@@ -24,8 +25,12 @@
       data: param,
       dataType: "json",
       success: function (res) {
-        var data = res.result
-        resultMsg(data)
+        if(res.status === 0){
+          var data = res.result
+          resultMsg(data)
+        }else{
+          alert(res.msg)
+        }
       }
     });
   }
