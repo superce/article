@@ -15,7 +15,7 @@ import { categroy } from '../utils/categroy'
 export class ZhihuService {
     constructor(@InjectRepository(article) private readonly zhihuRepos: Repository<article>){}
     async collection(param:{url: string, meun_id: number} ){
-        const { url, meun_id } = param //`https://www.zhihu.com/${param}`
+        const { url, meun_id } = param //`https://www.zhihu.com/${param}`        
         const { data } = await axios.get(url)
         const $ = cheerio.load(data) 
         let openccTitle = $('.QuestionHeader-title').text()
@@ -27,7 +27,6 @@ export class ZhihuService {
         articleThumbnail =  await this.setImgs($, figureLength, 'qs')
         let time = $('.ContentItem-time').text()        
         let splitDate = time.split(' ')
-        console.log('true', splitDate[2].split('・'))
         let splitDate2 = splitDate[2]
         if (splitDate[2].includes('・')){
             splitDate2 = splitDate[2].split('・')[0]
@@ -80,10 +79,10 @@ export class ZhihuService {
                 console.log(toDate)
                 let date = new Date(toDate)
                 console.log('时间', date)
-                let html = $('.Post-Main .RichText').html()
+                let html:any = $('.Post-Main .RichText').html()
                 let text = $('.Post-Main .RichText').text()
                 html = await translate(html)
-                console.log('html', html)
+                
                 const article_id = guid()
                 let introduction: string = ''
                 if (text.length > 60) {
@@ -107,7 +106,7 @@ export class ZhihuService {
             })
         })
     }
-    async saveZhi(title: string, content: string, article_id: string, thumbnail: string, date: Date){
+    async saveZhi(title: string, content: string, article_id: string, thumbnail: string, date: Date){        
         const newinsert = this.zhihuRepos.create({ title, content, article_id, thumbnail, date })
         const zhi = await this.zhihuRepos.save(newinsert)    
         return zhi
@@ -167,7 +166,7 @@ export class zhihu_listServer {
         @InjectRepository(list) private readonly zhihuList: Repository<list>,
         @InjectRepository(article) private readonly zhihuArticle: Repository<article>        
     ) { }
-    async list(param: { thumbnail: string, title: string, meun_id: number, article_id: string, introduction: string, date: Date}) {
+    async list(param: { thumbnail: string, title: string, meun_id: number, article_id: string, introduction: string, date: Date}) {        
         const { thumbnail, title, meun_id, article_id, introduction, date } = param
         // const categroy_name = categroy(categroy_id)
         const newinsert = this.zhihuList.create({ title, introduction, thumbnail, meun_id, article_id, date })
@@ -221,6 +220,26 @@ export class zhihu_listServer {
             message: 'ok'
         }
         throw new HttpException(result, HttpStatus.OK)
+    }
+    // 文章详情
+    async articleDetail(article_id: string){
+        let result = {
+            code: 200,
+            data: {},
+            message: 'null'
+        }
+        if(!article_id) throw new HttpException(result, HttpStatus.OK)
+        try{
+            const item = await this.zhihuArticle.findOne({where:{article_id}})
+            result = {
+                code: 200,
+                data: item,
+                message: 'ok'
+            }
+        }catch(err){
+            throw new HttpException(err, HttpStatus.BAD_REQUEST)
+        }
+        throw new HttpException(result, HttpStatus.OK)            
     }
     async onDelete(id: number){
         let result = {

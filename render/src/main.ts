@@ -9,5 +9,6 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));  
   app.setViewEngine('hbs');
   await app.listen(3200);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Render, UseGuards, Header } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Param, Post, Render, UseGuards, Header, Query } from '@nestjs/common';
 import { ZhihuService, zhihu_listServer } from './zhihu.service'
 import { zhihuDTO, editCategroyDTO, deleteArticleDTO, returnData } from './dto/index'
 import { AuthGuard } from '@nestjs/passport';
@@ -11,7 +11,7 @@ export class ZhihuController {
     @UseGuards(AuthGuard('jwt'))
     @Post()
     async postGetZhihu(@Body() zhihuDTO: zhihuDTO){
-        const { url } = zhihuDTO            
+        const { url } = zhihuDTO  
         if(!url) throw new HttpException("url不能为空", HttpStatus.OK)  
         let param = {
             thumbnail: '',
@@ -26,8 +26,8 @@ export class ZhihuController {
             const { articleThumbnail, title, meun_id, article_id, introduction, date } = await this.ZhihuService.zhuanlan(zhihuDTO)             
             param = { thumbnail: articleThumbnail, title, meun_id, article_id, introduction, date }
         }else{
-            const { articleThumbnail, title, meun_id, article_id, introduction, date } = await this.ZhihuService.collection(zhihuDTO) 
-            param = { thumbnail: articleThumbnail, title, meun_id, article_id, introduction, date }
+            // const { articleThumbnail, title, meun_id, article_id, introduction, date } = await this.ZhihuService.collection(zhihuDTO) 
+            // param = { thumbnail: articleThumbnail, title, meun_id, article_id, introduction, date }
         }
         const result = await this.zhihu_list.list(param) 
         throw new HttpException(result, HttpStatus.OK);
@@ -42,6 +42,13 @@ export class ZhihuController {
     @Get('list')
     async getList(){
         await this.zhihu_list.lists()
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('detail')
+    async getDetail(@Query('id') id: string){  
+        console.log(id);      
+        await this.zhihu_list.articleDetail(id)
     }
     @UseGuards(AuthGuard('jwt'))
     @Get('delete/:id')

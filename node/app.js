@@ -3,7 +3,6 @@ const app = express()
 const request = require('request')
 const fs = require('fs')
 const puppeteer = require('puppeteer')
-// import bodyParser from 'body-parser'
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
@@ -30,7 +29,7 @@ app.post('/save', (req, res) => {
 })
 app.get('/pue', async (req, res) => {
   const { url } = req.query
-  console.log(url);  
+  console.log(url);
   const options = {
     headless: false,
     defaultViewport: null,

@@ -1,70 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{!-- {{{block "meta" article=article}}} --}}
+    <meta property="og:type" content="article">
+    <meta id="og-title" property="og:title" content="{{article.title}}">
+    <meta id="og-url" property="og:url" content="https://health-longevity.top/detail/{{article.article_id}}">
+    <meta id="og-image" property="og:image" content="{{article.url}}{{article.thumbnail}}">
+    <meta id="t-imgage" name="twitter:image" content="{{article.url}}{{article.thumbnail}}">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/base.css">
+    {{!--
+    <link rel="stylesheet" href="/css/index.css"> --}}
+    <link rel="stylesheet" href="/css/m.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7649165793800344"
+        crossorigin="anonymous"></script>
+    <script src="/js/jquery-1.8.3.min.js"></script>
+    <script src="/js/comm.js"></script>
+    <script src="/js/lazy.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?11ff46d54d33f388244a143cf64bd435";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 
-{{#extend "meta"}}
-    {{> partial}}
-{{/extend}} 
-<article>
-    <!--lbox begin-->
-    <div class="lbox">        
-        <div class="content_box whitebg">    
-            <h2 class="htitle"></h2>        
-            <h1 class="con_tilte">{{article.title}}</h1>
-            <p class="bloginfo"><span class="date">{{article.date}}</span></p>
-            {{!-- <span>
-                <script src="js/count.js" type="text/javascript" language="javascript"></script>人已围观
-            </span> --}}
-            <div class="con_text">
-               {{{article.content}}}
-                <div class="nextinfo">
-                    {{#if takePage.pre.id}}
-                    <p>上一篇：<a href="/detail/{{takePage.pre.article_id}}">{{takePage.pre.title}}</a></p>
-                    {{/if}}
-                    {{#if takePage.next.id}}
-                    <p>下一篇：<a href="/detail/{{takePage.next.article_id}}">{{ takePage.next.title }}</a></p>
-                    {{/if}}
+</head>
+
+<body>
+
+    <!--top begin-->
+    <header id="header">
+        <div class="navbox">
+            <h2 id="mnavh"><span class="navicon"></span></h2>
+            <div class="logo"><a href="/">知識百科</a></div>
+            <nav>
+                <ul id="starlist">
+                    <li><a href="/">首頁</a></li>
+                    {{#each meunList}}
+                    <li><a href="/list/{{id}}">{{name}}</a></li>
+                    {{/each}}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <article>
+        <!--lbox begin-->
+        <div class="lbox">
+            <div class="content_box whitebg">
+                <h2 class="htitle"></h2>
+                <h1 class="con_tilte">{{article.title}}</h1>
+                <p class="bloginfo"><span class="date">{{article.date}}</span></p>
+                {{title}}
+                {{!-- <span>
+                    <script src="js/count.js" type="text/javascript" language="javascript"></script>人已围观
+                </span> --}}
+                <div class="con_text">
+                    {{{article.content}}}
+                    <div class="nextinfo">
+                        {{#if takePage.pre.id}}
+                        <p>上一篇：<a href="/detail/{{takePage.pre.article_id}}">{{takePage.pre.title}}</a></p>
+                        {{/if}}
+                        {{#if takePage.next.id}}
+                        <p>下一篇：<a href="/detail/{{takePage.next.article_id}}">{{ takePage.next.title }}</a></p>
+                        {{/if}}
+                    </div>
                 </div>
             </div>
+            <div class="whitebg">
+                <h2 class="htitle">隨機圖文</h2>
+                <ul class="xiangsi">
+                    {{#each matchArticle}}
+                    <li>
+                        <a href="/detail/{{list_article_id}}">
+                            <i><img src="{{list_thumbnail}}" alt=""></i>
+                            <p>{{list_title}}</p>
+                            <span>{{list_introduction}}</span>
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
         </div>
-        <div class="whitebg">
-            <h2 class="htitle">隨機圖文</h2>
-            <ul class="xiangsi">
-                {{#each matchArticle}}
-                <li>
-                    <a href="/detail/{{list_article_id}}">
-                    <i><img src="{{list_thumbnail}}" alt=""></i>
-                        <p>{{list_title}}</p>
-                        <span>{{list_introduction}}</span>
-                    </a>
-                </li>
-               {{/each}}
-            </ul>
+        <!--lbox end-->
+        <div class="rbox">
+            <div class="whitebg paihang">
+                <h2 class="htitle">點擊排行榜</h2>
+                <ul>
+                    {{#each topArticle}}
+                    <li><i></i><a href="/detail/{{list_article_id}}">{{list_title}}</a></li>
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="whitebg tuijian">
+                <h2 class="htitle">猜你喜歡</h2>
+                <ul>
+                    {{#each hotArticle}}
+                    <li>
+                        <a href="/detail/{{list_article_id}}">
+                            <i>
+                                <img src="{{list_thumbnail}}">
+                            </i>
+                            <p>{{ list_title }}</p>
+                        </a>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
         </div>
-    </div>
-    <!--lbox end-->
-<div class="rbox">
-    <div class="whitebg paihang">
-        <h2 class="htitle">點擊排行榜</h2>
-        <ul>
-            {{#each topArticle}}
-            <li><i></i><a href="/detail/{{list_article_id}}">{{list_title}}</a></li>
-            {{/each}}
-        </ul>
-    </div>
-    <div class="whitebg tuijian">
-        <h2 class="htitle">猜你喜歡</h2>
-        <ul>
-            {{#each hotArticle}}
-            <li>
-                <a href="/detail/{{list_article_id}}">
-                    <i>
-                        <img src="{{list_thumbnail}}">
-                    </i>
-                    <p>{{ list_title }}</p>
-                </a>
-            </li>
-            {{/each}}
-        </ul>
-    </div>
-</div>
-</article>
+    </article>
 
+
+    <footer>
+        <div class="box">
+            <div class="endnav">
+                <style>
+                    .footer-ul {
+                        display: flex;
+                        justify-content: center;
+                        margin-bottom: 10px;
+                    }
+
+                    .footer-ul li {
+                        margin: 0 10px
+                    }
+
+                    .footer-ul li a {
+                        color: #fff
+                    }
+                </style>
+                <ul class="footer-ul">
+                    <li class="about now"><a href="/about" onclick="shouabout('about')">關於我們</a></li>
+                    <li class="policy"><a href="/policy" onclick="shouabout('policy')">政策與安全</a></li>
+                    <li class="copyright"><a href="/copyright" onclick="shouabout('copyright')">版權</a></li>
+                    <li class="privacy"><a href="/privacy" onclick="shouabout('privacy')">隱私權</a></li>
+                    <li class="terms"><a href="/terms" onclick="shouabout('terms')">條款</a></li>
+                </ul>
+                <p>©2022 www.health-longevity.top. All Rights Reserved.</p>
+            </div>
+        </div>
+        <a href="#">
+            <div class="top"></div>
+        </a>
+    </footer>
+
+</body>
+
+</html>

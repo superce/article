@@ -1,4 +1,5 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Post, Query, Redirect, Render, Res, Response } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Param, Post, Query, Redirect, Render, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { listParamDTO } from './DTO/index';
 import { getZhihuListServer, zhihuDetailServer, meunService } from './app.service'
 import { timestampToTime } from './utils/time'
@@ -91,7 +92,7 @@ export class AppController {
 
   @Get('/detail/:id')
   @Render('detail')
-  async viewsDetail(@Param('id') id: string) {
+  async viewsDetail(@Param('id') id: string, @Res() res: Response) {          
     const article = await this.getZhihuDetail.detail(id)
     const meunList = await this.meun.findList()
     const { list } = await this.getZhihuList.getList(1)
@@ -112,21 +113,29 @@ export class AppController {
     })
     let title = article.title
     article.date = timestampToTime(article.date)
-    return { article, meunList, hotArticle, topArticle, takePage, title, matchArticle }
+    // const result = res.render('detail', { 
+    //   article, meunList, hotArticle, topArticle, takePage, title, matchArticle, layout: null 
+    // })
+    const result = { 
+      article, meunList, hotArticle, topArticle, takePage, title, matchArticle, layout: null 
+    }
+    return result
   }
   @Get('/about')
-  @Render('about')
-  aboutPage(){}
+  // @Render('about')
+  aboutPage(@Res() res: any){
+    res.render('about', {layout: null})
+  }
   @Get('/policy')
-  @Render('policy')
-  policyPage() { }
+  // @Render('policy')
+  policyPage(@Res() res: any) { res.render('policy', {layout: null})}
   @Get('/privacy')
-  @Render('privacy')
-  privacyPage() { }
+  // @Render('privacy')
+  privacyPage(@Res() res: any) { res.render('privacy', {layout: null})}
   @Get('/terms')
-  @Render('terms')
-  termsPage() { }
+  // @Render('terms')
+  termsPage(@Res() res: any) { res.render('terms', {layout: null})}
   @Get('/copyright')
-  @Render('copyright')
-  copyrightPage() { }
+  // @Render('copyright')
+  copyrightPage(@Res() res: any) { res.render('copyright', {layout: null})}
 }
