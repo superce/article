@@ -1,14 +1,16 @@
 const cnchars = require('simplebig');
 import axios from 'axios'
+import qs from 'qs'
 
-async function wycApi(html: any) {
-    // console.log('html---', html);
-    const info = JSON.stringify(html)
+function wycApi(html: any) {
+    console.log('html---', html);
     return new Promise((resolve, reject) => {        
         axios({
             method: 'post',
             url: 'http://www.wzwyc.com/api.php',
-            data:{ info: '黄晓明新女友曝光，与前妻杨颖有得一拼，教主的择偶品味还没有变' },
+            data:{ 
+                info: html              
+            },
             headers:{
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                 'Cookie': 'Hm_lvt_9960d24030b0982050171c77fbf2669f=1655706640; Hm_lpvt_9960d24030b0982050171c77fbf2669f=1655712885',
@@ -26,7 +28,8 @@ async function wycApi(html: any) {
     })
 }
 export async function translate(html: string) {
-    // const text = await wycApi(html)
-    const result = cnchars.s2t(html);
-    return result
+    const text = await wycApi(html)
+    console.log('text', text);
+    // const result = cnchars.s2t(html);
+    // return result
 }

@@ -14,7 +14,7 @@ function uptoken(bucket: string, key: string) {
 
 
 //构造上传函数
-function uploadFile(uptoken, key, localFile) {
+function uploadFile(uptoken: any, key: string, localFile: string) {
     return new Promise<any>((resolve, reject) => {
         const extra = new qiniu.form_up.PutExtra();
         const config = new qiniu.conf.Config();
