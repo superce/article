@@ -1,35 +1,28 @@
 const cnchars = require('simplebig');
-import axios from 'axios'
-import qs from 'qs'
+import * as request from 'request'
 
 function wycApi(html: any) {
-    console.log('html---', html);
-    return new Promise((resolve, reject) => {        
-        axios({
-            method: 'post',
+    return new Promise((resolve, reject) => {
+        request({
             url: 'http://www.wzwyc.com/api.php',
-            data:{ 
-                info: html              
+            method: "POST",
+            json: true,
+            headers: {
+              "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
             },
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'Cookie': 'Hm_lvt_9960d24030b0982050171c77fbf2669f=1655706640; Hm_lpvt_9960d24030b0982050171c77fbf2669f=1655712885',
-                'Host': 'www.wzwyc.com',
-                "Origin": "http://www.wzwyc.com",
-                "Referer": "http://www.wzwyc.com/",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36"
+            form: {
+              info: html
             }
-        }).then((res: any) => {
-            const data = JSON.parse(res.config.data)
-            resolve(data.info)
-        }).catch(err => {
-            console.log(err);
-        })
+          }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+              console.log(body) // 请求成功的处理逻辑
+              resolve(body)
+            }
+          }); 
     })
 }
 export async function translate(html: string) {
     const text = await wycApi(html)
-    console.log('text', text);
-    // const result = cnchars.s2t(html);
-    // return result
+    const result = cnchars.s2t(text);
+    return result
 }

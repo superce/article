@@ -14,48 +14,48 @@ import { categroy } from '../utils/categroy'
 
 export class ZhihuService {
     constructor(@InjectRepository(article) private readonly zhihuRepos: Repository<article>){}
-    // async collection(param:{url: string, meun_id: number} ){
-    //     const { url, meun_id } = param //`https://www.zhihu.com/${param}`        
-    //     const { data } = await axios.get(url)
-    //     const $ = cheerio.load(data) 
-    //     let openccTitle = $('.QuestionHeader-title').text()
-    //     const title = await translate(openccTitle)
-    //     const figureLength =  $('figure').length  
+    async collection(param:{url: string, meun_id: number} ){
+        const { url, meun_id } = param //`https://www.zhihu.com/${param}`        
+        const { data } = await axios.get(url)
+        const $ = cheerio.load(data) 
+        let openccTitle = $('.QuestionHeader-title').text()
+        const title = await translate(openccTitle)
+        const figureLength =  $('figure').length  
               
-    //     let articleThumbnail: string = ''
-    //     // 处理图片
-    //     articleThumbnail =  await this.setImgs($, figureLength, 'qs')
-    //     let time = $('.ContentItem-time').text()        
-    //     let splitDate = time.split(' ')
-    //     let splitDate2 = splitDate[2]
-    //     if (splitDate[2].includes('・')){
-    //         splitDate2 = splitDate[2].split('・')[0]
-    //     }
-    //     let toDate: string = splitDate[1] + ' ' + splitDate2
-    //     let date = new Date(toDate)
-    //     let html = $('.RichContent-inner').eq(0).find('.RichText').html()
-    //     let text = $('.RichContent-inner').eq(0).find('.RichText').text()
-    //     html = await translate(html)
-    //     const article_id = guid()
-    //     let introduction:string = ''
-    //     if (text.length > 48){
-    //         introduction = text.substring(0, 48)
-    //     }else{
-    //         introduction = text
-    //     }
-    //     introduction = await translate(introduction)
-    //     introduction += '...'
-    //     await this.saveZhi(title, html, article_id, articleThumbnail, date)    
-    //     let result = {
-    //         title,
-    //         articleThumbnail,
-    //         meun_id,
-    //         article_id,
-    //         introduction, 
-    //         date
-    //     }
-    //     return result
-    // }
+        let articleThumbnail: string = ''
+        // 处理图片
+        articleThumbnail =  await this.setImgs($, figureLength, 'qs')
+        let time = $('.ContentItem-time').text()        
+        let splitDate = time.split(' ')
+        let splitDate2 = splitDate[2]
+        if (splitDate[2].includes('・')){
+            splitDate2 = splitDate[2].split('・')[0]
+        }
+        let toDate: string = splitDate[1] + ' ' + splitDate2
+        let date = new Date(toDate)
+        let html = $('.RichContent-inner').eq(0).find('.RichText').html()
+        let text = $('.RichContent-inner').eq(0).find('.RichText').text()
+        html = await translate(html)
+        const article_id = guid()
+        let introduction:string = ''
+        if (text.length > 48){
+            introduction = text.substring(0, 48)
+        }else{
+            introduction = text
+        }
+        introduction = await translate(introduction)
+        introduction += '...'
+        await this.saveZhi(title, html, article_id, articleThumbnail, date)    
+        let result = {
+            title,
+            articleThumbnail,
+            meun_id,
+            article_id,
+            introduction, 
+            date
+        }
+        return result
+    }
     // 知乎专栏
     async zhuanlan(param: { url: string, meun_id: number }): Promise<any>{
         const { url, meun_id } = param
@@ -65,14 +65,14 @@ export class ZhihuService {
                 const img = $('.App-main .Post-content .TitleImage').attr('src')
                 const openccTitle = $('.Post-Main .Post-Title').text()
                 const title = await translate(openccTitle)
-                // let articleThumbnail: string = ''
-                // const figureLength = $('figure').length 
-                // let thumbnail = await this.setImgs($, figureLength, 'zhuanlan')
-                // if(img){
-                //     articleThumbnail = img
-                // }else{
-                //     articleThumbnail = thumbnail
-                // }
+                let articleThumbnail: string = ''
+                const figureLength = $('figure').length 
+                let thumbnail = await this.setImgs($, figureLength, 'zhuanlan')
+                if(img){
+                    articleThumbnail = img
+                }else{
+                    articleThumbnail = thumbnail
+                }
                 let time = $('.ContentItem-time').text()              
                 let splitDate = time.split(' ') 
                 let toDate: string = splitDate[1] + ' ' + splitDate[2]
@@ -91,18 +91,18 @@ export class ZhihuService {
                     introduction = text
                 }
                 introduction = await translate(introduction)
-                // introduction += '...'
-                // await this.saveZhi(title, html, article_id, articleThumbnail, date)
-                // let result = {
-                //     title,
-                //     articleThumbnail,
-                //     meun_id,
-                //     article_id,
-                //     introduction,
-                //     date
-                // }
-                // console.log('result', result)
-                // resove(result)
+                introduction += '...'
+                await this.saveZhi(title, html, article_id, articleThumbnail, date)
+                let result = {
+                    title,
+                    articleThumbnail,
+                    meun_id,
+                    article_id,
+                    introduction,
+                    date
+                }
+                console.log('result', result)
+                resove(result)
             })
         })
     }
