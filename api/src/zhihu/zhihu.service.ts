@@ -84,7 +84,7 @@ export class ZhihuService {
                 html = await translate(html)
                 
                 const article_id = guid()
-                let introduction: string = ''
+                let introduction: string | any = ''
                 if (text.length > 60) {
                     introduction = text.substring(0, 60)
                 } else {

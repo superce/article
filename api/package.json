@@ -41,6 +41,7 @@
     "passport-local": "^1.0.0",
     "puppeteer": "^13.5.2",
     "qiniu": "^7.4.0",
+    "qs": "^6.10.5",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
     "rimraf": "^3.0.2",
