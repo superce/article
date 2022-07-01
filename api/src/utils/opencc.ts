@@ -22,7 +22,7 @@ function wycApi(html: any) {
     })
 }
 export async function translate(html: string) {
-    const text = await wycApi(html)
-    const result = cnchars.s2t(text);
+    // const text = await wycApi(html)
+    const result = cnchars.s2t(html);
     return result
 }
