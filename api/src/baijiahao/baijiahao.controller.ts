@@ -7,7 +7,7 @@ export class BaijiahaoController {
   constructor(private baijia: BaijiahaoService){}
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  async getBaijia(@Query() query) {
+  async getBaijia(@Query() query: any) {
     // this.baijia.collection(query)
     return this.baijia.collection(query)
   }
