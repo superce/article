@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { article, list } from './entity/article.entity'
 import { DouyinModule } from './douyin/douyin.module';
 import { BaijiahaoModule } from './baijiahao/baijiahao.module';
+import { WeiboModule } from './weibo/weibo.module';
 import connectMysql from './connectMysql';
 
 console.log(connectMysql)
@@ -20,7 +21,8 @@ console.log(connectMysql)
     UserModule,
     TypeOrmModule.forFeature([list, article]),
     DouyinModule,
-    BaijiahaoModule
+    BaijiahaoModule,
+    WeiboModule
   ],
   controllers: [AppController],
   providers: [],
