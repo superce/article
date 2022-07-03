@@ -2,16 +2,22 @@
 <div class="article-list">
   <el-table v-loading="loading" :data="tableData" stripe style="width: 100%;overflow-y:scroll" height="calc(100% - 45px)">
     <el-table-column prop="title" label="标题" width="300" />
-    <el-table-column prop="thumbnail" label="缩略图" width="100">
+    <el-table-column prop="title" label="鏈接" width="300">
+      <template #default="{ row }">
+        {{'https://any-tool.top/detail/' + row.article_id}}
+      </template>
+    </el-table-column>
+    <el-table-column prop="thumbnail" label="缩略图" width="120">
       <template #default="{ row }">
         <img :src="isHasHttps(row.thumbnail)" alt="">
       </template>
     </el-table-column>
-    <el-table-column prop="categroy_name" label="分类名称">
+    <el-table-column prop="categroy_name" label="分类名称" width="100">
       <template #default="{row}">
-        <el-tag>{{ row.meun_id }}</el-tag>
+        <el-tag>{{ onGetMeunName(row.meun_id) }}</el-tag>
       </template>
     </el-table-column>
+    <el-table-column prop="date" label="時間" width="180" />
     <el-table-column prop="categroy_name" label="操作">
       <template #default="{row}">
         <el-button type="primary" @click="editTag(row)" size="small">修改标签</el-button>
@@ -39,13 +45,14 @@
   import { reactive, ref, onMounted, computed } from 'vue'
   import { apiGetArticleList, apiEditArticleTag, apiDeleteItem } from '@src/api/list'
   // import pagiNation from '@src/components/pagination.vue'
+  import { getMeunList } from '@src/utils/meun'
   import { apiMeunList } from '@src/api/meun'
   import tip from '@src/utils/Tip'
   const tableData = ref([])
   const loading = ref(false)
   onMounted(() => {
     list()
-    getMeunList()
+    onGetMeunList()
   })
   const href = computed(() => {
     let baseURL = 'https://www.health-longevity.top'
@@ -58,13 +65,18 @@
     return htps.includes('http') ? htps : href.value + htps
   }
   const meunList = ref([])
-  const getMeunList = () => {
-    apiMeunList().then(res => {
-      if(res.code === 200){
-        meunList.value = res.data
-        edit.categroy_id = res.data[0].id
-      }
-    })
+  const onGetMeunList = async () => {
+    const list = await getMeunList()
+    meunList.value = list
+    edit.categroy_id = list[0].id
+  }
+  function onGetMeunName(id){
+    const m = meunList.value.find(item => id === item.id)    
+    console.log(m);
+    if(m){
+      return m.name
+    }
+    // return m.name
   }
   function list(){
     loading.value = true

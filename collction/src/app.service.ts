@@ -8,7 +8,7 @@ import { article, list, meun } from './entity/zhihu.entity';
 export class getZhihuListServer {
   constructor(@InjectRepository(list) private readonly getZhihuList: Repository<any>) { }
   async getList(pageIndex = 1) {
-    let db = await this.getZhihuList.createQueryBuilder().skip(15 * (pageIndex - 1)).take(30).getRawMany()
+    let db = await this.getZhihuList.createQueryBuilder().orderBy('date', 'DESC').skip(15 * (pageIndex - 1)).take(30).getRawMany()
     let total = await this.getZhihuList.createQueryBuilder().getCount()
     const currentPageIndex = pageIndex
     const lists = {
@@ -23,7 +23,7 @@ export class getZhihuListServer {
     return { list }
   }
   async getMeunItemList(id: number) {
-    const list = await this.getZhihuList.find({ where: { meun_id: id } })
+    const list = await this.getZhihuList.find({ where: { meun_id: id }, order:{'date': 'DESC'} })
     return list
   }
 }

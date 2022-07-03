@@ -9,16 +9,12 @@
   import { onMounted, ref } from 'vue'
   import zhihu from './component/zhihu.vue'
   import douyin from './component/douyin.vue'
-  import { apiMeunList } from '@src/api/meun'
+  import { getMeunList } from '@src/utils/meun'
   const list = ref([])
   onMounted(() => {
     getList()
   })
-  const getList = () => {
-    apiMeunList().then(res => {
-      if(res.code === 200){
-        list.value = res.data
-      }
-    })
+  const getList = async () => {
+    list.value = await getMeunList()
   }
 </script>
