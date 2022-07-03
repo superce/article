@@ -59,8 +59,16 @@ export class ZhihuService {
                 let articleThumbnail: string = ''
                 const figureLength = $('figure').length 
                 let thumbnail = await this.setImgs($, figureLength, 'zhuanlan')
+                console.log('img----', img);
                 if(img){
-                    articleThumbnail = img
+                    let splitImg = img.split('?')[0]
+                    const a: { name: string, path: string } = await crop(splitImg)
+                    const { data } = await uploadQiniu(a)
+                    let ossUrl = 'https://img.health-longevity.top'
+                    if (process.env.NODE_ENV === 'development') {
+                        ossUrl = 'http://rajgtbfsj.hb-bkt.clouddn.com';
+                    }
+                    articleThumbnail = `${ossUrl}/${data.key}`
                 }else{
                     articleThumbnail = thumbnail
                 }
