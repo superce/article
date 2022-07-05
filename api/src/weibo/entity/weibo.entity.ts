@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, PrimaryColumn } from 'typeorm'
 
 @Entity()
-export class article{
+export class weibo_img{
     @PrimaryGeneratedColumn()
     id: number
 
