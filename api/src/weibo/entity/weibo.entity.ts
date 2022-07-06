@@ -17,12 +17,12 @@ export class weibo_img{
     @Column()
     group_imgs_title: string
 
-    @Column()
+    @Column('text')
     img_url: string
 
-    @Column()
+    @Column('text')
     thumbnail: string
-    
+
     @CreateDateColumn()
-    date: Date
+    find_time: Date
 }
