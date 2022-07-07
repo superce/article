@@ -6,6 +6,9 @@ export class weibo_img{
     id: number
 
     @Column()
+    meun_id: number
+
+    @Column()
     author_id: string
 
     @Column()

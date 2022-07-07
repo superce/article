@@ -5,4 +5,5 @@ export default interface saveItem {
     group_imgs_title: string
     img_url: string
     thumbnail: string
+    meun_id: number
 }

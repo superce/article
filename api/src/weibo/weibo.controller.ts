@@ -1,14 +1,14 @@
-import { Controller, Get, HttpException, Query, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpException, Query, HttpStatus, UseGuards, Param } from '@nestjs/common';
 import { WeiboService } from './weibo.service';
-import { weibo_list } from './dto';
+import { weibo_list, param } from './dto';
 import { AuthGuard } from '@nestjs/passport';
 @Controller('weibo')
 export class WeiboController {
     constructor(private WeiboService: WeiboService){}
     @UseGuards(AuthGuard('jwt'))
-    @Get()
-    async getWeiBoAuthor(@Query('url') url: string){
-        this.WeiboService.onGetWeiBoAuthor(url)        
+    @Get('/collection')
+    async getWeiBoAuthor(@Query() param: param){        
+        this.WeiboService.onGetWeiBoAuthor(param)        
         const result = {
             code: 200,
             message: 'ok'

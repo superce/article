@@ -21,7 +21,7 @@ export class WeiboService {
             })
         })
     }
-    async onGetWeiBoAuthor(url: string) {
+    async onGetWeiBoAuthor({url, meun_id}) {
         const urlSplit = url.split('/')
         const uid = Number(urlSplit[urlSplit.length - 1])
         let since_id: string = ''
@@ -41,12 +41,13 @@ export class WeiboService {
                 }
                 for (let item of list.pic_ids) {                    
                     const saveItem: saveItem = {
+                        meun_id,
                         img_url: list.pic_infos[item].large.url,
                         thumbnail: list.pic_infos[item].thumbnail.url,
                         author_name: list.user.screen_name,
                         author_id: list.user.idstr,
                         group_imgs_id: list.idstr,
-                        group_imgs_title: list.text_raw
+                        group_imgs_title: list.text_raw,
                     }
                     console.log(list.pic_ids.length);
                     try{                        
