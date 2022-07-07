@@ -67,6 +67,23 @@ const routes = [
     ]
   },
   {
+    path: '/weibo',
+    component: layout,
+    children: [
+      {
+        path: '',
+        name: 'Author',
+        meta: {
+          title: "微博图片",
+          icon: 'el-icon-files',
+          show: true,
+          index: 2,
+        },
+        component: () => import('@src/views/weibo/index.vue')
+      }
+    ]
+  },
+  {
     path: '/meun',
     component: layout,
     children: [

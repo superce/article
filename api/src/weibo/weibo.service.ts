@@ -26,14 +26,20 @@ export class WeiboService {
         const uid = Number(urlSplit[urlSplit.length - 1])
         let since_id: string = ''
         let page: number = 0
-        let stopWhile: boolean = false;
         do {
             page++
-            console.log(page, since_id);
+            // console.log(page, since_id);
             const { data }: any = await this.onRequesApi(uid, page, 0, since_id)
             since_id = data.since_id
             for (let list of data.list) {
-                for (let item of list.pic_ids) {
+                try{
+                    const group_id = await this.weibo.findOne({where: {group_imgs_id: list.idstr}})
+                    console.log('-----', group_id);
+                    if(group_id) break                    
+                }catch(err){
+
+                }
+                for (let item of list.pic_ids) {                    
                     const saveItem: saveItem = {
                         img_url: list.pic_infos[item].large.url,
                         thumbnail: list.pic_infos[item].thumbnail.url,
@@ -42,25 +48,39 @@ export class WeiboService {
                         group_imgs_id: list.idstr,
                         group_imgs_title: list.text_raw
                     }
-                    try{
+                    console.log(list.pic_ids.length);
+                    try{                        
                         const newinsert = this.weibo.create(saveItem)
-                        await this.weibo.save(newinsert)                    
+                        this.weibo.save(newinsert)                    
                     }catch(err){
                         const result = {
                             code: 400,
                             msg: err
                         }
                         since_id = ''
-                        console.log('result',list, item, page, since_id);
+                        // console.log('result',list, item, page, since_id);
                         break
                     }
                 }
             }
-            stopWhile = page >= 5 || !since_id ? true : false
-        } while (stopWhile)
-        const result = {
+            if(page >= 5) since_id = ''
+        } while (since_id)        
+    }
+
+    async onGetList(pageIndex: number, pageSize: number){
+        const skip = (pageIndex - 1) * pageSize
+        let result = {
             code: 200,
-            message: 'ok'
+            data: {},
+            count: 0,
+            msg: ''
+        }
+        try{
+            const res = await this.weibo.createQueryBuilder("weibo_img").orderBy({find_time: 'DESC'}).skip(skip).take(pageSize).getMany()
+            const count = await this.weibo.count()
+            result = { code: 200, data: res, count, msg: 'ok' }
+        }catch(err){
+            result = { code: 200, data: {}, count: 0, msg: 'ok' }
         }
         throw new HttpException(result, HttpStatus.OK)
     }

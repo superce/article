@@ -131,3 +131,14 @@ input {
 .article-list{
   img{width: 100px;height: 100px;object-fit: cover;}
 }
+.weibo{
+  display: flex;flex-wrap: wrap;height: calc(100% - 20px);overflow-y: auto;
+  .card{width: calc(380px - 10px);margin: 0 5px;
+    .box-card{height: 320px;}
+    .item{display: flex;justify-content: space-between;}
+    .card-header{display: flex;align-items: center;justify-content: space-between;}
+    .el-card__body{display: flex;flex-wrap: wrap;
+      .item{margin-bottom: 6px;margin-right: 6px;}
+    }
+  }
+}
