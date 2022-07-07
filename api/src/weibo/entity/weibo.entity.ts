@@ -6,10 +6,10 @@ export class article{
     id: number
 
     @Column()
-    author_name: string
+    author_id: string
 
     @Column()
-    author_id: string
+    author_name: string
 
     @Column()
     group_imgs_id: string
