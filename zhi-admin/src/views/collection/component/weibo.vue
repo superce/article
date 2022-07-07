@@ -5,6 +5,9 @@
       <el-form-item label="url" prop="url">
         <el-input v-model="formInline.url" placeholder="url" @keyup.capture.enter="doCollection"/>
       </el-form-item>
+      <el-form-item label="url" prop="cookie">
+        <el-input v-model="formInline.cookie" placeholder="cookie" @keyup.capture.enter="doCollection"/>
+      </el-form-item>
       <el-form-item label="分类">
         <el-select v-model="formInline.meun_id" placeholder="分类">          
           <el-option v-for="item in list" :key="item.name" :label="item.name" :value="item.id" />
@@ -34,12 +37,16 @@
   })
   const formInline = reactive({
     url: '',
-    meun_id: defaultMeunId.value
+    meun_id: defaultMeunId.value,
+    cookie: ''
   })
   const form = ref(null)
   const rules = reactive({
     url:[
       { required: true, message: 'Please input Activity url', trigger: 'blur' },
+    ],
+    cookie: [
+      { required: true, message: '', trigger: 'blur' },
     ]
   })
   const loading = ref(false)

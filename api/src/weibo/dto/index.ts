@@ -5,4 +5,5 @@ export class weibo_list {
 export class param {
     url: string
     meun_id: number
+    cookie: string
 }

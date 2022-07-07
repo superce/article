@@ -21,5 +21,10 @@ export class WeiboController {
         const { pageIndex, pageSize } = param
         await this.WeiboService.onGetList(pageIndex, pageSize)        
     }
+    @Get('/download')
+    async doDownLoadImg(@Query('url') param: string){
+        
+        await this.WeiboService.downloadImg(param)        
+    }
 }
 
