@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, PrimaryColumn } from 'typeorm'
 
 @Entity()
-export class article{
+export class weibo_img{
     @PrimaryGeneratedColumn()
     id: number
 
@@ -17,12 +17,12 @@ export class article{
     @Column()
     group_imgs_title: string
 
-    @Column()
+    @Column('text')
     img_url: string
 
-    @Column()
+    @Column('text')
     thumbnail: string
-    
+
     @CreateDateColumn()
-    date: Date
+    find_time: Date
 }
