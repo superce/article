@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Query, HttpStatus, UseGuards, Param } from '@nestjs/common';
+import { Controller, Get, HttpException, Query, HttpStatus, UseGuards } from '@nestjs/common';
 import { WeiboService } from './weibo.service';
 import { weibo_list, param } from './dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -20,11 +20,6 @@ export class WeiboController {
     async getWeiBoAuthorList(@Query() param: weibo_list){
         const { pageIndex, pageSize } = param
         await this.WeiboService.onGetList(pageIndex, pageSize)        
-    }
-    @Get('/download')
-    async doDownLoadImg(@Query('url') param: string){
-        
-        await this.WeiboService.downloadImg(param)        
-    }
+    }    
 }
 

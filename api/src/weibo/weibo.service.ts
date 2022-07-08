@@ -4,8 +4,7 @@ import { Repository, Entity } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm'
 import { weibo_img } from './entity/weibo.entity';
 import saveItem from './dto/type'
-const path = require('path')
-const fs = require('fs')
+
 @Injectable()
 export class WeiboService {
     constructor(@InjectRepository(weibo_img) private readonly weibo: Repository<weibo_img>) { }
@@ -93,14 +92,5 @@ export class WeiboService {
             result = { code: 200, data: {}, count: 0, msg: 'ok' }
         }
         throw new HttpException(result, HttpStatus.OK)
-    }
-
-    async downloadImg(url: string){
-        const res = await axios.get(url, {responseType: 'stream'})
-        const filePath = 'C:\\Users\\Administrator\\Desktop\\article'
-        const mypath = path.resolve(filePath, '1');
-        // const writer = fs.createWriteStream(mypath);
-        const logFileWriter = fs.createWriteStream(mypath);
-        res.data.pipe(logFileWriter);
     }
 }
